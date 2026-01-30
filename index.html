@@ -202,6 +202,45 @@
             font-weight: 700;
         }
 
+        /* Testimonials Section (New) */
+        .testimonials-wrapper {
+            overflow: hidden;
+            margin: 30px 20px;
+            padding: 20px 0;
+            background: #fffafb;
+            border-radius: 20px;
+            border: 1px solid #fce4ec;
+        }
+
+        .testimonials-slider {
+            display: flex;
+            gap: 20px;
+            animation: scroll 25s linear infinite;
+            width: max-content;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            width: 280px;
+            text-align: right;
+            border-right: 4px solid var(--primary);
+        }
+
+        .testi-user { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .testi-user i { color: var(--primary); font-size: 1.2rem; }
+        .testi-name { font-weight: 700; color: var(--primary-dark); font-size: 0.9rem; }
+        .testi-text { font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(280px * 8 + 20px * 8)); }
+        }
+
+        .testimonials-slider:hover { animation-play-state: paused; }
+
         /* FAQ Section */
         .faq-container { margin: 0 20px; text-align: start; }
         .faq-item { background: #fff; border-radius: 15px; border: 1px solid #fce4ec; margin-bottom: 10px; overflow: hidden; }
@@ -246,6 +285,12 @@
 
     <h3 class="section-title">قائمة الحلويات التقليدية</h3>
     <div class="sweets-grid" id="sweetsContainer"></div>
+
+    <h3 class="section-title">آراء تلميذاتنا وزبوناتنا</h3>
+    <div class="testimonials-wrapper">
+        <div class="testimonials-slider" id="testimonialsList">
+            </div>
+    </div>
 
     <h3 class="section-title">الأسئلة الشائعة</h3>
     <div class="faq-container">
@@ -297,6 +342,17 @@ const sweets = [
     { name: "غريبية", price: "50 دج", img: "images/ghriba.jpg" }
 ];
 
+const testimonials = [
+    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، يعطيك الصحة شاف، الحشو طري والمعسلة لداخل." },
+    { name: "كريمة ب.", text: "درت عندكم فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش." },
+    { name: "سمية العاصمية", text: "أحسن مدرسة في الشلف، المعاملة روعة والحلويات همة وشان." },
+    { name: "سارة.", text: "المقروض يذوب في الفم، جربت بزاف بلايص بصح كيفكم ماكانش." },
+    { name: "أم أنس", text: "شكراً شاف على النصائح، تعلمت أسرار الطلية والحلوى جاتني تبرق." },
+    { name: "نادية.", text: "دزيريات مقروصين فن، والحلويات التقليدية تعكم تشرف في العراس." },
+    { name: "ليلى", text: "خدمة متقونة ونظافة الله يبارك، البنة ما تتوصفش." },
+    { name: "أم جيهان", text: "ربي يوفقكم، مدرسة في القمة، البقلاوة التركية تعكم هبلت قاع العايلة." }
+];
+
 const container = document.getElementById("sweetsContainer");
 sweets.forEach(s => {
     container.innerHTML += `
@@ -304,6 +360,20 @@ sweets.forEach(s => {
             <img src="${s.img}" class="sweet-img" onerror="this.src='https://via.placeholder.com/200x150?text=Amir+School'">
             <div class="sweet-name">${s.name}</div>
             <div class="sweet-price">${s.price}</div>
+        </div>`;
+});
+
+const testiList = document.getElementById("testimonialsList");
+// نكرر المصفوفة لضمان استمرار الحركة بدون انقطاع
+const fullTestimonials = [...testimonials, ...testimonials];
+fullTestimonials.forEach(t => {
+    testiList.innerHTML += `
+        <div class="testimonial-card">
+            <div class="testi-user">
+                <i class="fas fa-user-circle"></i>
+                <span class="testi-name">${t.name}</span>
+            </div>
+            <p class="testi-text">"${t.text}"</p>
         </div>`;
 });
 
