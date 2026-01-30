@@ -18,6 +18,8 @@
             --muted: #666;
             --radius: 25px;
             --shadow: 0 15px 35px rgba(255, 107, 129, 0.12);
+            --success: #2ed573;
+            --danger: #ff4757;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,7 +46,6 @@
             padding-bottom: 40px;
         }
 
-        /* Cover & Profile Section */
         .header-section {
             position: relative;
             margin-bottom: 70px;
@@ -73,7 +74,29 @@
 
         .school-info { padding: 0 20px; }
 
-        /* Links */
+        /* حالة المحل */
+        .status-badge {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 20px;
+            border-radius: 15px;
+            margin-top: 15px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .status-open { background: #e7fbf2; color: var(--success); border: 1px solid #c1f2dc; }
+        .status-closed { background: #fff1f2; color: var(--danger); border: 1px solid #ffd1d6; }
+        .status-main { display: flex; align-items: center; gap: 8px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-open { background: var(--success); box-shadow: 0 0 8px var(--success); animation: pulse 1.5s infinite; }
+        .dot-closed { background: var(--danger); }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 213, 115, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 213, 115, 0); }
+        }
+
         .links-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -96,113 +119,27 @@
             justify-content: center;
         }
 
-        .link-btn:hover {
-            background: #fff9fa;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
+        .link-btn:hover { background: #fff9fa; border-color: var(--primary); transform: translateY(-2px); }
+        .link-btn i { position: absolute; right: 15px; color: var(--primary); font-size: 1.2rem; }
 
-        .link-btn i {
-            position: absolute;
-            right: 15px;
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
+        .section-title { margin: 40px 0 25px; color: var(--primary-dark); font-size: 1.4rem; position: relative; }
+        .section-title::after { content: ''; width: 50px; height: 4px; background: var(--primary); display: block; margin: 8px auto; border-radius: 10px; }
 
-        /* Section Titles */
-        .section-title {
-            margin: 40px 0 25px;
-            color: var(--primary-dark);
-            font-size: 1.4rem;
-            position: relative;
-        }
+        .hours-card { background: #fff5f7; margin: 0 20px; padding: 20px; border-radius: 15px; }
+        .hours-table { width: 100%; max-width: 500px; margin: 0 auto; border-collapse: collapse; }
+        .hours-table td { padding: 12px 10px; border-bottom: 1px dashed rgba(255, 107, 129, 0.2); font-weight: 600; }
+        .time-cell { text-align: end; color: var(--primary-dark); direction: ltr; }
 
-        .section-title::after {
-            content: '';
-            width: 50px;
-            height: 4px;
-            background: var(--primary);
-            display: block;
-            margin: 8px auto;
-            border-radius: 10px;
-        }
-
-        /* Hours Table */
-        .hours-card {
-            background: #fff5f7;
-            margin: 0 20px;
-            padding: 20px;
-            border-radius: 15px;
-        }
-
-        .hours-table {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            border-collapse: collapse;
-        }
-
-        .hours-table td {
-            padding: 12px 10px;
-            border-bottom: 1px dashed rgba(255, 107, 129, 0.2);
-            font-weight: 600;
-        }
-
-        .time-cell {
-            text-align: end;
-            color: var(--primary-dark);
-            direction: ltr;
-        }
-
-        /* Sweets Grid */
-        .sweets-grid {
-            display: grid;
-            gap: 15px;
-            padding: 0 20px;
-            grid-template-columns: repeat(2, 1fr);
-        }
-
+        .sweets-grid { display: grid; gap: 15px; padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
         @media(min-width:650px){ .sweets-grid { grid-template-columns: repeat(3, 1fr); } }
         @media(min-width:900px){ .sweets-grid { grid-template-columns: repeat(4, 1fr); } }
 
-        .sweet-card {
-            background: #fff;
-            border-radius: 18px;
-            padding: 10px;
-            border: 1px solid #fce4ec;
-            transition: 0.3s;
-        }
+        .sweet-card { background: #fff; border-radius: 18px; padding: 10px; border: 1px solid #fce4ec; }
+        .sweet-img { width: 100%; height: 110px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; background: #fdf2f4; }
+        .sweet-name { font-weight: 700; font-size: 0.9rem; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        .sweet-price { font-size: 0.85rem; color: var(--primary-dark); background: #fff0f3; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 8px; font-weight: 700; }
 
-        .sweet-img {
-            width: 100%;
-            height: 110px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            background: #fdf2f4;
-        }
-
-        .sweet-name {
-            font-weight: 700;
-            font-size: 0.9rem;
-            min-height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .sweet-price {
-            font-size: 0.85rem;
-            color: var(--primary-dark);
-            background: #fff0f3;
-            padding: 4px 12px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 8px;
-            font-weight: 700;
-        }
-
-        /* Testimonials Section (New) */
+        /* تدوير الآراء المستمر */
         .testimonials-wrapper {
             overflow: hidden;
             margin: 30px 20px;
@@ -210,14 +147,22 @@
             background: #fffafb;
             border-radius: 20px;
             border: 1px solid #fce4ec;
+            position: relative;
         }
 
         .testimonials-slider {
             display: flex;
             gap: 20px;
-            animation: scroll 25s linear infinite;
             width: max-content;
+            animation: scroll 40s linear infinite; /* سرعة هادئة ومستمرة */
         }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(50%); } /* التحرك لنصف الطول المكرر */
+        }
+
+        .testimonials-slider:hover { animation-play-state: paused; }
 
         .testimonial-card {
             background: var(--white);
@@ -227,27 +172,21 @@
             width: 280px;
             text-align: right;
             border-right: 4px solid var(--primary);
+            flex-shrink: 0;
         }
 
-        .testi-user { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .testi-user i { color: var(--primary); font-size: 1.2rem; }
+        .testi-user { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
+        .user-meta { display: flex; align-items: center; gap: 8px; }
+        .user-meta i { color: var(--primary); font-size: 1.1rem; }
         .testi-name { font-weight: 700; color: var(--primary-dark); font-size: 0.9rem; }
+        .stars { color: #ffbc00; font-size: 0.8rem; display: flex; gap: 2px; }
         .testi-text { font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
 
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(280px * 8 + 20px * 8)); }
-        }
-
-        .testimonials-slider:hover { animation-play-state: paused; }
-
-        /* FAQ Section */
         .faq-container { margin: 0 20px; text-align: start; }
         .faq-item { background: #fff; border-radius: 15px; border: 1px solid #fce4ec; margin-bottom: 10px; overflow: hidden; }
         .faq-question { width: 100%; border: none; background: none; padding: 18px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--text); font-family: 'Cairo'; }
         .faq-answer { max-height: 0; overflow: hidden; padding: 0 18px; font-size: 0.95rem; color: var(--muted); transition: 0.3s; line-height: 1.6; }
         .faq-item.active .faq-answer { max-height: 200px; padding: 0 18px 18px; }
-        .faq-item.active .faq-question { color: var(--primary-dark); }
 
         footer { margin-top: 50px; font-size: 0.85rem; color: #aaa; }
     </style>
@@ -264,6 +203,14 @@
     <div class="school-info">
         <h1 id="schoolName">مدرسة أمير للتكوين المحترف</h1>
         <p id="schoolDesc" style="color:var(--muted); margin-top: 5px;"></p>
+        
+        <div id="shopStatus" class="status-badge">
+            <div class="status-main">
+                <span id="statusDot" class="dot"></span>
+                <span id="statusText">جاري التحقق...</span>
+            </div>
+            <div id="statusTimer" class="status-timer" style="font-size: 0.8rem; opacity: 0.8; margin-top: 2px;"></div>
+        </div>
     </div>
 
     <div class="links-container">
@@ -272,7 +219,6 @@
         <a href="https://wa.me/213699748196" class="link-btn"><i class="fab fa-whatsapp"></i>واتساب</a>
         <a href="https://www.facebook.com/amirformation" class="link-btn"><i class="fab fa-facebook"></i>فايسبوك</a>
         <a href="https://www.tiktok.com/@chefsamahbradai" class="link-btn"><i class="fab fa-tiktok"></i>تيك توك</a>
-        <a href="#" class="link-btn"><i class="fa fa-location-dot"></i>أولاد محمد – الشلف</a>
     </div>
 
     <h3 class="section-title">أوقات العمل</h3>
@@ -283,7 +229,7 @@
         </table>
     </div>
 
-    <h3 class="section-title">قائمة الحلويات التقليدية</h3>
+    <h3 class="section-title">قائمة الحلويات</h3>
     <div class="sweets-grid" id="sweetsContainer"></div>
 
     <h3 class="section-title">آراء تلميذاتنا وزبوناتنا</h3>
@@ -296,66 +242,66 @@
     <div class="faq-container">
         <div class="faq-item">
             <button class="faq-question">هل توجد طلبيات للمناسبات؟ <i class="fa fa-chevron-down"></i></button>
-            <div class="faq-answer">نعم، نوفر طلبيات لجميع المناسبات والأفراح بجودة عالية وتزيين عصري حسب الطلب.</div>
+            <div class="faq-answer">نعم، نوفر طلبيات لجميع المناسبات والأفراح بجودة عالية.</div>
         </div>
         <div class="faq-item">
             <button class="faq-question">هل الشهادات معتمدة؟ <i class="fa fa-chevron-down"></i></button>
-            <div class="faq-answer">نعم، جميع تكويناتنا تتوج بشهادات معتمدة تمكنكم من دخول سوق العمل أو فتح مشاريعكم الخاصة.</div>
-        </div>
-        <div class="faq-item">
-            <button class="faq-question">هل تتوفر أسعار الجملة؟ <i class="fa fa-chevron-down"></i></button>
-            <div class="faq-answer">بالتأكيد، نوفر أسعاراً خاصة ومخفضة للطلبيات الكبيرة والمحلات.</div>
+            <div class="faq-answer">نعم، جميع تكويناتنا تتوج بشهادات معتمدة تمكنكم من دخول سوق العمل.</div>
         </div>
     </div>
 
     <footer>
-        صنع بكل ❤️ بواسطة مدرسة أمير © <span id="year"></span>
+        صنع بكل ❤️ مدرسة أمير © <span id="year"></span>
     </footer>
 </div>
 
 <script>
+// تحديث حالة المحل
+function updateShopStatus() {
+    const now = new Date();
+    const day = now.getDay(); 
+    const currentTime = now.getHours() + now.getMinutes() / 60;
+    let isOpen = false;
+    let nextAction = "";
+
+    if (day === 5) { // الجمعة
+        if (currentTime >= 14 && currentTime < 17) isOpen = true;
+        nextAction = isOpen ? "نغلق الساعة 17:00" : (currentTime < 14 ? "نفتح اليوم 14:00" : "نفتح غداً 09:00");
+    } else { 
+        if (currentTime >= 9 && currentTime < 17) isOpen = true;
+        nextAction = isOpen ? "نغلق الساعة 17:00" : (currentTime < 9 ? "نفتح اليوم 09:00" : (day === 4 ? "نفتح غداً 14:00" : "نفتح غداً 09:00"));
+    }
+
+    const badge = document.getElementById('shopStatus');
+    badge.className = isOpen ? "status-badge status-open" : "status-badge status-closed";
+    document.getElementById('statusDot').className = isOpen ? "dot dot-open" : "dot dot-closed";
+    document.getElementById('statusText').innerText = isOpen ? "محلنا مفتوح حالياً ✅" : "المحل مغلق الآن ❌";
+    document.getElementById('statusTimer').innerText = nextAction;
+}
+
+// الحلويات
 const sweets = [
     { name: "تشارك مسكّر", price: "70 دج", img: "images/tcharakmsakar.jpg" },
-    { name: "تشارك العريان", price: "70 دج", img: "images/tcharakarian.jpg" },
     { name: "عرايش", price: "90 دج", img: "images/araiech.jpg" },
-    { name: "كعيكعات", price: "80 دج", img: "images/kaikat.jpg" },
-    { name: "مقروض", price: "70 دج", img: "images/maqroutlous.jpg" },
-    { name: " مقروض زمان", price: "70 دج", img: "images/maqrout.jpg" },
-    { name: " مقروض اللوز", price: "100 دج", img: "images/maqroutlouz.jpg" },
-    { name: " كفتة", price: "200 دج - 250دج", img: "images/kefta.jpg" },
-    { name: "دزيريات مقروصين", price: "100 دج", img: "images/dziriyat.jpg" },
-    { name: "بقلاوة ", price: "80 دج", img: "images/baklawa.jpg" },
-    { name: "بقلاوة تركية", price: "80 دج", img: "images/turkish.jpg" },
-    { name: "قنيدلات", price: "80 دج", img: "images/qnidlet.jpg" },
-    { name: " مشوك الباي", price: "200 دج - 250دج", img: "images/mcheweklouz.jpg" },
-    { name: " الفاكهة", price: "200 دج - 250دج", img: "images/fruits.jpg" },
-    { name: "صابلي المعجون", price: "40 دج", img: "images/sabli.jpg" },
-    { name: "مشوك", price: "60 دج", img: "images/mchewek.jpg" },
-    { name: "جلجلانية", price: "70 دج", img: "images/djeljlania.jpg" },
-    { name: "مخبز", price: "120 دج", img: "images/mkhabez.jpg" },
-    { name: "كعك النقاش", price: "70 دج", img: "images/naqach.jpg" },
-    { name: "سنيكرز", price: "80 دج", img: "images/snickers.jpg" },
-    { name: "قلوب الشكولاطة", price: "80 دج", img: "images/chikoula.jpg" },
-    { name: "بنيون", price: "80 دج", img: "images/bniwen.jpg" },
-    { name: "طابع زمان", price: "30 دج", img: "images/tabaa.jpg" },
-    { name: "طابع الطلية", price: "40 دج", img: "images/tabaatalia.jpg" },
-    { name: "غريبية", price: "50 دج", img: "images/ghriba.jpg" }
+    { name: "مقروض اللوز", price: "100 دج", img: "images/maqroutlouz.jpg" },
+    { name: "كفتة", price: "200-250 دج", img: "images/kefta.jpg" },
+    { name: "بقلاوة", price: "80 دج", img: "images/baklawa.jpg" },
+    { name: "مخبز", price: "120 دج", img: "images/mkhabez.jpg" }
 ];
 
+// الآراء
 const testimonials = [
-    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، يعطيك الصحة شاف، الحشو طري والمعسلة لداخل." },
-    { name: "كريمة ب.", text: "درت عندكم فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش." },
-    { name: "سمية العاصمية", text: "أحسن مدرسة في الشلف، المعاملة روعة والحلويات همة وشان." },
-    { name: "سارة.", text: "المقروض يذوب في الفم، جربت بزاف بلايص بصح كيفكم ماكانش." },
-    { name: "أم أنس", text: "شكراً شاف على النصائح، تعلمت أسرار الطلية والحلوى جاتني تبرق." },
-    { name: "نادية.", text: "دزيريات مقروصين فن، والحلويات التقليدية تعكم تشرف في العراس." },
-    { name: "ليلى", text: "خدمة متقونة ونظافة الله يبارك، البنة ما تتوصفش." },
-    { name: "أم جيهان", text: "ربي يوفقكم، مدرسة في القمة، البقلاوة التركية تعكم هبلت قاع العايلة." }
+    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، يعطيك الصحة شاف.", stars: 5 },
+    { name: "كريمة ب.", text: "درت فورماسيون والحمد لله راني نخدم من داري.", stars: 5 },
+    { name: "سمية الشلفية", text: "أحسن مدرسة في الشلف، المعاملة روعة.", stars: 4 },
+    { name: "سارة.", text: "المقروض يذوب في الفم، ما شاء الله.", stars: 5 },
+    { name: "ليلى", text: "خدمة متقونة ونظافة الله يبارك.", stars: 5 }
 ];
 
-const container = document.getElementById("sweetsContainer");
+// تعبئة الحلويات
+const sweetsContainer = document.getElementById("sweetsContainer");
 sweets.forEach(s => {
-    container.innerHTML += `
+    sweetsContainer.innerHTML += `
         <div class="sweet-card">
             <img src="${s.img}" class="sweet-img" onerror="this.src='https://via.placeholder.com/200x150?text=Amir+School'">
             <div class="sweet-name">${s.name}</div>
@@ -363,26 +309,32 @@ sweets.forEach(s => {
         </div>`;
 });
 
+// تعبئة الآراء مع التكرار للتدوير المستمر
 const testiList = document.getElementById("testimonialsList");
-// نكرر المصفوفة لضمان استمرار الحركة بدون انقطاع
-const fullTestimonials = [...testimonials, ...testimonials];
-fullTestimonials.forEach(t => {
+const doubleTesti = [...testimonials, ...testimonials]; // نكرر المصفوفة لربط البداية بالنهاية
+doubleTesti.forEach(t => {
     testiList.innerHTML += `
         <div class="testimonial-card">
             <div class="testi-user">
-                <i class="fas fa-user-circle"></i>
-                <span class="testi-name">${t.name}</span>
+                <div class="user-meta">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="testi-name">${t.name}</span>
+                </div>
+                <div class="stars">${'<i class="fas fa-star"></i>'.repeat(t.stars)}</div>
             </div>
             <p class="testi-text">"${t.text}"</p>
         </div>`;
 });
 
+// تفعيل الأسئلة
 document.querySelectorAll(".faq-question").forEach(q => {
     q.onclick = () => q.parentElement.classList.toggle("active");
 });
 
-document.getElementById("schoolDesc").innerText = "فن صناعة الحلويات والمملحات وتكوينات احترافية";
+document.getElementById("schoolDesc").innerText = "تكوينات احترافية في الحلويات والمملحات";
 document.getElementById("year").innerText = new Date().getFullYear();
+updateShopStatus();
+setInterval(updateShopStatus, 60000);
 </script>
 </body>
 </html>
