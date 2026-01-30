@@ -19,7 +19,6 @@
             --radius: 25px;
             --shadow: 0 15px 35px rgba(255, 107, 129, 0.12);
             --success: #2ed573;
-            --warning: #ffa502;
             --danger: #ff4757;
         }
 
@@ -47,52 +46,30 @@
             padding-bottom: 40px;
         }
 
-        .header-section {
-            position: relative;
-            margin-bottom: 70px;
-        }
-
+        .header-section { position: relative; margin-bottom: 70px; }
         .cover-photo {
-            width: 100%;
-            height: 180px;
+            width: 100%; height: 180px;
             background: url('images/cover.jpg') center/cover no-repeat;
             background-color: var(--primary);
             filter: brightness(0.9);
         }
 
         .profile-img {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid #fff;
-            position: absolute;
-            bottom: -65px;
-            left: 50%;
+            width: 130px; height: 130px; border-radius: 50%;
+            object-fit: cover; border: 5px solid #fff;
+            position: absolute; bottom: -65px; left: 50%;
             transform: translateX(-50%);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        .school-info { padding: 0 20px; }
-
-        /* تسيق حالة المحل الذكية */
         .status-badge {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px 20px;
-            border-radius: 15px;
-            margin-top: 15px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: 0.3s;
+            display: inline-flex; flex-direction: column; align-items: center;
+            padding: 10px 20px; border-radius: 15px; margin-top: 15px;
+            font-weight: 700; font-size: 0.9rem;
         }
         .status-open { background: #e7fbf2; color: var(--success); border: 1px solid #c1f2dc; }
         .status-closed { background: #fff1f2; color: var(--danger); border: 1px solid #ffd1d6; }
-        
         .status-main { display: flex; align-items: center; gap: 8px; }
-        .status-timer { font-size: 0.8rem; opacity: 0.8; margin-top: 2px; }
-        
         .dot { width: 10px; height: 10px; border-radius: 50%; }
         .dot-open { background: var(--success); box-shadow: 0 0 8px var(--success); animation: pulse 1.5s infinite; }
         .dot-closed { background: var(--danger); }
@@ -104,172 +81,66 @@
         }
 
         .links-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 12px;
-            margin: 30px 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px; margin: 30px 20px;
         }
 
         .link-btn {
-            position: relative;
-            padding: 15px;
-            border-radius: 15px;
-            background: #fff;
-            border: 1px solid #fce4ec;
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 700;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: relative; padding: 15px; border-radius: 15px; background: #fff;
+            border: 1px solid #fce4ec; text-decoration: none; color: var(--text);
+            font-weight: 700; transition: 0.3s; display: flex; align-items: center; justify-content: center;
         }
+        .link-btn:hover { background: #fff9fa; border-color: var(--primary); transform: translateY(-2px); }
+        .link-btn i { position: absolute; right: 15px; color: var(--primary); font-size: 1.2rem; }
 
-        .link-btn:hover {
-            background: #fff9fa;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
+        .section-title { margin: 40px 0 25px; color: var(--primary-dark); font-size: 1.4rem; position: relative; }
+        .section-title::after { content: ''; width: 50px; height: 4px; background: var(--primary); display: block; margin: 8px auto; border-radius: 10px; }
 
-        .link-btn i {
-            position: absolute;
-            right: 15px;
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .section-title {
-            margin: 40px 0 25px;
-            color: var(--primary-dark);
-            font-size: 1.4rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            width: 50px;
-            height: 4px;
-            background: var(--primary);
-            display: block;
-            margin: 8px auto;
-            border-radius: 10px;
-        }
-
-        .hours-card {
-            background: #fff5f7;
-            margin: 0 20px;
-            padding: 20px;
-            border-radius: 15px;
-        }
-
-        .hours-table {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            border-collapse: collapse;
-        }
-
-        .hours-table td {
-            padding: 12px 10px;
-            border-bottom: 1px dashed rgba(255, 107, 129, 0.2);
-            font-weight: 600;
-        }
-
-        .time-cell { text-align: end; color: var(--primary-dark); direction: ltr; }
-
-        .sweets-grid {
-            display: grid;
-            gap: 15px;
-            padding: 0 20px;
-            grid-template-columns: repeat(2, 1fr);
-        }
+        .sweets-grid { display: grid; gap: 15px; padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
         @media(min-width:650px){ .sweets-grid { grid-template-columns: repeat(3, 1fr); } }
         @media(min-width:900px){ .sweets-grid { grid-template-columns: repeat(4, 1fr); } }
 
-        .sweet-card {
-            background: #fff;
-            border-radius: 18px;
-            padding: 10px;
-            border: 1px solid #fce4ec;
-            transition: 0.3s;
-        }
+        .sweet-card { background: #fff; border-radius: 18px; padding: 10px; border: 1px solid #fce4ec; transition: 0.3s; }
+        .sweet-card:hover { transform: scale(1.03); border-color: var(--primary); }
+        .sweet-img { width: 100%; height: 110px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; background: #fdf2f4; }
+        .sweet-name { font-weight: 700; font-size: 0.85rem; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        .sweet-price { font-size: 0.85rem; color: var(--primary-dark); background: #fff0f3; padding: 4px 10px; border-radius: 20px; display: inline-block; margin-top: 5px; font-weight: 700; }
 
-        .sweet-img {
-            width: 100%;
-            height: 110px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            background: #fdf2f4;
-        }
-
-        .sweet-name { font-weight: 700; font-size: 0.9rem; min-height: 40px; display: flex; align-items: center; justify-content: center; }
-        .sweet-price { font-size: 0.85rem; color: var(--primary-dark); background: #fff0f3; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 8px; font-weight: 700; }
-
-        /* قسم الآراء مع النجوم */
-        .testimonials-wrapper {
-            overflow: hidden;
-            margin: 30px 20px;
-            padding: 20px 0;
-            background: #fffafb;
-            border-radius: 20px;
-            border: 1px solid #fce4ec;
-        }
-
-        .testimonials-slider {
-            display: flex;
-            gap: 20px;
-            animation: scroll 25s linear infinite;
-            width: max-content;
-        }
-
-        .testimonial-card {
-            background: var(--white);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            width: 280px;
-            text-align: right;
-            border-right: 4px solid var(--primary);
-        }
-
-        .testi-user { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
-        .user-meta { display: flex; align-items: center; gap: 8px; }
-        .user-meta i { color: var(--primary); font-size: 1.1rem; }
+        /* تدوير الآراء انسيابي */
+        .testimonials-wrapper { overflow: hidden; margin: 30px 20px; padding: 20px 0; background: #fffafb; border-radius: 20px; border: 1px solid #fce4ec; }
+        .testimonials-slider { display: flex; gap: 20px; width: max-content; animation: scroll 40s linear infinite; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(50%); } }
+        .testimonials-slider:hover { animation-play-state: paused; }
+        .testimonial-card { background: var(--white); padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); width: 280px; text-align: right; border-right: 4px solid var(--primary); flex-shrink: 0; }
         .testi-name { font-weight: 700; color: var(--primary-dark); font-size: 0.9rem; }
-        .stars { color: #ffbc00; font-size: 0.8rem; display: flex; gap: 2px; }
+        .stars { color: #ffbc00; font-size: 0.8rem; display: flex; gap: 2px; margin: 5px 0; }
         .testi-text { font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
 
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-280px * 8 - 20px * 8)); }
-        }
-
-        .testimonials-slider:hover { animation-play-state: paused; }
+        .hours-card { background: #fff5f7; margin: 0 20px; padding: 20px; border-radius: 15px; }
+        .hours-table { width: 100%; max-width: 500px; margin: 0 auto; border-collapse: collapse; }
+        .hours-table td { padding: 12px 10px; border-bottom: 1px dashed rgba(255, 107, 129, 0.2); font-weight: 600; }
+        .time-cell { text-align: end; color: var(--primary-dark); direction: ltr; }
 
         .faq-container { margin: 0 20px; text-align: start; }
         .faq-item { background: #fff; border-radius: 15px; border: 1px solid #fce4ec; margin-bottom: 10px; overflow: hidden; }
-        .faq-question { width: 100%; border: none; background: none; padding: 18px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--text); font-family: 'Cairo'; }
+        .faq-question { width: 100%; border: none; background: none; padding: 18px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Cairo'; color: var(--text); }
         .faq-answer { max-height: 0; overflow: hidden; padding: 0 18px; font-size: 0.95rem; color: var(--muted); transition: 0.3s; line-height: 1.6; }
-        .faq-item.active .faq-answer { max-height: 200px; padding: 0 18px 18px; }
-        .faq-item.active .faq-question { color: var(--primary-dark); }
+        .faq-item.active .faq-answer { max-height: 200px; padding: 18px; border-top: 1px solid #fdf2f4; }
 
-        footer { margin-top: 50px; font-size: 0.85rem; color: #aaa; }
+        footer { margin-top: 50px; font-size: 0.85rem; color: #aaa; padding-bottom: 20px; }
     </style>
 </head>
 
 <body>
 <div class="container">
-
     <div class="header-section">
         <div class="cover-photo"></div>
         <img src="images/amir.jpg" class="profile-img" alt="Amir School" onerror="this.src='https://via.placeholder.com/130'">
     </div>
 
     <div class="school-info">
-        <h1 id="schoolName">مدرسة أمير للتكوين المحترف</h1>
+        <h1>مدرسة أمير للتكوين المحترف</h1>
         <p id="schoolDesc" style="color:var(--muted); margin-top: 5px;"></p>
-        
         <div id="shopStatus" class="status-badge">
             <div class="status-main">
                 <span id="statusDot" class="dot"></span>
@@ -320,83 +191,50 @@
         </div>
     </div>
 
-    <footer>
-        صنع بكل ❤️ بواسطة مدرسة أمير © <span id="year"></span>
-    </footer>
+    <footer>صنع بكل ❤️ مدرسة أمير © <span id="year"></span></footer>
 </div>
 
 <script>
-// دالة تحديث حالة المحل المتقدمة
+// تحديث حالة المحل
 function updateShopStatus() {
     const now = new Date();
-    const day = now.getDay(); // 0: Sunday, 5: Friday, 6: Saturday
-    const hour = now.getHours();
-    const minutes = now.getMinutes();
-    const currentTime = hour + minutes / 60;
-
+    const day = now.getDay();
+    const currentTime = now.getHours() + now.getMinutes() / 60;
     let isOpen = false;
     let nextAction = "";
 
-    const statusBadge = document.getElementById('shopStatus');
-    const statusDot = document.getElementById('statusDot');
-    const statusText = document.getElementById('statusText');
-    const statusTimer = document.getElementById('statusTimer');
-
-    // تحديد أوقات العمل
-    const regularOpen = 9;
-    const regularClose = 17;
-    const fridayOpen = 14;
-    const fridayClose = 17;
-
     if (day === 5) { // الجمعة
-        if (currentTime >= fridayOpen && currentTime < fridayClose) {
-            isOpen = true;
-            nextAction = `نغلق عند الساعة 17:00`;
-        } else if (currentTime < fridayOpen) {
-            nextAction = `سنفتح اليوم عند الساعة 14:00`;
-        } else {
-            nextAction = `سنفتح غداً الساعة 09:00`;
-        }
-    } else { // باقي الأيام (السبت - الخميس)
-        if (currentTime >= regularOpen && currentTime < regularClose) {
-            isOpen = true;
-            nextAction = `نغلق عند الساعة 17:00`;
-        } else if (currentTime < regularOpen) {
-            nextAction = `سنفتح اليوم عند الساعة 09:00`;
-        } else {
-            if (day === 4) nextAction = `سنفتح غداً الساعة 14:00`;
-            else nextAction = `سنفتح غداً الساعة 09:00`;
-        }
+        if (currentTime >= 14 && currentTime < 17) { isOpen = true; nextAction = "نغلق الساعة 17:00"; }
+        else if (currentTime < 14) nextAction = "نفتح اليوم الساعة 14:00";
+        else nextAction = "نفتح غداً الساعة 09:00";
+    } else { // باقي الأيام
+        if (currentTime >= 9 && currentTime < 17) { isOpen = true; nextAction = "نغلق الساعة 17:00"; }
+        else if (currentTime < 9) nextAction = "نفتح اليوم الساعة 09:00";
+        else nextAction = (day === 4) ? "نفتح غداً الساعة 14:00" : "نفتح غداً الساعة 09:00";
     }
 
-    if (isOpen) {
-        statusBadge.className = "status-badge status-open";
-        statusDot.className = "dot dot-open";
-        statusText.innerHTML = "مرحباً! محلنا مفتوح حالياً ✅";
-        statusTimer.innerHTML = nextAction;
-    } else {
-        statusBadge.className = "status-badge status-closed";
-        statusDot.className = "dot dot-closed";
-        statusText.innerHTML = "نعتذر، المحل مغلق الآن ❌";
-        statusTimer.innerHTML = nextAction;
-    }
+    document.getElementById('shopStatus').className = isOpen ? "status-badge status-open" : "status-badge status-closed";
+    document.getElementById('statusDot').className = isOpen ? "dot dot-open" : "dot dot-closed";
+    document.getElementById('statusText').innerText = isOpen ? "مرحباً! محلنا مفتوح حالياً ✅" : "نعتذر، المحل مغلق الآن ❌";
+    document.getElementById('statusTimer').innerText = nextAction;
 }
 
+// القائمة الكاملة (25 حلويات)
 const sweets = [
     { name: "تشارك مسكّر", price: "70 دج", img: "images/tcharakmsakar.jpg" },
     { name: "تشارك العريان", price: "70 دج", img: "images/tcharakarian.jpg" },
     { name: "عرايش", price: "90 دج", img: "images/araiech.jpg" },
     { name: "كعيكعات", price: "80 دج", img: "images/kaikat.jpg" },
     { name: "مقروض", price: "70 دج", img: "images/maqroutlous.jpg" },
-    { name: " مقروض زمان", price: "70 دج", img: "images/maqrout.jpg" },
-    { name: " مقروض اللوز", price: "100 دج", img: "images/maqroutlouz.jpg" },
-    { name: " كفتة", price: "200 دج - 250دج", img: "images/kefta.jpg" },
+    { name: "مقروض زمان", price: "70 دج", img: "images/maqrout.jpg" },
+    { name: "مقروض اللوز", price: "100 دج", img: "images/maqroutlouz.jpg" },
+    { name: "كفتة", price: "200 - 250 دج", img: "images/kefta.jpg" },
     { name: "دزيريات مقروصين", price: "100 دج", img: "images/dziriyat.jpg" },
-    { name: "بقلاوة ", price: "80 دج", img: "images/baklawa.jpg" },
+    { name: "بقلاوة", price: "80 دج", img: "images/baklawa.jpg" },
     { name: "بقلاوة تركية", price: "80 دج", img: "images/turkish.jpg" },
     { name: "قنيدلات", price: "80 دج", img: "images/qnidlet.jpg" },
-    { name: " مشوك الباي", price: "200 دج - 250دج", img: "images/mcheweklouz.jpg" },
-    { name: " الفاكهة", price: "200 دج - 250دج", img: "images/fruits.jpg" },
+    { name: "مشوك الباي", price: "200 - 250 دج", img: "images/mcheweklouz.jpg" },
+    { name: "الفاكهة", price: "200 - 250 دج", img: "images/fruits.jpg" },
     { name: "صابلي المعجون", price: "40 دج", img: "images/sabli.jpg" },
     { name: "مشوك", price: "60 دج", img: "images/mchewek.jpg" },
     { name: "جلجلانية", price: "70 دج", img: "images/djeljlania.jpg" },
@@ -411,25 +249,14 @@ const sweets = [
 ];
 
 const testimonials = [
-    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، يعطيك الصحة شاف، الحشو طري والمعسلة لداخل.", stars: 5 },
-    { name: "كريمة ب.", text: "درت عندكم فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش.", stars: 5 },
-    { name: "سمية العاصمية", text: "أحسن مدرسة في الشلف، المعاملة روعة والحلويات همة وشان.", stars: 4 },
-    { name: "سارة.", text: "المقروض يذوب في الفم، جربت بزاف بلايص بصح كيفكم ماكانش.", stars: 5 },
-    { name: "أم أنس", text: "شكراً شاف على النصائح، تعلمت أسرار الطلية والحلوى جاتني تبرق.", stars: 5 },
-    { name: "نادية.", text: "دزيريات مقروصين فن، والحلويات التقليدية تعكم تشرف في العراس.", stars: 4 },
-    { name: "ليلى", text: "خدمة متقونة ونظافة الله يبارك، البنة ما تتوصفش.", stars: 5 },
-    { name: "أم جيهان", text: "ربي يوفقكم، مدرسة في القمة، البقلاوة التركية تعكم هبلت قاع العايلة.", stars: 5 }
+    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، يعطيك الصحة شاف.", stars: 5 },
+    { name: "كريمة ب.", text: "درت فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش.", stars: 5 },
+    { name: "سمية العاصمية", text: "أحسن مدرسة في الشلف، المعاملة روعة.", stars: 4 },
+    { name: "سارة.", text: "المقروض يذوب في الفم، جربت بزاف بلايص كيفكم ماكانش.", stars: 5 },
+    { name: "أم أنس", text: "شكراً شاف على النصائح، تعلمت أسرار الطلية.", stars: 5 }
 ];
 
-// دالة توليد النجوم
-function generateStars(count) {
-    let starsHtml = "";
-    for(let i=0; i<5; i++) {
-        starsHtml += `<i class="${i < count ? 'fas' : 'far'} fa-star"></i>`;
-    }
-    return starsHtml;
-}
-
+// عرض الحلويات
 const container = document.getElementById("sweetsContainer");
 sweets.forEach(s => {
     container.innerHTML += `<div class="sweet-card">
@@ -439,30 +266,28 @@ sweets.forEach(s => {
     </div>`;
 });
 
+// عرض الآراء مع تدوير انسيابي
 const testiList = document.getElementById("testimonialsList");
-[...testimonials, ...testimonials].forEach(t => {
+const fullTesti = [...testimonials, ...testimonials, ...testimonials]; // تكرار لضمان الطول
+fullTesti.forEach(t => {
+    let stars = "";
+    for(let i=0; i<5; i++) stars += `<i class="${i < t.stars ? 'fas' : 'far'} fa-star"></i>`;
     testiList.innerHTML += `<div class="testimonial-card">
-        <div class="testi-user">
-            <div class="user-meta">
-                <i class="fas fa-user-circle"></i>
-                <span class="testi-name">${t.name}</span>
-            </div>
-            <div class="stars">${generateStars(t.stars)}</div>
-        </div>
+        <div class="testi-name">${t.name}</div>
+        <div class="stars">${stars}</div>
         <p class="testi-text">"${t.text}"</p>
     </div>`;
 });
 
+// الأسئلة الشائعة
 document.querySelectorAll(".faq-question").forEach(q => {
     q.onclick = () => q.parentElement.classList.toggle("active");
 });
 
 document.getElementById("schoolDesc").innerText = "فن صناعة الحلويات والمملحات وتكوينات احترافية";
 document.getElementById("year").innerText = new Date().getFullYear();
-
-// تشغيل الحالة وتحديثها تلقائياً
 updateShopStatus();
-setInterval(updateShopStatus, 60000); // تحديث كل دقيقة
+setInterval(updateShopStatus, 60000);
 </script>
 </body>
 </html>
