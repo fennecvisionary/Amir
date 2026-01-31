@@ -45,8 +45,8 @@
             border-radius: 20px;
             box-shadow: var(--light-shadow);
             transition: all 0.5s ease;
-            width: 90vw;       /* البطاقة تملأ 90% من عرض الشاشة */
-            max-width: 600px;  /* الحد الأقصى على الشاشات الكبيرة */
+            width: 90vw;
+            max-width: 600px;
             box-sizing: border-box;
         }
 
@@ -62,30 +62,30 @@
 
         .error-icon img {
             width: 100%;
-            max-height: 50vh; /* أقصى ارتفاع 50% من ارتفاع الشاشة */
+            max-height: 50vh;
             object-fit: contain;
             border-radius: 10px;
         }
 
         .text {
-            margin: 1.5rem 0;
+            margin: 1rem 0; /* تقليل المسافة قليلاً */
         }
 
         .text h2 {
-            font-size: calc(1.5rem + 0.5vw); /* حجم ديناميكي حسب الشاشة */
+            font-size: calc(1.3rem + 0.4vw); /* أصغر قليلاً */
             margin-bottom: 0.5rem;
         }
 
         .text p {
-            font-size: calc(1rem + 0.3vw);
+            font-size: calc(0.95rem + 0.25vw); /* أصغر قليلاً */
             opacity: 0.8;
             margin: 0;
         }
 
         button {
             display: inline-block;
-            margin-top: 2rem;
-            padding: calc(10px + 0.5vw) calc(20px + 1vw);
+            margin-top: 1.5rem;
+            padding: calc(8px + 0.3vw) calc(16px + 0.5vw); /* أصغر */
             background-color: var(--primary-color);
             color: #fff;
             text-decoration: none;
@@ -93,19 +93,19 @@
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            font-size: calc(0.9rem + 0.3vw);
+            font-size: calc(0.75rem + 0.3vw); /* أصغر */
             transition: transform 0.3s ease, background-color 0.3s ease;
             white-space: nowrap;
         }
 
         button:hover {
             background-color: #e56075;
-            transform: translateY(-3px);
+            transform: translateY(-2px);
         }
 
         .footer-link {
-            margin-top: 2rem;
-            font-size: calc(0.8rem + 0.3vw);
+            margin-top: 1.5rem;
+            font-size: calc(0.75rem + 0.2vw); /* أصغر */
         }
 
         .code-link {
@@ -150,3 +150,4 @@
 </body>
 
 </html>
+
