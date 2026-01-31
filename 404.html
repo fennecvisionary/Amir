@@ -61,11 +61,16 @@
             line-height: 1;
         }
 
-        /* استبدال الـ GIF بأيقونة رمزية كبيرة */
+        /* استبدال الـ GIF بأيقونة أو صورة كبيرة */
         .error-icon {
-            font-size: 5rem;
-            margin: 1rem 0;
             display: block;
+            margin: 1rem auto;
+        }
+
+        .error-icon img {
+            width: 80px; /* حجم الصورة */
+            height: 80px;
+            object-fit: contain;
         }
 
         .text {
@@ -123,8 +128,12 @@
 <body class="light-mode">
     <div class="content">
         <h1>404</h1>
-        <span class="error-icon">🍽️</span> 
-        
+
+        <!-- استبدال الإيموجي بصورة -->
+        <span class="error-icon">
+            <img src="images/001.png" alt="Error Icon">
+        </span>
+
         <div class="text">
             <h2>يبدو أنك ضللت الطريق</h2>
             <p>الصفحة التي تبحث عنها غير موجودة في مطبخنا حالياً.</p>
@@ -150,3 +159,4 @@
 </body>
 
 </html>
+
