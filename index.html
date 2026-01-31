@@ -275,26 +275,46 @@ function updateShopStatus() {
     document.getElementById('statusTimer').innerText = nextAction;
 }
 
-// دالة إرسال الطلب للواتساب
+// دالة إرسال الطلب للواتساب مع رسالة الطمأنة
 function sendToWhatsApp() {
     const name = document.getElementById('custName').value;
     const type = document.getElementById('eventType').value;
     const date = document.getElementById('eventDate').value;
     const notes = document.getElementById('orderNotes').value;
     const phone = "213699748196";
+    const btn = document.querySelector('.btn-send');
 
     if(!name || !notes) {
         alert("من فضلك، املأ اسمك وتفاصيل الطلب أولاً");
         return;
     }
 
+    // حفظ النص الأصلي
+    const originalContent = btn.innerHTML;
+
+    // تأثير الطمأنة (تم تلقي الطلب)
+    btn.style.background = "#2ed573"; 
+    btn.style.transform = "scale(0.95)";
+    btn.innerHTML = '<i class="fas fa-check-circle"></i> تم تلقي طلبك بنجاح.. سنرد عليك فوراً';
+
     const message = `*طلب تسعيرة جديد من الموقع*%0A%0A` +
                     `*الاسم:* ${name}%0A` +
                     `*المناسبة:* ${type}%0A` +
-                    `*التاريخ:* ${date}%0A` +
-                    `*الطلب:* ${notes}`;
+                    `*التاريخ التقريبي:* ${date || 'غير محدد'}%0A` +
+                    `*تفاصيل الطلب:* ${notes}%0A%0A` +
+                    `_يرجى مراجعة الطلب والرد في أقرب وقت_`;
 
-    window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+    // تأخير ثانية لراحة الزبون ثم التحويل
+    setTimeout(() => {
+        window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        
+        // إعادة الزر بعد 3 ثواني
+        setTimeout(() => {
+            btn.style.background = "";
+            btn.style.transform = "";
+            btn.innerHTML = originalContent;
+        }, 3000);
+    }, 1000);
 }
 
 const sweets = [
