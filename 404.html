@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style404.css">
     <title>404 - الصفحة غير موجودة</title>
     <style>
         :root {
@@ -27,6 +26,7 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            padding: 1rem;
             background-color: var(--light-bg-color);
             color: var(--light-text-color);
             text-align: center;
@@ -41,12 +41,13 @@
 
         .content {
             background-color: var(--light-card-bg);
-            padding: 3rem;
+            padding: 2rem;
             border-radius: 20px;
             box-shadow: var(--light-shadow);
             transition: all 0.5s ease;
-            max-width: 500px;
-            width: 90%;
+            width: 100%;
+            max-width: 90%; /* الآن البطاقة متجاوبة على كل الشاشات */
+            box-sizing: border-box; /* يشمل padding ضمن العرض */
         }
 
         .dark-mode .content {
@@ -54,7 +55,7 @@
             box-shadow: var(--dark-shadow);
         }
 
-        /* استبدال الـ GIF بأيقونة أو صورة كبيرة */
+        /* الصورة الكبيرة */
         .error-icon {
             display: block;
             margin: 1rem auto;
@@ -62,7 +63,6 @@
 
         .error-icon img {
             width: 100%;
-            max-width: 500px; /* ضبط الحجم حسب عرض البطاقة */
             height: auto;
             object-fit: contain;
             border-radius: 10px;
@@ -96,6 +96,7 @@
             font-weight: bold;
             font-size: 1rem;
             transition: transform 0.3s ease, background-color 0.3s ease;
+            white-space: nowrap;
         }
 
         button:hover {
@@ -117,14 +118,53 @@
         .code-link:hover {
             text-decoration: underline;
         }
+
+        /* ======== تجاوبية الهواتف ======== */
+        @media screen and (max-width: 768px) {
+            .content {
+                max-width: 95%;
+                padding: 1.5rem;
+            }
+
+            .text h2 {
+                font-size: 1.5rem;
+            }
+
+            .text p {
+                font-size: 1rem;
+            }
+
+            button {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .content {
+                max-width: 98%;
+                padding: 1rem;
+            }
+
+            .text h2 {
+                font-size: 1.3rem;
+            }
+
+            .text p {
+                font-size: 0.95rem;
+            }
+
+            button {
+                padding: 8px 20px;
+                font-size: 0.85rem;
+            }
+        }
     </style>
 </head>
 
 <body class="light-mode">
     <div class="content">
-        <!-- الرقم 404 تم حذفه -->
-
-        <!-- استبدال الإيموجي بصورة -->
+        <!-- الصورة -->
         <span class="error-icon">
             <img src="images/001.png" alt="Error Icon">
         </span>
@@ -147,10 +187,9 @@
         const body = document.body;
         if (localStorage.getItem('theme') === 'dark') {
             body.classList.add('dark-mode');
-        } else {
-            body.classList.add('light-mode');
         }
     </script>
 </body>
 
 </html>
+
