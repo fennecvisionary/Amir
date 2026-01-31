@@ -45,9 +45,9 @@
             border-radius: 20px;
             box-shadow: var(--light-shadow);
             transition: all 0.5s ease;
-            width: 100%;
-            max-width: 90%; /* الآن البطاقة متجاوبة على كل الشاشات */
-            box-sizing: border-box; /* يشمل padding ضمن العرض */
+            width: 90vw;       /* البطاقة تملأ 90% من عرض الشاشة */
+            max-width: 600px;  /* الحد الأقصى على الشاشات الكبيرة */
+            box-sizing: border-box;
         }
 
         .dark-mode .content {
@@ -55,7 +55,6 @@
             box-shadow: var(--dark-shadow);
         }
 
-        /* الصورة الكبيرة */
         .error-icon {
             display: block;
             margin: 1rem auto;
@@ -63,7 +62,7 @@
 
         .error-icon img {
             width: 100%;
-            height: auto;
+            max-height: 50vh; /* أقصى ارتفاع 50% من ارتفاع الشاشة */
             object-fit: contain;
             border-radius: 10px;
         }
@@ -73,12 +72,12 @@
         }
 
         .text h2 {
-            font-size: 1.8rem;
+            font-size: calc(1.5rem + 0.5vw); /* حجم ديناميكي حسب الشاشة */
             margin-bottom: 0.5rem;
         }
 
         .text p {
-            font-size: 1.1rem;
+            font-size: calc(1rem + 0.3vw);
             opacity: 0.8;
             margin: 0;
         }
@@ -86,7 +85,7 @@
         button {
             display: inline-block;
             margin-top: 2rem;
-            padding: 12px 35px;
+            padding: calc(10px + 0.5vw) calc(20px + 1vw);
             background-color: var(--primary-color);
             color: #fff;
             text-decoration: none;
@@ -94,7 +93,7 @@
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: calc(0.9rem + 0.3vw);
             transition: transform 0.3s ease, background-color 0.3s ease;
             white-space: nowrap;
         }
@@ -106,7 +105,7 @@
 
         .footer-link {
             margin-top: 2rem;
-            font-size: 0.9rem;
+            font-size: calc(0.8rem + 0.3vw);
         }
 
         .code-link {
@@ -117,47 +116,6 @@
 
         .code-link:hover {
             text-decoration: underline;
-        }
-
-        /* ======== تجاوبية الهواتف ======== */
-        @media screen and (max-width: 768px) {
-            .content {
-                max-width: 95%;
-                padding: 1.5rem;
-            }
-
-            .text h2 {
-                font-size: 1.5rem;
-            }
-
-            .text p {
-                font-size: 1rem;
-            }
-
-            button {
-                padding: 10px 25px;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .content {
-                max-width: 98%;
-                padding: 1rem;
-            }
-
-            .text h2 {
-                font-size: 1.3rem;
-            }
-
-            .text p {
-                font-size: 0.95rem;
-            }
-
-            button {
-                padding: 8px 20px;
-                font-size: 0.85rem;
-            }
         }
     </style>
 </head>
@@ -192,4 +150,3 @@
 </body>
 
 </html>
-
