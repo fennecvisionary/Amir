@@ -54,13 +54,6 @@
             box-shadow: var(--dark-shadow);
         }
 
-        h1 {
-            font-size: 6rem;
-            margin: 0;
-            color: var(--primary-color);
-            line-height: 1;
-        }
-
         /* استبدال الـ GIF بأيقونة أو صورة كبيرة */
         .error-icon {
             display: block;
@@ -68,9 +61,11 @@
         }
 
         .error-icon img {
-            width: 80px; /* حجم الصورة */
-            height: 80px;
+            width: 100%;
+            max-width: 500px; /* ضبط الحجم حسب عرض البطاقة */
+            height: auto;
             object-fit: contain;
+            border-radius: 10px;
         }
 
         .text {
@@ -127,7 +122,7 @@
 
 <body class="light-mode">
     <div class="content">
-        <h1>404</h1>
+        <!-- الرقم 404 تم حذفه -->
 
         <!-- استبدال الإيموجي بصورة -->
         <span class="error-icon">
@@ -159,4 +154,3 @@
 </body>
 
 </html>
-
