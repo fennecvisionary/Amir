@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style404.css">
+    <title>404 - الصفحة غير موجودة</title>
+    <style>
+        :root {
+            --primary-color: #d44d1e;
+            --light-bg-color: #f8f9fa;
+            --light-text-color: #333;
+            --light-card-bg: #ffffff;
+            --light-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            
+            --dark-bg-color: #1a1a1a;
+            --dark-text-color: #f8f9fa;
+            --dark-card-bg: #2d2d2d;
+            --dark-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--light-bg-color);
+            color: var(--light-text-color);
+            text-align: center;
+            flex-direction: column;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg-color);
+            color: var(--dark-text-color);
+        }
+
+        .content {
+            background-color: var(--light-card-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--light-shadow);
+            transition: all 0.5s ease;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .dark-mode .content {
+            background-color: var(--dark-card-bg);
+            box-shadow: var(--dark-shadow);
+        }
+
+        h1 {
+            font-size: 6rem;
+            margin: 0;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        /* استبدال الـ GIF بأيقونة رمزية كبيرة */
+        .error-icon {
+            font-size: 5rem;
+            margin: 1rem 0;
+            display: block;
+        }
+
+        .text {
+            margin: 1.5rem 0;
+        }
+
+        .text h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .text p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin: 0;
+        }
+
+        button {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 12px 35px;
+            background-color: var(--primary-color);
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #b33d16;
+            transform: translateY(-3px);
+        }
+
+        .footer-link {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .code-link {
+            color: orange;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .code-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body class="light-mode">
+    <div class="content">
+        <h1>404</h1>
+        <span class="error-icon">🍽️</span> 
+        
+        <div class="text">
+            <h2>يبدو أنك ضللت الطريق</h2>
+            <p>الصفحة التي تبحث عنها غير موجودة في مطبخنا حالياً.</p>
+            
+            <button onclick="window.location.href='https://amirdelices.pages.dev/'">العودة للرئيسية</button>
+        </div>
+
+        <div class="footer-link">
+            بواسطة: 
+            <a href="DevProfile.html" class="code-link">🦊 Bradai Abderrahmen</a>
+        </div>
+    </div>
+
+    <script>
+        // التحقق من الوضع الليلي
+        const body = document.body;
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+        } else {
+            body.classList.add('light-mode');
+        }
+    </script>
+</body>
+
+</html>
