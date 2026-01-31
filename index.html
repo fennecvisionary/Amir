@@ -31,7 +31,6 @@
             color: var(--text);
         }
 
-        /* شريط الأخبار */
         .news-ticker {
             background: var(--primary-dark);
             color: white;
@@ -128,26 +127,22 @@
         .section-title { margin: 40px 0 25px; color: var(--primary-dark); font-size: 1.4rem; position: relative; }
         .section-title::after { content: ''; width: 50px; height: 4px; background: var(--primary); display: block; margin: 8px auto; border-radius: 10px; }
 
-        /* قسم لماذا نحن الجديد */
+        /* الأقسام الجديدة */
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px; }
-        .feature-card { background: #fff; padding: 20px; border-radius: 20px; border: 1px solid #fce4ec; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        .feature-card:hover { border-color: var(--primary); transform: translateY(-5px); }
-        .feature-card i { font-size: 2.2rem; color: var(--primary); margin-bottom: 12px; display: block; }
-        .feature-card h4 { font-size: 0.95rem; color: var(--text); font-weight: 700; }
+        .feature-card { background: #fff; padding: 20px; border-radius: 20px; border: 1px solid #fce4ec; transition: 0.3s; }
+        .feature-card i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; display: block; }
+        .feature-card h4 { font-size: 0.9rem; font-weight: 700; }
 
-        /* قسم عداد المناسبات الجديد */
-        .countdown-container { background: #4a148c; color: white; margin: 20px; padding: 30px 20px; border-radius: 20px; position: relative; }
-        .countdown-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
-        .countdown-item { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; min-width: 130px; border-bottom: 3px solid var(--primary); }
-        .cd-days { font-size: 1.8rem; font-weight: 800; display: block; color: var(--primary); }
-        .cd-label { font-size: 0.85rem; opacity: 0.9; }
+        .countdown-container { background: #4a148c; color: white; margin: 20px; padding: 25px; border-radius: 20px; }
+        .countdown-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 15px; }
+        .countdown-item { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 15px; min-width: 120px; border-bottom: 3px solid var(--primary); }
+        .cd-days { font-size: 1.6rem; font-weight: 800; color: var(--primary); display: block; }
+        .cd-label { font-size: 0.8rem; }
 
-        /* قسم التغليف الأنيق الجديد */
-        .packaging-banner { background: #fff5f7; margin: 20px; border-radius: 20px; padding: 25px; display: flex; align-items: center; gap: 20px; border: 2px dashed var(--primary); text-align: right; }
+        .packaging-banner { background: #fff5f7; margin: 20px; border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; border: 2px dashed var(--primary); text-align: right; }
         .packaging-icon { font-size: 2.5rem; color: var(--primary); }
-        .packaging-text h4 { color: var(--primary-dark); margin-bottom: 5px; font-weight: 700; }
-        .packaging-text p { font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
 
+        /* الشبكة والجداول */
         .sweets-grid { display: grid; gap: 15px; padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
         @media(min-width:650px){ .sweets-grid { grid-template-columns: repeat(3, 1fr); } }
         @media(min-width:900px){ .sweets-grid { grid-template-columns: repeat(4, 1fr); } }
@@ -161,12 +156,8 @@
         .testimonials-wrapper { overflow: hidden; margin: 30px 20px; padding: 20px 0; background: #fffafb; border-radius: 20px; border: 1px solid #fce4ec; }
         .testimonials-slider { display: flex; gap: 20px; width: max-content; animation: scroll 40s linear infinite; }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(50%); } }
-        .testimonials-slider:hover { animation-play-state: paused; }
         .testimonial-card { background: var(--white); padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); width: 280px; text-align: right; border-right: 4px solid var(--primary); flex-shrink: 0; }
-        .testi-name { font-weight: 700; color: var(--primary-dark); font-size: 0.9rem; }
-        .stars { color: #ffbc00; font-size: 0.8rem; display: flex; gap: 2px; margin: 5px 0; }
-        .testi-text { font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
-
+        
         .hours-card { background: #fff5f7; margin: 0 20px; padding: 20px; border-radius: 15px; }
         .hours-table { width: 100%; max-width: 500px; margin: 0 auto; border-collapse: collapse; }
         .hours-table td { padding: 12px 10px; border-bottom: 1px dashed rgba(255, 107, 129, 0.2); font-weight: 600; }
@@ -174,23 +165,14 @@
 
         .order-form { text-align: right; padding: 20px; background: #fff; border-radius: 15px; border: 1px solid #fce4ec; margin: 0 20px; }
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-weight: 700; margin-bottom: 8px; color: var(--text); }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 12px; border: 1px solid #fce4ec; border-radius: 12px; 
-            font-family: 'Cairo'; font-size: 0.95rem; outline: none; transition: 0.3s;
-        }
-        .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); box-shadow: 0 0 5px rgba(255, 107, 129, 0.2); }
-        .btn-send {
-            width: 100%; background: var(--success); color: white; border: none; padding: 15px; 
-            border-radius: 15px; font-weight: 700; cursor: pointer; font-size: 1.1rem; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-        .btn-send:hover { background: #26c167; transform: translateY(-2px); }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 8px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #fce4ec; border-radius: 12px; font-family: 'Cairo'; outline: none; }
+        .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; }
 
         .faq-container { margin: 0 20px; text-align: start; }
         .faq-item { background: #fff; border-radius: 15px; border: 1px solid #fce4ec; margin-bottom: 10px; overflow: hidden; }
-        .faq-question { width: 100%; border: none; background: none; padding: 18px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Cairo'; color: var(--text); }
-        .faq-answer { max-height: 0; overflow: hidden; padding: 0 18px; font-size: 0.95rem; color: var(--muted); transition: 0.3s; line-height: 1.6; }
+        .faq-question { width: 100%; border: none; background: none; padding: 18px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Cairo'; }
+        .faq-answer { max-height: 0; overflow: hidden; padding: 0 18px; transition: 0.3s; font-size: 0.95rem; color: var(--muted); }
         .faq-item.active .faq-answer { max-height: 200px; padding: 18px; border-top: 1px solid #fdf2f4; }
 
         footer { margin-top: 50px; font-size: 0.85rem; color: #aaa; padding-bottom: 20px; text-align: center; }
@@ -201,7 +183,7 @@
 
 <div class="news-ticker">
     <div class="ticker-content">
-        📢 التسجيلات مفتوحة لدورة الحلويات التقليدية و العصرية .. سارعوا بحجز أماكنكم! | 🏆 شهادات وطنية معتمدة تمكنكم من فتح مشاريعكم الخاصة | 🍰 طلبيات الأعراس والمناسبات متوفرة حالياً مع إمكانية التوصيل للمنازل
+        📢 التسجيلات مفتوحة لدورة الحلويات التقليدية و العصرية .. سارعوا بحجز أماكنكم! | 🏆 شهادات وطنية معتمدة تمكنكم من فتح مشاريعكم الخاصة | 🍰 طلبيات الأعراس والمناسبات متوفرة حالياً
     </div>
 </div>
 
@@ -228,6 +210,7 @@
 
         <div class="links-container">
             <a href="tel:+213699748196" class="link-btn"><i class="fa fa-phone"></i> 96 81 74 0699</a>
+            <a href="tel:+213660508949" class="link-btn"><i class="fa fa-phone"></i> 49 89 50 0660</a>
             <a href="https://wa.me/213699748196" class="link-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
             <a href="https://www.facebook.com/amirformation" class="link-btn"><i class="fab fa-facebook"></i> فايسبوك</a>
             <a href="https://www.tiktok.com/@chefsamahbradai" class="link-btn"><i class="fab fa-tiktok"></i> تيك توك</a>
@@ -236,7 +219,7 @@
 
         <h3 class="section-title">عدّاد المناسبات القادمة</h3>
         <div class="countdown-container">
-            <p style="margin-bottom: 20px; font-weight: 700;">لا تتركي اللحظات الأخيرة، احجزي طلبيتك الآن لمناسباتك!</p>
+            <p style="font-weight: 700;">لا تتركي اللحظات الأخيرة، احجزي طلبيتك الآن!</p>
             <div class="countdown-grid">
                 <div class="countdown-item">
                     <span id="ramadan-days" class="cd-days">--</span>
@@ -246,6 +229,21 @@
                     <span id="eid-days" class="cd-days">--</span>
                     <span class="cd-label">لعيد الفطر السعيد</span>
                 </div>
+            </div>
+        </div>
+
+        <h3 class="section-title">لماذا مدرسة أمير؟</h3>
+        <div class="features-grid">
+            <div class="feature-card"><i class="fas fa-hat-chef"></i><h4>👨‍🍳 صنع يدوي</h4></div>
+            <div class="feature-card"><i class="fas fa-cookie-bite"></i><h4>🧁 مكونات طبيعية</h4></div>
+            <div class="feature-card"><i class="fas fa-calendar-check"></i><h4>⏰ احترام المواعيد</h4></div>
+        </div>
+
+        <div class="packaging-banner">
+            <div class="packaging-icon"><i class="fas fa-gift"></i></div>
+            <div class="packaging-text">
+                <h4>🎁 تغليف أنيق وفاخر</h4>
+                <p>حلوياتنا تُقدم في علب راقية تليق بمستوى مناسباتكم وتجعل منها ذكرى لا تُنسى.</p>
             </div>
         </div>
 
@@ -260,8 +258,7 @@
         <h3 class="section-title">طلب تسعيرة لمناسبة</h3>
         <div class="order-form">
             <div class="form-group"><label>الاسم الكامل:</label><input type="text" id="custName" placeholder="أدخل اسمك الكريم"></div>
-            <div class="form-group">
-                <label>نوع المناسبة:</label>
+            <div class="form-group"><label>نوع المناسبة:</label>
                 <select id="eventType">
                     <option>عرس</option>
                     <option>خطوبة / فاتحة</option>
@@ -275,14 +272,6 @@
             <button class="btn-send" onclick="sendToWhatsApp()"><i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب</button>
         </div>
 
-        <div class="packaging-banner">
-            <div class="packaging-icon"><i class="fas fa-gift"></i></div>
-            <div class="packaging-text">
-                <h4>🎁 تغليف أنيق وفاخر</h4>
-                <p>نهتم بأدق التفاصيل، حلوياتنا تُقدم في علب راقية تليق بمستوى مناسباتكم وتجعل منها ذكرى لا تُنسى.</p>
-            </div>
-        </div>
-
         <h3 class="section-title">قائمة الحلويات التقليدية</h3>
         <div class="sweets-grid" id="sweetsContainer"></div>
 
@@ -293,16 +282,6 @@
 
         <h3 class="section-title">الأسئلة الشائعة</h3>
         <div class="faq-container">
-            <div class="faq-item active">
-                <button class="faq-question">لماذا تختارين مدرسة أمير؟ <i class="fa fa-chevron-down"></i></button>
-                <div class="faq-answer">
-                    <div class="features-grid">
-                        <div class="feature-card"><i class="fas fa-hand-sparkles"></i><h4>صنع يدوي</h4></div>
-                        <div class="feature-card"><i class="fas fa-seedling"></i><h4>مكونات طبيعية</h4></div>
-                        <div class="feature-card"><i class="fas fa-history"></i><h4>احترام المواعيد</h4></div>
-                    </div>
-                </div>
-            </div>
             <div class="faq-item">
                 <button class="faq-question">هل توجد طلبيات للمناسبات؟ <i class="fa fa-chevron-down"></i></button>
                 <div class="faq-answer">نعم، نوفر طلبيات لجميع المناسبات بجودة عالية وتزيين عصري حسب الطلب.</div>
@@ -311,6 +290,10 @@
                 <button class="faq-question">هل الشهادات معتمدة؟ <i class="fa fa-chevron-down"></i></button>
                 <div class="faq-answer">نعم، جميع تكويناتنا تتوج بشهادات معتمدة تمكنكم من دخول سوق العمل.</div>
             </div>
+            <div class="faq-item">
+                <button class="faq-question">هل تتوفر أسعار الجملة؟ <i class="fa fa-chevron-down"></i></button>
+                <div class="faq-answer">بالتأكيد، نوفر أسعاراً خاصة ومخفضة للطلبيات الكبيرة والمحلات.</div>
+            </div>
         </div>
 
         <footer>صنع بكل ❤️ مدرسة أمير © <span id="year"></span></footer>
@@ -318,6 +301,7 @@
 </div>
 
 <script>
+// تأثير الكتابة
 const typingContent = "فن صناعة الحلويات والمملحات وتكوينات احترافية";
 let charIdx = 0;
 function typeEffect() {
@@ -328,8 +312,8 @@ function typeEffect() {
     }
 }
 
+// العداد
 function updateCountdowns() {
-    // تواريخ تقريبية لعام 2026
     const ramadanDate = new Date("March 1, 2026 00:00:00").getTime();
     const eidDate = new Date("March 30, 2026 00:00:00").getTime();
     const now = new Date().getTime();
@@ -343,11 +327,7 @@ function updateCountdowns() {
     setDays("eid-days", eidDate);
 }
 
-window.onscroll = function() {
-    document.getElementById("backToTop").style.display = (window.scrollY > 500) ? "flex" : "none";
-};
-function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
-
+// الحالة
 function updateShopStatus() {
     const now = new Date();
     const day = now.getDay();
@@ -371,36 +351,32 @@ function updateShopStatus() {
     document.getElementById('statusTimer').innerText = nextAction;
 }
 
-function sendToWhatsApp() {
-    const name = document.getElementById('custName').value;
-    const type = document.getElementById('eventType').value;
-    const date = document.getElementById('eventDate').value;
-    const notes = document.getElementById('orderNotes').value;
-    const phone = "213699748196";
-    const btn = document.querySelector('.btn-send');
-
-    if(!name || !notes) { alert("من فضلك، املأ اسمك وتفاصيل الطلب أولاً"); return; }
-
-    const originalContent = btn.innerHTML;
-    btn.style.background = "#2ed573"; 
-    btn.innerHTML = '<i class="fas fa-check-circle"></i> تم تلقي طلبك بنجاح.. سنرد عليك فوراً';
-
-    const message = `*طلب تسعيرة جديد من الموقع*%0A%0A*الاسم:* ${name}%0A*المناسبة:* ${type}%0A*التاريخ:* ${date || 'غير محدد'}%0A*تفاصيل الطلب:* ${notes}`;
-
-    setTimeout(() => {
-        window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
-        setTimeout(() => { btn.style.background = ""; btn.innerHTML = originalContent; }, 3000);
-    }, 1000);
-}
-
+// البيانات الكاملة للحلويات
 const sweets = [
     { name: "تشارك مسكّر", price: "70 دج", img: "images/tcharakmsakar.jpg" },
+    { name: "تشارك العريان", price: "70 دج", img: "images/tcharakarian.jpg" },
     { name: "عرايش", price: "90 دج", img: "images/araiech.jpg" },
-    { name: "بقلاوة", price: "80 دج", img: "images/baklawa.jpg" },
-    { name: "مخبز", price: "120 دج", img: "images/mkhabez.jpg" },
+    { name: "كعيكعات", price: "80 دج", img: "images/kaikat.jpg" },
+    { name: "مقروض", price: "70 دج", img: "images/maqroutlous.jpg" },
+    { name: "مقروض زمان", price: "70 دج", img: "images/maqrout.jpg" },
     { name: "مقروض اللوز", price: "100 دج", img: "images/maqroutlouz.jpg" },
     { name: "كفتة", price: "200 - 250 دج", img: "images/kefta.jpg" },
+    { name: "دزيريات مقروصين", price: "100 دج", img: "images/dziriyat.jpg" },
+    { name: "بقلاوة", price: "80 دج", img: "images/baklawa.jpg" },
+    { name: "بقلاوة تركية", price: "80 دج", img: "images/turkish.jpg" },
+    { name: "قنيدلات", price: "80 دج", img: "images/qnidlet.jpg" },
+    { name: "مشوك الباي", price: "200 - 250 دج", img: "images/mcheweklouz.jpg" },
+    { name: "الفاكهة", price: "200 - 250 دج", img: "images/fruits.jpg" },
     { name: "صابلي المعجون", price: "40 دج", img: "images/sabli.jpg" },
+    { name: "مشوك", price: "60 دج", img: "images/mchewek.jpg" },
+    { name: "جلجلانية", price: "70 دج", img: "images/djeljlania.jpg" },
+    { name: "مخبز", price: "120 دج", img: "images/mkhabez.jpg" },
+    { name: "كعك النقاش", price: "70 دج", img: "images/naqach.jpg" },
+    { name: "سنيكرز", price: "80 دج", img: "images/snickers.jpg" },
+    { name: "قلوب الشكولاطة", price: "80 دج", img: "images/chikoula.jpg" },
+    { name: "بنيون", price: "80 دج", img: "images/bniwen.jpg" },
+    { name: "طابع زمان", price: "30 دج", img: "images/tabaa.jpg" },
+    { name: "طابع الطلية", price: "40 دج", img: "images/tabaatalia.jpg" },
     { name: "غريبية", price: "50 دج", img: "images/ghriba.jpg" }
 ];
 
@@ -413,10 +389,16 @@ sweets.forEach(s => {
     </div>`;
 });
 
+// البيانات الكاملة للآراء
 const testimonials = [
     { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، تذوب في الفم يعطيك الصحة شاف.", stars: 5 },
     { name: "كريمة ب.", text: "درت فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش.", stars: 5 },
-    { name: "سمية مهداوي", text: "أحسن مدرسة في الشلف، المعاملة روعة والتعليم بضمير.", stars: 5 }
+    { name: "سمية مهداوي", text: "أحسن مدرسة في الشلف، المعاملة روعة والتعليم بضمير.", stars: 5 },
+    { name: "فاطمة الزهراء", text: "المقروض جاني مرمل ومعسل للقلب، ربي يبارك في رزقكم.", stars: 5 },
+    { name: "فايزة أم أنس", text: "حمرتولي وجهي في عرس خويا، الضياف قاع سألو على الحلويات.", stars: 5 },
+    { name: "ليلى س. ", text: "تعلمت أسرار الطلية والمخبز، الشهادة نتاعكم فتحتلي بيبان بزاف.", stars: 5 },
+    { name: "نادية وهران", text: "نبعث السائق يجيب الطلبية حتى للشلف، تستاهلو كل خير.", stars: 5 },
+    { name: "مريم أم جنة", text: "نظام وترتيب وإتقان، مدرسة أمير هي الرقم 1 بالنسبة ليا.", stars: 5 }
 ];
 
 const testiList = document.getElementById("testimonialsList");
@@ -430,17 +412,30 @@ const testiList = document.getElementById("testimonialsList");
     </div>`;
 });
 
+function sendToWhatsApp() {
+    const name = document.getElementById('custName').value;
+    const type = document.getElementById('eventType').value;
+    const notes = document.getElementById('orderNotes').value;
+    if(!name || !notes) { alert("من فضلك املأ البيانات"); return; }
+    const message = `*طلب تسعيرة جديد*%0A*الاسم:* ${name}%0A*المناسبة:* ${type}%0A*التفاصيل:* ${notes}`;
+    window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
+}
+
 document.querySelectorAll(".faq-question").forEach(q => {
     q.onclick = () => q.parentElement.classList.toggle("active");
 });
+
+window.onscroll = function() {
+    document.getElementById("backToTop").style.display = (window.scrollY > 500) ? "flex" : "none";
+};
+function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
 
 window.onload = () => {
     updateShopStatus();
     updateCountdowns();
     typeEffect();
-    setInterval(updateShopStatus, 60000);
+    document.getElementById("year").innerText = new Date().getFullYear();
 };
-document.getElementById("year").innerText = new Date().getFullYear();
 </script>
 </body>
 </html>
