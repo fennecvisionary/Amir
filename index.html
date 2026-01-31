@@ -124,13 +124,12 @@
         .feature-card { background: #fff; padding: 20px; border-radius: 20px; border: 1px solid #fce4ec; }
         .feature-card i { font-size: 2.2rem; color: var(--primary); margin-bottom: 12px; display: block; }
 
-        /* العداد */
+        /* العداد والتغليف */
         .countdown-container { background: #4a148c; color: white; margin: 20px; padding: 25px; border-radius: 20px; }
         .countdown-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 15px; }
         .countdown-item { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; min-width: 130px; border-bottom: 3px solid var(--primary); }
         .cd-days { font-size: 1.8rem; font-weight: 800; color: var(--primary); display: block; }
 
-        /* التغليف */
         .packaging-banner { background: var(--secondary-bg); margin: 20px; border-radius: 20px; padding: 25px; display: flex; align-items: center; gap: 20px; border: 2px dashed var(--primary); text-align: right; }
         .packaging-icon { font-size: 2.5rem; color: var(--primary); }
 
@@ -144,7 +143,7 @@
         .sweet-name { font-weight: 700; font-size: 0.85rem; min-height: 40px; display: flex; align-items: center; justify-content: center; }
         .sweet-price { font-size: 0.85rem; color: var(--primary-dark); background: #fff0f3; padding: 4px 10px; border-radius: 20px; font-weight: 700; }
 
-        /* الآراء */
+        /* قسم الآراء */
         .testimonials-wrapper { overflow: hidden; margin: 30px 20px; padding: 20px 0; background: #fffafb; border-radius: 20px; border: 1px solid #fce4ec; }
         .testimonials-slider { display: flex; gap: 20px; width: max-content; animation: scroll 40s linear infinite; }
         .testimonial-card { background: var(--white); padding: 20px; border-radius: 15px; width: 280px; text-align: right; border-right: 4px solid var(--primary); flex-shrink: 0; }
@@ -161,12 +160,20 @@
         .faq-item.active .faq-answer { max-height: 200px; padding: 18px; border-top: 1px solid #fce4ec; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
 
+        /* أوقات العمل - تعديل الجدول */
+        .hours-card { background: var(--secondary-bg); margin: 0 20px; padding: 25px; border-radius: 20px; border: 1px solid #fce4ec; }
+        .hours-table { width: 100%; max-width: 500px; margin: 0 auto; border-collapse: separate; border-spacing: 0 10px; }
+        .hours-table tr { background: white; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .hours-table td { padding: 15px; font-weight: 700; color: var(--text); }
+        .hours-table td:first-child { border-radius: 0 10px 10px 0; text-align: right; color: var(--primary-dark); }
+        .hours-table td:last-child { border-radius: 10px 0 0 10px; text-align: left; direction: ltr; }
+
         /* نموذج الطلب */
-        .order-form { text-align: right; padding: 20px; background: #fff; border-radius: 15px; border: 1px solid #fce4ec; margin: 0 20px; }
+        .order-form { text-align: right; padding: 25px; background: #fff; border-radius: 20px; border: 1px solid #fce4ec; margin: 0 20px; }
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-weight: 700; margin-bottom: 8px; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #fce4ec; border-radius: 12px; font-family: 'Cairo'; outline: none; }
-        .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 8px; color: var(--primary-dark); }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px; border: 1px solid #fce4ec; border-radius: 15px; font-family: 'Cairo'; outline: none; background: #fffafb; }
+        .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 18px; border-radius: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3); }
 
         footer { margin-top: 50px; font-size: 0.85rem; color: #aaa; padding-bottom: 20px; text-align: center; }
 
@@ -215,7 +222,7 @@
 
         <h3 class="section-title">عدّاد المناسبات القادمة</h3>
         <div class="countdown-container">
-            <p style="font-weight: 700;">لا تتركي اللحظات الأخيرة، احجزي طلبيتك الآن!</p>
+            <p style="font-weight: 700; margin-bottom: 10px;">لا تتركي اللحظات الأخيرة، احجزي طلبيتك الآن!</p>
             <div class="countdown-grid">
                 <div class="countdown-item">
                     <span id="ramadan-days" class="cd-days">--</span>
@@ -226,6 +233,36 @@
                     <span class="cd-label">لعيد الفطر السعيد</span>
                 </div>
             </div>
+        </div>
+
+        <h3 class="section-title">أوقات العمل</h3>
+        <div class="hours-card">
+            <table class="hours-table">
+                <tr>
+                    <td><i class="far fa-calendar-alt"></i> السبت – الخميس</td>
+                    <td>09:00 - 17:00</td>
+                </tr>
+                <tr>
+                    <td><i class="far fa-clock"></i> الجمعة</td>
+                    <td>14:00 - 17:00</td>
+                </tr>
+            </table>
+        </div>
+
+        <h3 class="section-title">طلب تسعيرة لمناسبة</h3>
+        <div class="order-form">
+            <div class="form-group"><label>الاسم الكامل:</label><input type="text" id="custName" placeholder="أدخل اسمك الكريم"></div>
+            <div class="form-group"><label>نوع المناسبة:</label>
+                <select id="eventType">
+                    <option>عرس</option>
+                    <option>خطوبة / فاتحة</option>
+                    <option>ختان</option>
+                    <option>حفلة نجاح / تخرج</option>
+                    <option>أخرى</option>
+                </select>
+            </div>
+            <div class="form-group"><label>التفاصيل (الكمية والأنواع):</label><textarea id="orderNotes" rows="3" placeholder="مثال: 100 حبة عرايش و 50 بقلاوة..."></textarea></div>
+            <button class="btn-send" onclick="sendToWhatsApp()"><i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب</button>
         </div>
 
         <h3 class="section-title">لماذا مدرسة أمير؟</h3>
@@ -241,30 +278,6 @@
                 <h4>🎁 تغليف أنيق وفاخر</h4>
                 <p>حلوياتنا تُقدم في علب راقية تليق بمستوى مناسباتكم وتجعل منها ذكرى لا تُنسى.</p>
             </div>
-        </div>
-
-        <h3 class="section-title">طلب تسعيرة لمناسبة</h3>
-        <div class="order-form">
-            <div class="form-group"><label>الاسم الكامل:</label><input type="text" id="custName" placeholder="أدخل اسمك الكريم"></div>
-            <div class="form-group"><label>نوع المناسبة:</label>
-                <select id="eventType">
-                    <option>عرس</option>
-                    <option>خطوبة / فاتحة</option>
-                    <option>ختان</option>
-                    <option>حفلة نجاح / تخرج</option>
-                    <option>أخرى</option>
-                </select>
-            </div>
-            <div class="form-group"><label>التفاصيل (الكمية والأنواع):</label><textarea id="orderNotes" placeholder="مثال: 100 حبة عرايش و 50 بقلاوة..."></textarea></div>
-            <button class="btn-send" onclick="sendToWhatsApp()"><i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب</button>
-        </div>
-
-        <h3 class="section-title">أوقات العمل</h3>
-        <div class="hours-card">
-            <table class="hours-table">
-                <tr><td>السبت – الخميس</td><td style="text-align:left; direction:ltr;">09:00 - 17:00</td></tr>
-                <tr><td>الجمعة</td><td style="text-align:left; direction:ltr;">14:00 - 17:00</td></tr>
-            </table>
         </div>
 
         <h3 class="section-title">قائمة الحلويات التقليدية</h3>
@@ -340,21 +353,19 @@ function updateShopStatus() {
     document.getElementById('statusTimer').innerText = nextAction;
 }
 
-// القائمة الكاملة (25 نوع)
 const sweets = [
     { name: "تشارك مسكّر", price: "70 دج", img: "images/tcharakmsakar.jpg" },
     { name: "تشارك العريان", price: "70 دج", img: "images/tcharakarian.jpg" },
     { name: "عرايش", price: "90 دج", img: "images/araiech.jpg" },
     { name: "كعيكعات", price: "80 دج", img: "images/kaikat.jpg" },
-    { name: "مقروض", price: "70 دج", img: "images/maqroutlous.jpg" },
     { name: "مقروض زمان", price: "70 دج", img: "images/maqrout.jpg" },
     { name: "مقروض اللوز", price: "100 دج", img: "images/maqroutlouz.jpg" },
     { name: "كفتة", price: "200 - 250 دج", img: "images/kefta.jpg" },
-    { name: "دزيريات مقروصين", price: "100 دج", img: "images/dziriyat.jpg" },
+    { name: "دزيريات", price: "100 دج", img: "images/dziriyat.jpg" },
     { name: "بقلاوة", price: "80 دج", img: "images/baklawa.jpg" },
     { name: "بقلاوة تركية", price: "80 دج", img: "images/turkish.jpg" },
     { name: "قنيدلات", price: "80 دج", img: "images/qnidlet.jpg" },
-    { name: "مشوك الباي", price: "200 - 250 دج", img: "images/mcheweklouz.jpg" },
+    { name: "مشوك الباي", price: "200 دج", img: "images/mcheweklouz.jpg" },
     { name: "الفاكهة", price: "200 - 250 دج", img: "images/fruits.jpg" },
     { name: "صابلي المعجون", price: "40 دج", img: "images/sabli.jpg" },
     { name: "مشوك", price: "60 دج", img: "images/mchewek.jpg" },
