@@ -104,6 +104,7 @@
         .dot-open { background: var(--success); animation: pulse 1.5s infinite; }
         .dot-closed { background: var(--danger); }
 
+        /* تعديلات وسائط التواصل الاجتماعي - تأثيرات الهوفر */
         .links-container {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 12px; margin: 30px 20px;
@@ -112,23 +113,58 @@
         .link-btn {
             position: relative; padding: 15px; border-radius: 15px; background: #fff;
             border: 1px solid #fce4ec; text-decoration: none; color: var(--text);
-            font-weight: 700; transition: 0.3s; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            display: flex; align-items: center; justify-content: center;
         }
-        .link-btn i { position: absolute; right: 15px; color: var(--primary); }
+
+        .link-btn i { position: absolute; right: 15px; color: var(--primary); transition: 0.3s; }
+
+        .link-btn:hover {
+            transform: translateY(-5px);
+            background-color: var(--secondary-bg);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(255, 107, 129, 0.15);
+            color: var(--primary-dark);
+        }
+
+        .link-btn:hover i {
+            transform: scale(1.25) rotate(-10deg);
+            color: var(--primary-dark);
+        }
 
         .section-title { margin: 40px 0 25px; color: var(--primary-dark); font-size: 1.4rem; }
         .section-title::after { content: ''; width: 50px; height: 4px; background: var(--primary); display: block; margin: 8px auto; border-radius: 10px; }
 
+        /* تعديلات عدّاد المناسبات */
+        .countdown-container { 
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #ff8a9a 100%); 
+            color: white; margin: 20px; padding: 25px; border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.2);
+        }
+        .countdown-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 15px; }
+        
+        .countdown-item { 
+            background: rgba(255,255,255,0.2); 
+            backdrop-filter: blur(5px);
+            padding: 15px; border-radius: 15px; min-width: 140px; 
+            border: 1px solid rgba(255,255,255,0.3);
+            border-bottom: 4px solid white;
+            animation: cardFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .cd-days { font-size: 2rem; font-weight: 800; color: white; display: block; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .cd-label { font-size: 0.85rem; font-weight: 600; opacity: 0.95; }
+
         /* لماذا نحن */
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px; }
-        .feature-card { background: #fff; padding: 20px; border-radius: 20px; border: 1px solid #fce4ec; }
+        .feature-card { background: #fff; padding: 20px; border-radius: 20px; border: 1px solid #fce4ec; transition: 0.3s; }
+        .feature-card:hover { border-color: var(--primary); background: var(--secondary-bg); }
         .feature-card i { font-size: 2.2rem; color: var(--primary); margin-bottom: 12px; display: block; }
-
-        /* العداد والتغليف */
-        .countdown-container { background: #4a148c; color: white; margin: 20px; padding: 25px; border-radius: 20px; }
-        .countdown-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 15px; }
-        .countdown-item { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; min-width: 130px; border-bottom: 3px solid var(--primary); }
-        .cd-days { font-size: 1.8rem; font-weight: 800; color: var(--primary); display: block; }
 
         .packaging-banner { background: var(--secondary-bg); margin: 20px; border-radius: 20px; padding: 25px; display: flex; align-items: center; gap: 20px; border: 2px dashed var(--primary); text-align: right; }
         .packaging-icon { font-size: 2.5rem; color: var(--primary); }
@@ -138,7 +174,7 @@
         @media(min-width:650px){ .sweets-grid { grid-template-columns: repeat(3, 1fr); } }
         @media(min-width:900px){ .sweets-grid { grid-template-columns: repeat(4, 1fr); } }
         .sweet-card { background: #fff; border-radius: 18px; padding: 10px; border: 1px solid #fce4ec; transition: 0.3s; }
-        .sweet-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .sweet-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--shadow); }
         .sweet-img { width: 100%; height: 110px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; }
         .sweet-name { font-weight: 700; font-size: 0.85rem; min-height: 40px; display: flex; align-items: center; justify-content: center; }
         .sweet-price { font-size: 0.85rem; color: var(--primary-dark); background: #fff0f3; padding: 4px 10px; border-radius: 20px; font-weight: 700; }
@@ -160,7 +196,7 @@
         .faq-item.active .faq-answer { max-height: 200px; padding: 18px; border-top: 1px solid #fce4ec; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
 
-        /* أوقات العمل - تعديل الجدول */
+        /* أوقات العمل */
         .hours-card { background: var(--secondary-bg); margin: 0 20px; padding: 25px; border-radius: 20px; border: 1px solid #fce4ec; }
         .hours-table { width: 100%; max-width: 500px; margin: 0 auto; border-collapse: separate; border-spacing: 0 10px; }
         .hours-table tr { background: white; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
@@ -172,8 +208,10 @@
         .order-form { text-align: right; padding: 25px; background: #fff; border-radius: 20px; border: 1px solid #fce4ec; margin: 0 20px; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-weight: 700; margin-bottom: 8px; color: var(--primary-dark); }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px; border: 1px solid #fce4ec; border-radius: 15px; font-family: 'Cairo'; outline: none; background: #fffafb; }
-        .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 18px; border-radius: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3); }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px; border: 1px solid #fce4ec; border-radius: 15px; font-family: 'Cairo'; outline: none; background: #fffafb; transition: 0.3s; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+        .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 18px; border-radius: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3); transition: 0.3s; }
+        .btn-send:hover { background: #26c167; transform: scale(1.02); }
 
         footer { margin-top: 50px; font-size: 0.85rem; color: #aaa; padding-bottom: 20px; text-align: center; }
 
@@ -217,12 +255,12 @@
             <a href="https://wa.me/213699748196" class="link-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
             <a href="https://www.facebook.com/amirformation" class="link-btn"><i class="fab fa-facebook"></i> فايسبوك</a>
             <a href="https://www.tiktok.com/@chefsamahbradai" class="link-btn"><i class="fab fa-tiktok"></i> تيك توك</a>
-            <a href="https://maps.app.goo.gl/YourMapLink" target="_blank" class="link-btn"><i class="fa fa-location-dot"></i> أولاد محمد – الشلف</a>
+            <a href="#" target="_blank" class="link-btn"><i class="fa fa-location-dot"></i> أولاد محمد – الشلف</a>
         </div>
 
         <h3 class="section-title">عدّاد المناسبات القادمة</h3>
         <div class="countdown-container">
-            <p style="font-weight: 700; margin-bottom: 10px;">لا تتركي اللحظات الأخيرة، احجزي طلبيتك الآن!</p>
+            <p style="font-weight: 700; margin-bottom: 15px;">لا تتركي اللحظات الأخيرة، احجزي طلبيتك الآن!</p>
             <div class="countdown-grid">
                 <div class="countdown-item">
                     <span id="ramadan-days" class="cd-days">--</span>
@@ -320,6 +358,7 @@ function typeEffect() {
 }
 
 function updateCountdowns() {
+    // تواريخ تقديرية لعام 2026
     const ramadanDate = new Date("March 1, 2026 00:00:00").getTime();
     const eidDate = new Date("March 30, 2026 00:00:00").getTime();
     const now = new Date().getTime();
@@ -338,7 +377,7 @@ function updateShopStatus() {
     const currentTime = now.getHours() + now.getMinutes() / 60;
     let isOpen = false;
     let nextAction = "";
-    if (day === 5) {
+    if (day === 5) { // الجمعة
         if (currentTime >= 14 && currentTime < 17) { isOpen = true; nextAction = "نغلق الساعة 17:00"; }
         else if (currentTime < 14) nextAction = "نفتح اليوم الساعة 14:00";
         else nextAction = "نفتح غداً الساعة 09:00";
