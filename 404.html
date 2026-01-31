@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - الصفحة غير موجودة</title>
+
+    <!-- خط Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- أيقونات Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
             --primary-color: #e56075;
@@ -68,32 +74,34 @@
         }
 
         .text {
-            margin: 1rem 0; /* تقليل المسافة قليلاً */
+            margin: 1rem 0;
         }
 
         .text h2 {
-            font-size: calc(1.3rem + 0.4vw); /* أصغر قليلاً */
+            font-size: calc(1.3rem + 0.4vw);
             margin-bottom: 0.5rem;
+            font-weight: 700;
         }
 
         .text p {
-            font-size: calc(0.95rem + 0.25vw); /* أصغر قليلاً */
+            font-size: calc(0.95rem + 0.25vw);
             opacity: 0.8;
             margin: 0;
+            font-weight: 400;
         }
 
         button {
             display: inline-block;
             margin-top: 1.5rem;
-            padding: calc(8px + 0.3vw) calc(16px + 0.5vw); /* أصغر */
+            padding: calc(8px + 0.3vw) calc(16px + 0.5vw);
             background-color: var(--primary-color);
             color: #fff;
             text-decoration: none;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            font-weight: bold;
-            font-size: calc(0.75rem + 0.3vw); /* أصغر */
+            font-weight: 600;
+            font-size: calc(0.75rem + 0.3vw);
             transition: transform 0.3s ease, background-color 0.3s ease;
             white-space: nowrap;
         }
@@ -105,13 +113,13 @@
 
         .footer-link {
             margin-top: 1.5rem;
-            font-size: calc(0.75rem + 0.2vw); /* أصغر */
+            font-size: calc(0.75rem + 0.2vw);
         }
 
         .code-link {
             color: orange;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
         }
 
         .code-link:hover {
@@ -131,10 +139,12 @@
             <h2>يبدو أنك ضللت الطريق</h2>
             <p>الصفحة التي تبحث عنها غير موجودة في مطبخنا حالياً.</p>
             
-            <button onclick="window.location.href='https://amirdelices.pages.dev/'">العودة للرئيسية</button>
+            <button onclick="window.location.href='https://amirdelices.pages.dev/'">
+                <i class="fa-solid fa-arrow-left"></i> العودة للرئيسية
+            </button>
         </div>
 
-        <div class="footer-link">
+       <div class="footer-link">
             بواسطة: 
             <a href="https://fennecvisionary.vercel.app/DevProfile.html" class="code-link">🦊 Bradai Abderrahmen</a>
         </div>
@@ -150,4 +160,3 @@
 </body>
 
 </html>
-
