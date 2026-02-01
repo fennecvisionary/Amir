@@ -3,210 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دليل أطباء الجزائر الشامل</title>
+    <title>منصة طبيب الجزائر المتطورة</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* CSS ------------------------------------------------ */
         :root {
-            --primary-blue: #0056b3;
-            --secondary-blue: #3498db;
-            --accent-yellow: #f1c40f;
-            --light-gray: #f4f7f6;
+            --primary: #0a66c2;
+            --secondary: #00bfa5;
+            --accent: #ff9800;
+            --bg: #f0f2f5;
             --white: #ffffff;
-            --text-main: #2c3e50;
-            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+            --text-dark: #1a1a1b;
+            --text-light: #65676b;
+            --grad: linear-gradient(135deg, #0a66c2 0%, #00bfa5 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
 
-        body {
-            direction: rtl;
-            background-color: var(--light-gray);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        body { background-color: var(--bg); color: var(--text-dark); overflow-x: hidden; }
 
         /* Navbar */
-        nav {
-            background: var(--white);
-            padding: 1rem 0;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+        nav { background: var(--white); padding: 15px 0; box-shadow: var(--shadow); sticky; top: 0; z-index: 100; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; padding: 0 20px; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .logo i { font-size: 30px; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Header */
+        header { background: var(--grad); padding: 80px 20px; text-align: center; color: white; border-bottom-left-radius: 50px; border-bottom-right-radius: 50px; }
+        header h1 { font-size: 2.8rem; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+
+        /* Specialties Icons */
+        .specialties-bar { 
+            display: flex; gap: 20px; overflow-x: auto; padding: 20px; margin: -40px auto 30px; 
+            max-width: 1000px; justify-content: flex-start; scrollbar-width: none;
         }
-
-        .nav-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .spec-item {
+            background: var(--white); padding: 20px; border-radius: 20px; min-width: 110px; 
+            text-align: center; box-shadow: var(--shadow); cursor: pointer; transition: 0.3s;
+            border: 2px solid transparent;
         }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-
-        .logo span { color: var(--accent-yellow); }
-
-        /* Hero Section */
-        header {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: white;
-            padding: 60px 0 100px;
-            text-align: center;
-        }
-
-        header h1 { font-size: 2.5rem; margin-bottom: 15px; }
+        .spec-item:hover, .spec-item.active { transform: translateY(-10px); border-color: var(--secondary); color: var(--primary); }
+        .spec-item i { font-size: 24px; margin-bottom: 10px; display: block; }
+        .spec-item span { font-size: 0.9rem; font-weight: bold; }
 
         /* Search Box */
-        .search-section {
-            margin-top: -60px;
+        .search-area { max-width: 900px; margin: 0 auto 40px; background: var(--white); padding: 20px; border-radius: 20px; box-shadow: var(--shadow); display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px; }
+        .search-area input, .search-area select { border: 1px solid #ddd; padding: 12px; border-radius: 12px; outline: none; font-size: 1rem; }
+
+        /* Doctor Card Premium */
+        .doctors-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; max-width: 1200px; margin: auto; padding: 20px; }
+        .card { 
+            background: var(--white); border-radius: 25px; padding: 0; position: relative; 
+            overflow: hidden; transition: 0.4s; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.05);
         }
-
-        .search-container {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .search-container input, .search-container select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            outline: none;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
-
-        .search-container input:focus { border-color: var(--secondary-blue); }
-
-        /* Results Display */
-        .results-info {
-            text-align: center;
-            margin: 30px 0;
-            font-weight: bold;
-            color: var(--primary-blue);
-        }
-
-        .doctors-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
-        }
-
-        /* Doctor Card */
-        .card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: 0.3s ease;
-            animation: slideUp 0.5s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card:hover { transform: translateY(-8px); }
-
-        .card .icon-circle {
-            width: 80px;
-            height: 80px;
-            background: var(--light-gray);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            color: var(--secondary-blue);
-            font-size: 2rem;
-        }
-
-        .card h3 { margin-bottom: 5px; color: var(--text-main); }
-        .card .spec-tag { color: var(--secondary-blue); font-weight: bold; margin-bottom: 10px; display: block;}
-        .card .wilaya-badge { 
-            background: var(--accent-yellow); 
-            padding: 3px 12px; 
-            border-radius: 20px; 
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-
-        .card-details { margin: 15px 0; font-size: 0.9rem; color: #666; }
-
-        .card-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .btn {
-            text-decoration: none;
-            padding: 10px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 0.85rem;
-            transition: 0.3s;
-        }
-
+        .card:hover { transform: scale(1.03); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+        .card-header { background: #f8f9fa; padding: 30px 20px; position: relative; }
+        .status-tag { position: absolute; top: 15px; right: 15px; background: #e8f5e9; color: #2e7d32; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .card-body { padding: 20px; text-align: center; }
+        .doc-img { width: 90px; height: 90px; background: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: -60px auto 15px; border: 5px solid var(--white); box-shadow: var(--shadow); font-size: 40px; color: var(--primary); }
+        .card h3 { font-size: 1.4rem; margin-bottom: 5px; }
+        .specialty-label { color: var(--secondary); font-weight: bold; margin-bottom: 15px; display: block; }
+        .info-row { display: flex; align-items: center; gap: 10px; color: var(--text-light); margin-bottom: 8px; font-size: 0.9rem; justify-content: center; }
+        .card-actions { display: flex; gap: 10px; padding: 20px; border-top: 1px solid #f0f0f0; }
+        .btn { flex: 1; padding: 12px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+        .btn-book { background: var(--grad); color: white; }
         .btn-wa { background: #25d366; color: white; }
-        .btn-call { background: var(--secondary-blue); color: white; }
-        .btn:hover { opacity: 0.8; }
+        .btn-share { position: absolute; top: 15px; left: 15px; color: #999; border: none; background: none; cursor: pointer; }
+
+        /* Appointment Modal */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(5px); }
+        .modal-content { background: var(--white); padding: 30px; border-radius: 30px; width: 90%; max-width: 500px; animation: pop 0.3s ease; }
+        @keyframes pop { from { transform: scale(0.8); } to { transform: scale(1); } }
+        .modal-header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; }
 
         /* Footer */
-        footer {
-            background: var(--primary-blue);
-            color: white;
-            padding: 40px 0;
-            text-align: center;
-        }
+        footer { background: #1a1a1b; color: white; padding: 50px 20px; text-align: center; margin-top: 50px; }
 
-        .social-icons { margin-top: 15px; }
-        .social-icons i { font-size: 1.5rem; margin: 0 10px; cursor: pointer; }
-
-        #btn-top {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: var(--primary-blue);
-            color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            display: none;
-        }
-
-        /* Mobile */
-        @media (max-width: 600px) {
-            .search-container { grid-template-columns: 1fr; }
+        @media (max-width: 768px) {
+            .search-area { grid-template-columns: 1fr; }
             header h1 { font-size: 1.8rem; }
         }
     </style>
@@ -214,155 +93,166 @@
 <body>
 
     <nav>
-        <div class="container nav-content">
-            <a href="#" class="logo"><i class="fas fa-hand-holding-medical"></i> طبيب <span>الجزائر</span></a>
-            <div>69 ولاية</div>
+        <div class="nav-content">
+            <a href="#" class="logo"><i class="fas fa-notes-medical"></i> طبيب<span>الجزائر</span></a>
+            <div id="date-now" style="font-weight: bold; color: var(--text-light)"></div>
         </div>
     </nav>
 
     <header>
         <div class="container">
-            <h1>دليل أطباء الجزائر</h1>
-            <p>المصدر الموثوق للبحث عن الأطباء في كافة تخصصاتهم عبر الوطن</p>
+            <h1>احجز موعدك مع نخبة الأطباء</h1>
+            <p>أكثر من 5000 عيادة طبية في متناول يدك عبر 69 ولاية</p>
         </div>
     </header>
 
-    <section class="container search-section">
-        <div class="search-container">
-            <input type="text" id="nameSearch" placeholder="ابحث باسم الدكتور...">
-            <select id="wilayaFilter">
-                <option value="">كل الولايات (69)</option>
+    <div class="specialties-bar">
+        <div class="spec-item active" onclick="filterBySpec('')"><i class="fas fa-th-large"></i><span>الكل</span></div>
+        <div class="spec-item" onclick="filterBySpec('طب عام')"><i class="fas fa-stethoscope"></i><span>طب عام</span></div>
+        <div class="spec-item" onclick="filterBySpec('طب الأسنان')"><i class="fas fa-tooth"></i><span>أسنان</span></div>
+        <div class="spec-item" onclick="filterBySpec('أمراض القلب')"><i class="fas fa-heartbeat"></i><span>قلب</span></div>
+        <div class="spec-item" onclick="filterBySpec('طب الأطفال')"><i class="fas fa-baby"></i><span>أطفال</span></div>
+        <div class="spec-item" onclick="filterBySpec('طب العيون')"><i class="fas fa-eye"></i><span>عيون</span></div>
+        <div class="spec-item" onclick="filterBySpec('جراحة العظام')"><i class="fas fa-bone"></i><span>عظام</span></div>
+    </div>
+
+    <section class="container" style="max-width: 1200px; margin: auto;">
+        <div class="search-area">
+            <input type="text" id="nameInput" placeholder="بحث باسم الطبيب أو العيادة...">
+            <select id="wilayaInput">
+                <option value="">كل الولايات</option>
             </select>
-            <select id="specFilter">
-                <option value="">كل التخصصات</option>
-                <option value="طب عام">طب عام</option>
-                <option value="طب الأطفال">طب الأطفال</option>
-                <option value="طب الأسنان">طب الأسنان</option>
-                <option value="أمراض القلب">أمراض القلب</option>
-                <option value="طب العيون">طب العيون</option>
-                <option value="جراحة العظام">جراحة العظام</option>
-                <option value="أمراض النساء">أمراض النساء</option>
-            </select>
+            <button class="btn btn-book" onclick="filter()">بحث سريع</button>
         </div>
-        <div class="results-info" id="resultsCount">جاري تحميل البيانات...</div>
+        
+        <div id="resultsInfo" style="margin-bottom: 20px; font-weight: bold; color: var(--primary)"></div>
+        
+        <div class="doctors-grid" id="doctorsGrid"></div>
     </section>
 
-    <main class="container">
-        <div class="doctors-grid" id="doctorsGrid">
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalDocName">حجز موعد جديد</h3>
+                <button onclick="closeModal()" style="border:none; background:none; font-size:20px; cursor:pointer">&times;</button>
             </div>
-    </main>
-
-    <button id="btn-top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+            <div class="form-group">
+                <label>اسمك الكامل</label>
+                <input type="text" placeholder="أدخل اسمك">
+            </div>
+            <div class="form-group">
+                <label>تاريخ الموعد</label>
+                <input type="date">
+            </div>
+            <button class="btn btn-book" style="width: 100%;" onclick="confirmBooking()">تأكيد الحجز</button>
+        </div>
+    </div>
 
     <footer>
-        <div class="container">
-            <p>دليل أطباء الجزائر الشامل &copy; 2026</p>
-            <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 10px;">هذا الموقع هو دليل معلوماتي، يرجى الاتصال بالطبيب للتأكد من المواعيد.</p>
-            <div class="social-icons">
-                <i class="fab fa-facebook"></i>
-                <i class="fab fa-whatsapp"></i>
-                <i class="fab fa-instagram"></i>
-            </div>
+        <p>منصة طبيب الجزائر - جميع الحقوق محفوظة 2026 &copy;</p>
+        <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px;">
+            <i class="fab fa-facebook fa-2x"></i>
+            <i class="fab fa-instagram fa-2x"></i>
+            <i class="fab fa-linkedin fa-2x"></i>
         </div>
     </footer>
 
     <script>
-        /* JavaScript & Data ---------------------------------- */
+        // البيانات الموسعة
+        const wilayas = ["أدرار", "الشلف", "الأغواط", "أم البواقي", "باتنة", "بجاية", "بسكرة", "بشار", "البليدة", "البويرة", "تمنراست", "تبسة", "تلمسان", "تيارت", "تيزي وزو", "الجزائر", "الجلفة", "جيجل", "سطيف", "سعيدة", "سكيكدة", "سيدي بلعباس", "عنابة", "قالمة", "قسنطينة", "المدية", "مستغانم", "المسيلة", "معسكر", "ورقلة", "وهران", "البيض", "إليزي", "برج بوعريريج", "بومرداس", "الطارف", "تندوف", "تيسمسيلت", "الوادي", "خنشلة", "سوق أهراس", "تيبازة", "ميلة", "عين الدفلى", "النعامة", "عين تموشنت", "غرداية", "غليزان", "تيميمون", "برج باجي مختار", "أولاد جلال", "بني عباس", "إن صالح", "إن قزام", "تقرت", "جانت", "المغير", "المنيعة"];
 
-        // 1. قائمة الولايات الكاملة (69 ولاية)
-        const wilayas = [
-            "أدرار", "الشلف", "الأغواط", "أم البواقي", "باتنة", "بجاية", "بسكرة", "بشار", "البليدة", "البويرة",
-            "تمنراست", "تبسة", "تلمسان", "تيارت", "تيزي وزو", "الجزائر", "الجلفة", "جيجل", "سطيف", "سعيدة",
-            "سكيكدة", "سيدي بلعباس", "عنابة", "قالمة", "قسنطينة", "المدية", "مستغانم", "المسيلة", "معسكر", "ورقلة",
-            "وهران", "البيض", "إليزي", "برج بوعريريج", "بومرداس", "الطارف", "تندوف", "تيسمسيلت", "الوادي", "خنشلة",
-            "سوق أهراس", "تيبازة", "ميلة", "عين الدفلى", "النعامة", "عين تموشنت", "غرداية", "غليزان", "تيميمون",
-            "برج باجي مختار", "أولاد جلال", "بني عباس", "إن صالح", "إن قزام", "تقرت", "جانت", "المغير", "المنيعة",
-            "سيدي خويلد", "حاسي مسعود", "بريان", "القرارة", "دلس", "سيدي غيلاس", "قصر البخاري", "بوسعادة", "توقرت"
-        ];
-
-        // 2. مصفوفة بيانات الأطباء (أمثلة)
         const doctors = [
-            { name: "د. أمين بلقاسم", specialty: "طب عام", wilaya: "الجزائر", phone: "213660112233", address: "باب الزوار - مقابل الجامعة", hours: "08:00 - 16:00" },
-            { name: "د. فاطمة الزهراء", specialty: "طب الأطفال", wilaya: "وهران", phone: "213550998877", address: "شارع العقيد لطفي - وهران", hours: "09:00 - 17:00" },
-            { name: "د. يوسف منصوري", specialty: "جراحة العظام", wilaya: "سطيف", phone: "213770445566", address: "وسط المدينة - سطيف", hours: "08:30 - 15:00" },
-            { name: "د. سارة عثماني", specialty: "طب الأسنان", wilaya: "قسنطينة", phone: "213661224466", address: "حي الدقسي - قسنطينة", hours: "10:00 - 18:00" },
-            { name: "د. هشام زروقي", specialty: "أمراض القلب", wilaya: "البليدة", phone: "213540332211", address: "شارع باب السبت - البليدة", hours: "08:00 - 14:00" },
-            { name: "د. مريم ياحي", specialty: "طب العيون", wilaya: "عنابة", phone: "213790554433", address: "حي لورا - عنابة", hours: "09:00 - 16:30" }
+            { name: "د. عبد الرحيم بوعزيز", specialty: "أمراض القلب", wilaya: "الجزائر", address: "حي حيدرة، فيلا رقم 12", phone: "213661000000", rating: 4.9, open: true },
+            { name: "د. سهام لعموري", specialty: "طب الأطفال", wilaya: "سطيف", address: "شارع 08 ماي، وسط المدينة", phone: "213550111222", rating: 4.8, open: true },
+            { name: "د. خالد بن يوسف", specialty: "جراحة العظام", wilaya: "وهران", address: "شارع الصنوبر، وهران", phone: "213770333444", rating: 4.7, open: false },
+            { name: "د. مريم طبايبية", specialty: "طب الأسنان", wilaya: "قسنطينة", address: "بوالصوف، عمارة ب", phone: "213699000111", rating: 5.0, open: true },
+            { name: "د. كمال تواتي", specialty: "طب عام", wilaya: "بجاية", address: "وسط المدينة بجاية", phone: "213560778899", rating: 4.6, open: true },
         ];
 
-        // 3. المنطق البرمجي
-        document.addEventListener('DOMContentLoaded', () => {
-            const grid = document.getElementById('doctorsGrid');
-            const wilayaSel = document.getElementById('wilayaFilter');
-            const specSel = document.getElementById('specFilter');
-            const nameInp = document.getElementById('nameSearch');
-            const countDisplay = document.getElementById('resultsCount');
-            const topBtn = document.getElementById('btn-top');
+        let currentSpec = '';
 
-            // ملء الولايات
+        document.addEventListener('DOMContentLoaded', () => {
+            const wilayaSel = document.getElementById('wilayaInput');
             wilayas.forEach(w => {
                 let opt = document.createElement('option');
-                opt.value = w;
-                opt.textContent = w;
+                opt.value = w; opt.textContent = w;
                 wilayaSel.appendChild(opt);
             });
 
-            function display(list) {
-                grid.innerHTML = '';
-                countDisplay.textContent = `عدد الأطباء المتاحين: ${list.length}`;
+            document.getElementById('date-now').textContent = new Date().toLocaleDateString('ar-DZ', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
 
-                if (list.length === 0) {
-                    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px;">لا توجد نتائج بحث!</div>`;
-                    return;
-                }
+            render();
+        });
 
-                list.forEach(doc => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <div class="icon-circle"><i class="fas fa-user-md"></i></div>
-                        <span class="wilaya-badge">${doc.wilaya}</span>
-                        <h3>${doc.name}</h3>
-                        <span class="spec-tag">${doc.specialty}</span>
-                        <div class="card-details">
-                            <p><i class="fas fa-map-marker-alt"></i> ${doc.address}</p>
-                            <p><i class="far fa-clock"></i> ${doc.hours}</p>
+        function filterBySpec(spec) {
+            currentSpec = spec;
+            document.querySelectorAll('.spec-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            filter();
+        }
+
+        function filter() {
+            const name = document.getElementById('nameInput').value.toLowerCase();
+            const wilaya = document.getElementById('wilayaInput').value;
+            
+            const filtered = doctors.filter(d => {
+                return (d.name.toLowerCase().includes(name)) &&
+                       (wilaya === "" || d.wilaya === wilaya) &&
+                       (currentSpec === "" || d.specialty === currentSpec);
+            });
+            render(filtered);
+        }
+
+        function render(data = doctors) {
+            const grid = document.getElementById('doctorsGrid');
+            grid.innerHTML = '';
+            document.getElementById('resultsInfo').textContent = `تم إيجاد ${data.length} طبيب مختص`;
+
+            data.forEach(doc => {
+                const card = `
+                    <div class="card">
+                        <button class="btn-share"><i class="fas fa-share-alt"></i></button>
+                        <div class="card-header">
+                            <span class="status-tag" style="background:${doc.open ? '#e8f5e9':'#ffebee'}; color:${doc.open ? '#2e7d32':'#c62828'}">
+                                ${doc.open ? 'مفتوح الآن' : 'مغلق'}
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <div class="doc-img"><i class="fas fa-user-md"></i></div>
+                            <h3>${doc.name}</h3>
+                            <span class="specialty-label">${doc.specialty}</span>
+                            <div style="color:var(--accent); margin-bottom:15px">
+                                ${'<i class="fas fa-star"></i>'.repeat(Math.floor(doc.rating))} (${doc.rating})
+                            </div>
+                            <div class="info-row"><i class="fas fa-map-marker-alt"></i> ${doc.wilaya}، ${doc.address}</div>
+                            <div class="info-row"><i class="fas fa-phone-alt"></i> ${doc.phone}</div>
                         </div>
                         <div class="card-actions">
-                            <a href="tel:${doc.phone}" class="btn btn-call"><i class="fas fa-phone"></i> اتصل</a>
-                            <a href="https://wa.me/${doc.phone}" target="_blank" class="btn btn-wa"><i class="fab fa-whatsapp"></i> واتساب</a>
+                            <button class="btn btn-book" onclick="openModal('${doc.name}')">حجز موعد</button>
+                            <a href="https://wa.me/${doc.phone}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> واتساب</a>
                         </div>
-                    `;
-                    grid.appendChild(card);
-                });
-            }
-
-            function filter() {
-                const n = nameInp.value.toLowerCase();
-                const w = wilayaSel.value;
-                const s = specSel.value;
-
-                const filtered = doctors.filter(doc => {
-                    return (doc.name.toLowerCase().includes(n)) &&
-                           (w === "" || doc.wilaya === w) &&
-                           (s === "" || doc.specialty === s);
-                });
-                display(filtered);
-            }
-
-            nameInp.addEventListener('input', filter);
-            wilayaSel.addEventListener('change', filter);
-            specSel.addEventListener('change', filter);
-
-            window.addEventListener('scroll', () => {
-                topBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+                    </div>
+                `;
+                grid.innerHTML += card;
             });
+        }
 
-            // البداية
-            display(doctors);
-        });
+        function openModal(name) {
+            document.getElementById('modalDocName').textContent = "حجز موعد عند " + name;
+            document.getElementById('bookingModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+        }
+
+        function confirmBooking() {
+            alert("تم إرسال طلب الحجز بنجاح! سيتصل بك الطبيب لتأكيد الموعد.");
+            closeModal();
+        }
+
+        document.getElementById('nameInput').addEventListener('input', filter);
+        document.getElementById('wilayaInput').addEventListener('change', filter);
     </script>
 </body>
 </html>
