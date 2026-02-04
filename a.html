@@ -338,80 +338,7 @@
     font-size: 0.85rem;
     color: var(--muted);
 }
-</style>
-
-        <h3 class="section-title">طلب تسعيرة لمناسبة</h3>
-        <div class="order-form">
-            <div class="form-group"><label>الاسم الكامل:</label><input type="text" id="custName" placeholder="أدخل اسمك الكريم"></div>
-            <div class="form-group"><label>نوع المناسبة:</label>
-                <select id="eventType">
-                    <option>عرس</option>
-                    <option>خطوبة / فاتحة</option>
-                    <option>ختان</option>
-                    <option>حفلة نجاح / تخرج</option>
-                    <option>أخرى</option>
-                </select>
-            </div>
-            <div class="form-group"><label>التفاصيل (الكمية والأنواع):</label><textarea id="orderNotes" rows="3" placeholder="مثال: 100 حبة عرايش و 50 بقلاوة..."></textarea></div>
-            <button class="btn-send" onclick="sendToWhatsApp()"><i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب</button>
-        </div>
-
-        <h3 class="section-title">لماذا مدرسة أمير؟</h3>
-        <div class="features-grid">
-            <div class="feature-card"><i class="fas fa-hands"></i><h4>صنع يدوي إحترافي</h4></div>
-            <div class="feature-card"><i class="fas fa-cookie-bite"></i><h4>مكونات طبيعية</h4></div>
-            <div class="feature-card"><i class="fas fa-calendar-check"></i><h4>احترام المواعيد</h4></div>
-        </div>
-
-        <div class="packaging-banner">
-            <div class="packaging-icon"><i class="fas fa-gift"></i></div>
-            <div class="packaging-text">
-                <h4>🎁 تغليف أنيق وفاخر</h4>
-                <p>حلوياتنا تُقدم في علب راقية تليق بمستوى مناسباتكم وتجعل منها ذكرى لا تُنسى.</p>
-            </div>
-        </div>
-
-        <h3 class="section-title">قائمة الحلويات التقليدية</h3>
-        <div class="sweets-grid" id="sweetsContainer"></div>
-
-        <h3 class="section-title">آراء تلميذاتنا وزبوناتنا</h3>
-        <div class="testimonials-wrapper">
-            <div class="testimonials-slider" id="testimonialsList"></div>
-        </div>
-
-        <h3 class="section-title">الأسئلة الشائعة</h3>
-        <div class="faq-container">
-            <div class="faq-item">
-                <button class="faq-question">هل توجد طلبيات للمناسبات؟ <i class="fa fa-chevron-down"></i></button>
-                <div class="faq-answer">نعم، نوفر طلبيات لجميع المناسبات بجودة عالية وتزيين عصري حسب الطلب.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">هل الشهادات معتمدة؟ <i class="fa fa-chevron-down"></i></button>
-                <div class="faq-answer">نعم، جميع تكويناتنا تتوج بشهادات معتمدة تمكنكم من دخول سوق العمل.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">هل تتوفر أسعار الجملة؟ <i class="fa fa-chevron-down"></i></button>
-                <div class="faq-answer">بالتأكيد، نوفر أسعاراً خاصة ومخفضة للطلبيات الكبيرة والمحلات التجارية.</div>
-            </div>
-        </div>
-        <footer class="main-footer">
-    <div class="footer-logo">مدرسة أمير</div>
-    <p class="footer-tagline">فن صناعة الحلويات والمملحات وتكوينات احترافية</p>
-    
-    <div class="footer-social">
-        <a href="https://www.facebook.com/amirformation" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://www.tiktok.com/@chefsamahbradai" title="تيك توك"><i class="fab fa-tiktok"></i></a>
-        <a href="https://wa.me/213699748196" title="واتساب"><i class="fab fa-whatsapp"></i></a>
-    </div>
-
-    <div class="footer-bottom">
-        <p class="copyright">© <span id="year"></span> <span class="school-name">مدرسة أمير</span> - جميع الحقوق محفوظة</p>
-        <p class="made-with">
-            بكل <i class="fas fa-heart heart-icon"></i> من الشلف إلى كل الجزائر
-        </p>
-    </div>
-</footer>
-        /* --- تنسيق أوقات العمل لضبط اتجاه الوقت --- */
+      /* --- تنسيق أوقات العمل لضبط اتجاه الوقت --- */
 .time-wrapper {
     display: flex;
     align-items: center;
@@ -518,6 +445,79 @@
     50% { transform: scale(1.4); }
     100% { transform: scale(1); }
 }
+</style>
+
+        <h3 class="section-title">طلب تسعيرة لمناسبة</h3>
+        <div class="order-form">
+            <div class="form-group"><label>الاسم الكامل:</label><input type="text" id="custName" placeholder="أدخل اسمك الكريم"></div>
+            <div class="form-group"><label>نوع المناسبة:</label>
+                <select id="eventType">
+                    <option>عرس</option>
+                    <option>خطوبة / فاتحة</option>
+                    <option>ختان</option>
+                    <option>حفلة نجاح / تخرج</option>
+                    <option>أخرى</option>
+                </select>
+            </div>
+            <div class="form-group"><label>التفاصيل (الكمية والأنواع):</label><textarea id="orderNotes" rows="3" placeholder="مثال: 100 حبة عرايش و 50 بقلاوة..."></textarea></div>
+            <button class="btn-send" onclick="sendToWhatsApp()"><i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب</button>
+        </div>
+
+        <h3 class="section-title">لماذا مدرسة أمير؟</h3>
+        <div class="features-grid">
+            <div class="feature-card"><i class="fas fa-hands"></i><h4>صنع يدوي إحترافي</h4></div>
+            <div class="feature-card"><i class="fas fa-cookie-bite"></i><h4>مكونات طبيعية</h4></div>
+            <div class="feature-card"><i class="fas fa-calendar-check"></i><h4>احترام المواعيد</h4></div>
+        </div>
+
+        <div class="packaging-banner">
+            <div class="packaging-icon"><i class="fas fa-gift"></i></div>
+            <div class="packaging-text">
+                <h4>🎁 تغليف أنيق وفاخر</h4>
+                <p>حلوياتنا تُقدم في علب راقية تليق بمستوى مناسباتكم وتجعل منها ذكرى لا تُنسى.</p>
+            </div>
+        </div>
+
+        <h3 class="section-title">قائمة الحلويات التقليدية</h3>
+        <div class="sweets-grid" id="sweetsContainer"></div>
+
+        <h3 class="section-title">آراء تلميذاتنا وزبوناتنا</h3>
+        <div class="testimonials-wrapper">
+            <div class="testimonials-slider" id="testimonialsList"></div>
+        </div>
+
+        <h3 class="section-title">الأسئلة الشائعة</h3>
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">هل توجد طلبيات للمناسبات؟ <i class="fa fa-chevron-down"></i></button>
+                <div class="faq-answer">نعم، نوفر طلبيات لجميع المناسبات بجودة عالية وتزيين عصري حسب الطلب.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">هل الشهادات معتمدة؟ <i class="fa fa-chevron-down"></i></button>
+                <div class="faq-answer">نعم، جميع تكويناتنا تتوج بشهادات معتمدة تمكنكم من دخول سوق العمل.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">هل تتوفر أسعار الجملة؟ <i class="fa fa-chevron-down"></i></button>
+                <div class="faq-answer">بالتأكيد، نوفر أسعاراً خاصة ومخفضة للطلبيات الكبيرة والمحلات التجارية.</div>
+            </div>
+        </div>
+        <footer class="main-footer">
+    <div class="footer-logo">مدرسة أمير</div>
+    <p class="footer-tagline">فن صناعة الحلويات والمملحات وتكوينات احترافية</p>
+    
+    <div class="footer-social">
+        <a href="https://www.facebook.com/amirformation" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.tiktok.com/@chefsamahbradai" title="تيك توك"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/213699748196" title="واتساب"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <div class="footer-bottom">
+        <p class="copyright">© <span id="year"></span> <span class="school-name">مدرسة أمير</span> - جميع الحقوق محفوظة</p>
+        <p class="made-with">
+            بكل <i class="fas fa-heart heart-icon"></i> من الشلف إلى كل الجزائر
+        </p>
+    </div>
+</footer>
     </div>
 </div>
 
