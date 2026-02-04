@@ -195,14 +195,23 @@
         .faq-answer { max-height: 0; overflow: hidden; padding: 0 18px; transition: 0.3s; background: var(--secondary-bg); color: var(--text); }
         .faq-item.active .faq-answer { max-height: 200px; padding: 18px; border-top: 1px solid #fce4ec; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
+         /* أوقات العمل المطورة */
+        .hours-card-v2 {
+            background: #fff; margin: 0 25px; padding: 30px;
+            border-radius: 22px; border: 1px solid #fce4ec;
+            display: flex; flex-direction: column; gap: 20px;
+            box-shadow: 0 10px 25px rgba(255, 107, 129, 0.05);
+        }
+        .hours-item { display: flex; align-items: center; gap: 20px; text-align: right; }
+        .hours-icon { 
+            width: 50px; height: 50px; background: #fff0f3; color: var(--primary);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+        }
+        .hours-info .days { display: block; font-weight: 700; color: var(--text); }
+        .hours-info .time { display: block; color: var(--primary-dark); font-weight: 600; direction: ltr; font-size: 0.95rem;}
+        .hours-divider { height: 1px; background: linear-gradient(to left, transparent, #ff6b8144, transparent); }
 
-        /* أوقات العمل */
-        .hours-card { background: var(--secondary-bg); margin: 0 20px; padding: 25px; border-radius: 20px; border: 1px solid #fce4ec; }
-        .hours-table { width: 100%; max-width: 500px; margin: 0 auto; border-collapse: separate; border-spacing: 0 10px; }
-        .hours-table tr { background: white; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .hours-table td { padding: 15px; font-weight: 700; color: var(--text); }
-        .hours-table td:first-child { border-radius: 0 10px 10px 0; text-align: right; color: var(--primary-dark); }
-        .hours-table td:last-child { border-radius: 10px 0 0 10px; text-align: left; direction: ltr; }
+
 
         /* نموذج الطلب */
         .order-form { text-align: right; padding: 25px; background: #fff; border-radius: 20px; border: 1px solid #fce4ec; margin: 0 20px; }
