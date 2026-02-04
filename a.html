@@ -291,7 +291,13 @@
         <div class="hours-icon"><i class="fas fa-calendar-alt"></i></div>
         <div class="hours-info">
             <span class="days">السبت – الخميس</span>
-            <span class="time"> 09:00 صباحاً – 17:00 مساءً</span>
+            <div class="time-wrapper">
+                <span class="time-text">من</span>
+                <span class="time-digits">09:00</span>
+                <span class="time-text">صباحاً إلى</span>
+                <span class="time-digits">17:00</span>
+                <span class="time-text">مساءً</span>
+            </div>
         </div>
     </div>
     
@@ -301,12 +307,38 @@
         <div class="hours-icon"><i class="fas fa-clock"></i></div>
         <div class="hours-info">
             <span class="days">الجمعة</span>
-            <span class="time">14:00 مساء-17:00مساءً</span>
+            <div class="time-wrapper">
+                <span class="time-text">من</span>
+                <span class="time-digits">14:00</span>
+                <span class="time-text">مساءً إلى</span>
+                <span class="time-digits">17:00</span>
+                <span class="time-text">مساءً</span>
+            </div>
         </div>
     </div>
 </div>
 
+<style>
+/* أضف هذه التنسيقات لضمان ترتيب الوقت */
+.time-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 4px;
+    color: var(--primary-dark);
+    font-weight: 700;
+}
 
+.time-digits {
+    direction: ltr; /* يضمن بقاء الأرقام والنقطتين في مكانها الصحيح */
+    font-family: sans-serif; /* خط أوضح للأرقام */
+}
+
+.time-text {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+</style>
 
         <h3 class="section-title">طلب تسعيرة لمناسبة</h3>
         <div class="order-form">
