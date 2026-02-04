@@ -394,20 +394,130 @@
                 <div class="faq-answer">بالتأكيد، نوفر أسعاراً خاصة ومخفضة للطلبيات الكبيرة والمحلات التجارية.</div>
             </div>
         </div>
-
         <footer class="main-footer">
-        <div class="footer-logo">مدرسة أمير</div>
-        <p>فن صناعة الحلويات والمملحات وتكوينات احترافية</p>
-        <div class="footer-social">
-            <a href="https://www.facebook.com/amirformation"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.tiktok.com/@chefsamahbradai"><i class="fab fa-tiktok"></i></a>
-            <a href="https://wa.me/213699748196"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <div class="footer-bottom">
-            <p>© <span id="year"></span> مدرسة أمير - جميع الحقوق محفوظة</p>
-            <p style="margin-top: 5px; font-size: 0.7rem;">بكل ❤️ من الشلف إلى كل الجزائر</p>
-        </div>
+    <div class="footer-logo">مدرسة أمير</div>
+    <p class="footer-tagline">فن صناعة الحلويات والمملحات وتكوينات احترافية</p>
+    
+    <div class="footer-social">
+        <a href="https://www.facebook.com/amirformation" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.tiktok.com/@chefsamahbradai" title="تيك توك"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/213699748196" title="واتساب"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <div class="footer-bottom">
+        <p class="copyright">© <span id="year"></span> <span class="school-name">مدرسة أمير</span> - جميع الحقوق محفوظة</p>
+        <p class="made-with">
+            بكل <i class="fas fa-heart heart-icon"></i> من الشلف إلى كل الجزائر
+        </p>
+    </div>
 </footer>
+        /* --- تنسيق أوقات العمل لضبط اتجاه الوقت --- */
+.time-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 4px;
+    justify-content: center;
+}
+.time-digits {
+    direction: ltr;
+    display: inline-block;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+.time-text {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+/* --- تنسيق التذييل الجديد --- */
+.main-footer {
+    margin-top: 60px;
+    background: #2d3436;
+    color: white;
+    padding: 50px 20px 30px;
+    border-radius: 40px 40px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-tagline {
+    opacity: 0.8;
+    margin-bottom: 25px;
+    transition: 0.3s;
+}
+
+.main-footer:hover .footer-tagline {
+    opacity: 1;
+    color: var(--primary);
+}
+
+/* حركة أيقونات التواصل */
+.footer-social a {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    margin: 0 8px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.footer-social a:hover {
+    background: var(--primary);
+    transform: translateY(-10px) rotate(360deg);
+    box-shadow: 0 10px 20px rgba(255, 107, 129, 0.3);
+}
+
+/* منطقة الحقوق السفلى */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 35px;
+    padding-top: 25px;
+}
+
+.school-name {
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.footer-bottom:hover .school-name {
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(255, 107, 129, 0.4);
+}
+
+.made-with {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+
+.footer-bottom:hover .made-with {
+    opacity: 1;
+    letter-spacing: 1px;
+}
+
+/* حركة القلب النابض */
+.heart-icon {
+    color: #ff4757;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+.footer-bottom:hover .heart-icon {
+    animation: pulseHeart 0.8s infinite;
+}
+
+@keyframes pulseHeart {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
     </div>
 </div>
 
