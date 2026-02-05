@@ -446,7 +446,6 @@ function updateShopStatus() {
     document.getElementById('statusText').innerText = isOpen ? "مرحباً! محلنا مفتوح حالياً ✅" : "نعتذر، المحل مغلق الآن ❌";
     document.getElementById('statusTimer').innerText = nextAction;
 }
-
 const sweets = [
     { name: "تشارك مسكّر", price: "70 دج", img: "images/tcharakmsakar.jpg" },
     { name: "تشارك العريان", price: "70 دج", img: "images/tcharakarian.jpg" },
@@ -454,13 +453,13 @@ const sweets = [
     { name: "كعيكعات", price: "80 دج", img: "images/kaikat.jpg" },
     { name: "مقروض زمان", price: "70 دج", img: "images/maqrout.jpg" },
     { name: "مقروض اللوز", price: "100 دج", img: "images/maqroutlouz.jpg" },
-    { name: "كفتة", price: "200 - 250 دج", img: "images/kefta.jpg" },
+    { name: "كفتة", price: "200 دج", img: "images/kefta.jpg" }, // تم تبسيط السعر للحساب
     { name: "دزيريات", price: "100 دج", img: "images/dziriyat.jpg" },
     { name: "بقلاوة", price: "80 دج", img: "images/baklawa.jpg" },
     { name: "بقلاوة تركية", price: "80 دج", img: "images/turkish.jpg" },
     { name: "قنيدلات", price: "80 دج", img: "images/qnidlet.jpg" },
     { name: "مشوك الباي", price: "200 دج", img: "images/mcheweklouz.jpg" },
-    { name: "الفاكهة", price: "200 - 250 دج", img: "images/fruits.jpg" },
+    { name: "الفاكهة", price: "200 دج", img: "images/fruits.jpg" },
     { name: "صابلي المعجون", price: "40 دج", img: "images/sabli.jpg" },
     { name: "مشوك", price: "60 دج", img: "images/mchewek.jpg" },
     { name: "جلجلانية", price: "70 دج", img: "images/djeljlania.jpg" },
@@ -473,11 +472,13 @@ const sweets = [
     { name: "طابع الطلية", price: "40 دج", img: "images/tabaatalia.jpg" },
     { name: "غريبية", price: "50 دج", img: "images/ghriba.jpg" }
 ];
+
 let cart = [];
 
-// 1. تحديث عرض الحلويات مع زر الإضافة
+// 1. عرض الحلويات بطريقة صحيحة (مرة واحدة فقط)
 function renderSweets() {
     const container = document.getElementById("sweetsContainer");
+    if(!container) return;
     container.innerHTML = "";
     sweets.forEach((s, index) => {
         container.innerHTML += `
@@ -497,16 +498,19 @@ function addToCart(index) {
     const item = sweets[index];
     const existing = cart.find(c => c.name === item.name);
     if (existing) {
-        existing.qty += 1;
+        existing.qty += 10;
     } else {
-        cart.push({ ...item, qty: 10 }); // نبدأ بـ 10 حبات كأقل كمية مثلاً
+        cart.push({ ...item, qty: 50 }); // أقل كمية افتراضية 50 حبة
     }
     updateCartUI();
+    // تنبيه بسيط
+    const btn = event.currentTarget;
+    btn.innerHTML = "تمت الإضافة ✓";
+    setTimeout(() => { btn.innerHTML = '<i class="fas fa-cart-plus"></i> أضف للطلب'; }, 1000);
 }
 
 function updateCartUI() {
-    const count = cart.reduce((sum, item) => sum + 1, 0);
-    document.getElementById("cartCount").innerText = count;
+    document.getElementById("cartCount").innerText = cart.length;
 }
 
 function toggleCart() {
@@ -518,22 +522,21 @@ function toggleCart() {
 function renderCartItems() {
     const container = document.getElementById("cartItemsList");
     let total = 0;
-    container.innerHTML = cart.length === 0 ? "<p>السلة فارغة</p>" : "";
+    container.innerHTML = cart.length === 0 ? "<p style='text-align:center; padding:20px;'>السلة فارغة</p>" : "";
     
     cart.forEach((item, index) => {
-        const priceValue = parseInt(item.price); // تحويل "70 دج" إلى 70
+        const priceValue = parseInt(item.price); 
         const subtotal = priceValue * item.qty;
         total += subtotal;
         
         container.innerHTML += `
             <div class="cart-item">
-                <div>
+                <div style="flex:2">
                     <strong>${item.name}</strong><br>
                     <small>${item.price} للحبة</small>
                 </div>
-                <div>
-                    <input type="number" class="qty-input" value="${item.qty}" 
-                           onchange="updateQty(${index}, this.value)"> حبة
+                <div style="flex:1">
+                    <input type="number" class="qty-input" value="${item.qty}" onchange="updateQty(${index}, this.value)"> حبة
                 </div>
                 <button onclick="removeFromCart(${index})" style="color:red; border:none; background:none; cursor:pointer">
                     <i class="fas fa-trash"></i>
@@ -544,7 +547,7 @@ function renderCartItems() {
 }
 
 function updateQty(index, val) {
-    cart[index].qty = parseInt(val);
+    cart[index].qty = parseInt(val) || 0;
     renderCartItems();
 }
 
@@ -554,79 +557,39 @@ function removeFromCart(index) {
     updateCartUI();
 }
 
-// 3. إرسال الطلب النهائي (واتساب + طباعة)
 function finalizeOrder() {
     if (cart.length === 0) { alert("السلة فارغة!"); return; }
-    
     let message = `*طلب جديد من مدرسة أمير*%0A`;
     message += `--------------------------%0A`;
-    let printContent = `طلب مدرسة أمير\n------------------\n`;
-    
     cart.forEach(item => {
         message += `• ${item.name}: ${item.qty} حبة%0A`;
-        printContent += `• ${item.name}: ${item.qty} حبة\n`;
     });
-    
     const total = document.getElementById("totalPrice").innerText;
-    message += `--------------------------%0A*المجموع الإجمالي:* ${total}%0A%0A*شكراً لثقتكم بمدرسة أمير!*`;
-    
-    // خيار 1: إرسال واتساب
-    window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
-    
-    // خيار 2: طباعة (اختياري)
-    // alert("سيتم فتح نافذة الطباعة...");
-    // window.print();
-}
-const container = document.getElementById("sweetsContainer");
-sweets.forEach(s => {
-    container.innerHTML += `<div class="sweet-card">
-        <img src="${s.img}" class="sweet-img" onerror="this.src='https://via.placeholder.com/200x150?text=Amir+School'">
-        <div class="sweet-name">${s.name}</div>
-        <div class="sweet-price">${s.price}</div>
-    </div>`;
-});
-
-const testimonials = [
-    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، تذوب في الفم يعطيك الصحة شاف.", stars: 5 },
-    { name: "كريمة ب.", text: "درت فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش.", stars: 5 },
-    { name: "سمية مهداوي", text: "أحسن مدرسة في الشلف، المعاملة روعة والتعليم بضمير.", stars: 5 },
-    { name: "فاطمة الزهراء", text: "المقروض جاني مرمل ومعسل للقلب، ربي يبارك في رزقكم.", stars: 5 },
-    { name: "فايزة أم أنس", text: "حمرتولي وجهي في عرس خويا، الضياف قاع سألو على الحلويات.", stars: 5 }
-];
-
-const testiList = document.getElementById("testimonialsList");
-[...testimonials, ...testimonials].forEach(t => {
-    let starHtml = "";
-    for(let i=0; i<t.stars; i++) starHtml += `<i class="fas fa-star"></i>`;
-    testiList.innerHTML += `<div class="testimonial-card">
-        <div class="testi-name">${t.name}</div>
-        <div class="stars">${starHtml}</div>
-        <p class="testi-text">"${t.text}"</p>
-    </div>`;
-});
-
-function sendToWhatsApp() {
-    const name = document.getElementById('custName').value;
-    const type = document.getElementById('eventType').value;
-    const notes = document.getElementById('orderNotes').value;
-    if(!name || !notes) { alert("من فضلك املأ البيانات"); return; }
-    const message = `*طلب تسعيرة جديد*%0A*الاسم:* ${name}%0A*المناسبة:* ${type}%0A*التفاصيل:* ${notes}`;
+    message += `--------------------------%0A*المجموع التقديري:* ${total}%0A%0A*يرجى تأكيد الطلبية.*`;
     window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
 }
 
-document.querySelectorAll(".faq-question").forEach(q => {
-    q.onclick = () => q.parentElement.classList.toggle("active");
-});
+// 3. باقي الوظائف (الحالة، العداد، إلخ)
+function typeEffect() {
+    const typingContent = "فن صناعة الحلويات والمملحات وتكوينات احترافية";
+    let charIdx = 0;
+    const desc = document.getElementById("schoolDesc");
+    function type() {
+        if (charIdx < typingContent.length) {
+            desc.innerHTML += typingContent.charAt(charIdx);
+            charIdx++; setTimeout(type, 80);
+        }
+    }
+    type();
+}
 
-window.onscroll = function() {
-    document.getElementById("backToTop").style.display = (window.scrollY > 500) ? "flex" : "none";
-};
-function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
-
+// تشغيل الوظائف عند التحميل
 window.onload = () => {
-    updateShopStatus();
-    updateCountdowns();
+    renderSweets(); // عرض الحلويات بالزر الصحيح
     typeEffect();
+    // تأكد من وجود دالة updateShopStatus و updateCountdowns في الكود الأصلي لديك
+    if(typeof updateShopStatus === 'function') updateShopStatus();
+    if(typeof updateCountdowns === 'function') updateCountdowns();
     document.getElementById("year").innerText = new Date().getFullYear();
 };
 </script>
