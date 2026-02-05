@@ -229,88 +229,89 @@
         .btn-send:hover { background: #26c167; transform: scale(1.02); }
 
 /* =========================================
-   قـسـم الـسـلـة (التصميم المطور 2024)
+   تعديلات التوافقية والترتيب (سهم الصعود + السلة + الزر)
    ========================================= */
 
-/* 1. الزر العائم (Floating Action Button) */
-.cart-floating-btn {
+/* 1. سهم الصعود للأعلى (ضمان ظهوره فوق السلة دائماً) */
+#backToTop {
     position: fixed; 
-    bottom: 30px; 
-    left: 20px; 
-    width: 65px; 
-    height: 65px; 
+    bottom: 110px; /* تم رفعه قليلاً لكي لا يغطي السلة في الموبايل */
+    right: 20px; 
+    background: var(--white);
+    color: var(--primary); 
+    width: 48px; 
+    height: 48px; 
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-    display: flex; 
+    display: none; 
     align-items: center; 
     justify-content: center;
     cursor: pointer; 
-    z-index: 2500; 
-    border: 2px solid white;
-    box-shadow: 0 8px 25px rgba(255, 107, 129, 0.4);
-    /* حركة ارتدادية ناعمة */
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 5000; /* أعلى قيمة لضمان بقائه فوق السلة (2500) والمودال (4000) */
+    border: 2px solid var(--primary);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
 }
 
-.cart-floating-btn:hover {
-    transform: translateY(-5px) rotate(10deg);
-    box-shadow: 0 12px 30px rgba(255, 107, 129, 0.5);
-}
-
-.cart-floating-btn i { 
-    font-size: 1.5rem; 
-}
-
-/* 2. شارة العدد (Badge) */
-.cart-count {
-    position: absolute; 
-    top: -5px; 
-    right: -5px;
-    min-width: 24px;
-    height: 24px;
-    background: var(--success); 
+#backToTop:hover {
+    background: var(--primary);
     color: white;
-    font-size: 0.8rem; 
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    border: 2px solid white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    pointer-events: none; /* لمنع تداخل اللمس مع الزر */
+    transform: translateY(-5px);
 }
 
-/* 3. زر الإضافة في بطاقة المنتج */
+/* 2. زر "أضف للطلب" المتجاوب مع الهاتف */
 .add-to-cart-btn {
     width: 100%;
     margin-top: 12px; 
-    padding: 10px 15px; 
-    border-radius: 15px; 
+    padding: 10px 8px; /* حشو مرن */
+    border-radius: 12px; 
     border: 2px solid var(--primary-dark);
     background: var(--secondary-bg); 
     color: var(--primary-dark); 
     font-family: 'Cairo', sans-serif; 
-    font-size: 0.85rem; 
+    font-size: 0.85rem; /* حجم خط مثالي */
     font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     cursor: pointer;
-    transition: all 0.3s ease; 
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* ميزة التجاوب: منع انقسام النص أو تشوهه */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* تحسينات إضافية للهواتف الصغيرة جداً (أقل من 360px) */
+@media (max-width: 380px) {
+    .add-to-cart-btn {
+        font-size: 0.75rem; 
+        padding: 8px 4px;
+        gap: 4px;
+    }
+    .add-to-cart-btn i {
+        font-size: 0.8rem;
+    }
 }
 
 .add-to-cart-btn:hover { 
     background: var(--primary-dark); 
     color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 71, 87, 0.2);
+    box-shadow: 0 5px 12px rgba(255, 71, 87, 0.3);
 }
 
 .add-to-cart-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.96); /* تأثير الضغط */
+}
+
+/* 3. الزر العائم للسلة (للتأكد من موقعه) */
+.cart-floating-btn {
+    position: fixed; 
+    bottom: 30px; 
+    left: 20px; 
+    z-index: 2500; /* تحت سهم الصعود */
+    /* ... باقي التنسيقات السابقة التي لديك ... */
 }
 
 /* 4. نافذة السلة (Modal Overlay) */
