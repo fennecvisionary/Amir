@@ -248,13 +248,94 @@
 }
 .qty-input { width: 60px; padding: 5px; border-radius: 8px; border: 1px solid #ddd; text-align: center; }
 /* التذييل المطور */
-        .main-footer { margin-top: 60px; background: #2d3436; color: white; padding: 50px 20px 20px; border-radius: 40px 40px 0 0; }
-        .footer-logo { font-size: 1.8rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
-        .footer-social { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
-        .footer-social a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: 0.3s; }
-        .footer-social a:hover { background: var(--primary); transform: translateY(-5px); }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 30px; padding-top: 20px; font-size: 0.8rem; opacity: 0.8; }
+       /* --- تنسيق التذييل الجديد --- */
+.main-footer {
+    margin-top: 60px;
+    background: #2d3436;
+    color: white;
+    padding: 50px 20px 30px;
+    border-radius: 40px 40px 0 0;
+    position: relative;
+    overflow: hidden;
+}
 
+.footer-tagline {
+    opacity: 0.8;
+    margin-bottom: 25px;
+    transition: 0.3s;
+}
+
+.main-footer:hover .footer-tagline {
+    opacity: 1;
+    color: var(--primary);
+}
+
+/* حركة أيقونات التواصل */
+.footer-social a {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    margin: 0 8px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.footer-social a:hover {
+    background: var(--primary);
+    transform: translateY(-10px) rotate(360deg);
+    box-shadow: 0 10px 20px rgba(255, 107, 129, 0.3);
+}
+
+/* منطقة الحقوق السفلى */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 35px;
+    padding-top: 25px;
+}
+
+.school-name {
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.footer-bottom:hover .school-name {
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(255, 107, 129, 0.4);
+}
+
+.made-with {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+
+.footer-bottom:hover .made-with {
+    opacity: 1;
+    letter-spacing: 1px;
+}
+
+/* حركة القلب النابض */
+.heart-icon {
+    color: #ff4757;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+.footer-bottom:hover .heart-icon {
+    animation: pulseHeart 0.8s infinite;
+}
+
+@keyframes pulseHeart {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
     </style>
 </head>
 
@@ -380,7 +461,7 @@
             </div>
         </div>
 
-         <footer class="main-footer">
+<footer class="main-footer">
     <div class="footer-logo">مدرسة أمير</div>
     <p class="footer-tagline">فن صناعة الحلويات والمملحات وتكوينات احترافية</p>
     
@@ -393,12 +474,10 @@
     <div class="footer-bottom">
         <p class="copyright">© <span id="year"></span> <span class="school-name">مدرسة أمير</span> - جميع الحقوق محفوظة</p>
         <p class="made-with">
-        صُنع بكل <i class="fas fa-heart heart-icon"></i> من الشلف إلى كل ربوع الجزائر
+            بكل <i class="fas fa-heart heart-icon"></i> من الشلف إلى كل الجزائر
         </p>
     </div>
 </footer>
-    </div>
-</div>
 
 <div class="cart-floating-btn" onclick="toggleCart()">
     <i class="fas fa-shopping-basket"></i>
