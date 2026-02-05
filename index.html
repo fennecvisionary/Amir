@@ -853,15 +853,44 @@ window.onload = () => {
     updateShopStatus();
     updateCountdowns();
     
-   function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
-// تفعيل الأسئلة الشائعة
-    document.querySelectorAll(".faq-question").forEach(q => {
-        q.onclick = () => q.parentElement.classList.toggle("active");
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // 1. التحكم في ظهور سهم الصعود (Scroll to Top)
+    const backToTopBtn = document.getElementById("backToTop");
+    
+    window.addEventListener("scroll", function() {
+        if (backToTopBtn) {
+            if (window.scrollY > 500) {
+                backToTopBtn.style.display = "flex";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        }
     });
 
+    // 2. وظيفة الصعود للأعلى عند النقر
+    if (backToTopBtn) {
+        backToTopBtn.onclick = function() {
+            window.scrollTo({
+                top: 0, 
+                behavior: 'smooth'
+            });
+        };
+    }
+
+    // 3. تفعيل الأسئلة الشائعة
+    document.querySelectorAll(".faq-question").forEach(q => {
+        q.onclick = () => {
+            q.parentElement.classList.toggle("active");
+        };
+    });
+
+    // 4. تحديث السنة تلقائياً في التذييل
     const yearEl = document.getElementById("year");
-    if(yearEl) yearEl.innerText = new Date().getFullYear();
-}; 
+    if(yearEl) {
+        yearEl.innerText = new Date().getFullYear();
+    }
+});
 </script>
     </body>
 </div>
