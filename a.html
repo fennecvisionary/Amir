@@ -649,7 +649,14 @@ window.onscroll = function() {
 };
 
 function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
+// تفعيل الأسئلة الشائعة
+    document.querySelectorAll(".faq-question").forEach(q => {
+        q.onclick = () => q.parentElement.classList.toggle("active");
+    });
 
+    const yearEl = document.getElementById("year");
+    if(yearEl) yearEl.innerText = new Date().getFullYear();
+};
 // تهيئة كل شيء عند تحميل الصفحة
 window.onload = () => {
     renderSweets();
@@ -658,14 +665,7 @@ window.onload = () => {
     updateShopStatus();
     updateCountdowns();
     
-    // تفعيل الأسئلة الشائعة
-    document.querySelectorAll(".faq-question").forEach(q => {
-        q.onclick = () => q.parentElement.classList.toggle("active");
-    });
-
-    const yearEl = document.getElementById("year");
-    if(yearEl) yearEl.innerText = new Date().getFullYear();
-};
+    
 </script>
     </body>
 </div>
