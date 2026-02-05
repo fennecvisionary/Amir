@@ -32,15 +32,6 @@
             min-height: 100vh;
             color: var(--text);
         }
-          .reveal {
-          opacity: 0;
-          transform: translateY(30px);
-          transition: all 0.8s ease-out;
-        }
-         .reveal.active {
-         opacity: 1;
-         transform: translateY(0);
-        }
 
         /* شريط الأخبار */
         .news-ticker {
@@ -204,28 +195,14 @@
         .faq-answer { max-height: 0; overflow: hidden; padding: 0 18px; transition: 0.3s; background: var(--secondary-bg); color: var(--text); }
         .faq-item.active .faq-answer { max-height: 200px; padding: 18px; border-top: 1px solid #fce4ec; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
-         /* أوقات العمل المطورة */
-        .hours-card-v2 {
-            background: #fff; margin: 0 25px; padding: 30px;
-            border-radius: 22px; border: 1px solid #fce4ec;
-            display: flex; flex-direction: column; gap: 20px;
-            box-shadow: 0 10px 25px rgba(255, 107, 129, 0.05);
-        }
-        .hours-item { display: flex; align-items: center; gap: 20px; text-align: right; }
-        .hours-icon { 
-            width: 50px; height: 50px; background: #fff0f3; color: var(--primary);
-            border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
-        }
-        .hours-info .days { display: block; font-weight: 700; color: var(--text); }
-        .hours-info .time { display: block; color: var(--primary-dark); font-weight: 600; direction: ltr; font-size: 0.95rem;}
-        .hours-divider { height: 1px; background: linear-gradient(to left, transparent, #ff6b8144, transparent); }
-        /* التذييل المطور */
-        .main-footer { margin-top: 60px; background: #2d3436; color: white; padding: 50px 20px 20px; border-radius: 40px 40px 0 0; }
-        .footer-logo { font-size: 1.8rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
-        .footer-social { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
-        .footer-social a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: 0.3s; }
-        .footer-social a:hover { background: var(--primary); transform: translateY(-5px); }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 30px; padding-top: 20px; font-size: 0.8rem; opacity: 0.8; }
+
+        /* أوقات العمل */
+        .hours-card { background: var(--secondary-bg); margin: 0 20px; padding: 25px; border-radius: 20px; border: 1px solid #fce4ec; }
+        .hours-table { width: 100%; max-width: 500px; margin: 0 auto; border-collapse: separate; border-spacing: 0 10px; }
+        .hours-table tr { background: white; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .hours-table td { padding: 15px; font-weight: 700; color: var(--text); }
+        .hours-table td:first-child { border-radius: 0 10px 10px 0; text-align: right; color: var(--primary-dark); }
+        .hours-table td:last-child { border-radius: 10px 0 0 10px; text-align: left; direction: ltr; }
 
         /* نموذج الطلب */
         .order-form { text-align: right; padding: 25px; background: #fff; border-radius: 20px; border: 1px solid #fce4ec; margin: 0 20px; }
@@ -236,10 +213,14 @@
         .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 18px; border-radius: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3); transition: 0.3s; }
         .btn-send:hover { background: #26c167; transform: scale(1.02); }
 
-        footer { margin-top: 50px; font-size: 0.85rem; color: #aaa; padding-bottom: 20px; text-align: center; }
+/* التذييل المطور */
+        .main-footer { margin-top: 60px; background: #2d3436; color: white; padding: 50px 20px 20px; border-radius: 40px 40px 0 0; }
+        .footer-logo { font-size: 1.8rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+        .footer-social { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
+        .footer-social a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: 0.3s; }
+        .footer-social a:hover { background: var(--primary); transform: translateY(-5px); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 30px; padding-top: 20px; font-size: 0.8rem; opacity: 0.8; }
 
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(50%); } }
-        @keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 213, 115, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 213, 115, 0); } }
     </style>
 </head>
 
@@ -295,166 +276,20 @@
                 </div>
             </div>
         </div>
-        <div class="hours-card-v2">
-    <div class="hours-item">
-        <div class="hours-icon"><i class="fas fa-calendar-alt"></i></div>
-        <div class="hours-info">
-            <span class="days">السبت – الخميس</span>
-            <div class="time-wrapper">
-                <span class="time-text">من</span>
-                <span class="time-digits">09:00</span>
-                <span class="time-text">صباحاً إلى</span>
-                <span class="time-digits">17:00</span>
-                <span class="time-text">مساءً</span>
-            </div>
+
+        <h3 class="section-title">أوقات العمل</h3>
+        <div class="hours-card">
+            <table class="hours-table">
+                <tr>
+                    <td><i class="far fa-calendar-alt"></i> السبت – الخميس</td>
+                    <td>09:00 - 17:00</td>
+                </tr>
+                <tr>
+                    <td><i class="far fa-clock"></i> الجمعة</td>
+                    <td>14:00 - 17:00</td>
+                </tr>
+            </table>
         </div>
-    </div>
-    
-    <div class="hours-divider"></div>
-    
-    <div class="hours-item">
-        <div class="hours-icon"><i class="fas fa-clock"></i></div>
-        <div class="hours-info">
-            <span class="days">الجمعة</span>
-            <div class="time-wrapper">
-                <span class="time-text">من</span>
-                <span class="time-digits">14:00</span>
-                <span class="time-text">مساءً إلى</span>
-                <span class="time-digits">17:00</span>
-                <span class="time-text">مساءً</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<style>
-/* أضف هذه التنسيقات لضمان ترتيب الوقت */
-.time-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 4px;
-    color: var(--primary-dark);
-    font-weight: 700;
-}
-
-.time-digits {
-    direction: ltr; /* يضمن بقاء الأرقام والنقطتين في مكانها الصحيح */
-    font-family: sans-serif; /* خط أوضح للأرقام */
-}
-
-.time-text {
-    font-size: 0.85rem;
-    color: var(--muted);
-}
-      /* --- تنسيق أوقات العمل لضبط اتجاه الوقت --- */
-.time-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 4px;
-    justify-content: center;
-}
-.time-digits {
-    direction: ltr;
-    display: inline-block;
-    font-weight: 700;
-    color: var(--primary-dark);
-}
-.time-text {
-    font-size: 0.85rem;
-    color: var(--muted);
-}
-
-/* --- تنسيق التذييل الجديد --- */
-.main-footer {
-    margin-top: 60px;
-    background: #2d3436;
-    color: white;
-    padding: 50px 20px 30px;
-    border-radius: 40px 40px 0 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.footer-tagline {
-    opacity: 0.8;
-    margin-bottom: 25px;
-    transition: 0.3s;
-}
-
-.main-footer:hover .footer-tagline {
-    opacity: 1;
-    color: var(--primary);
-}
-
-/* حركة أيقونات التواصل */
-.footer-social a {
-    width: 45px;
-    height: 45px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-decoration: none;
-    margin: 0 8px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.footer-social a:hover {
-    background: var(--primary);
-    transform: translateY(-10px) rotate(360deg);
-    box-shadow: 0 10px 20px rgba(255, 107, 129, 0.3);
-}
-
-/* منطقة الحقوق السفلى */
-.footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin-top: 35px;
-    padding-top: 25px;
-}
-
-.school-name {
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.footer-bottom:hover .school-name {
-    color: var(--primary);
-    text-shadow: 0 0 10px rgba(255, 107, 129, 0.4);
-}
-
-.made-with {
-    margin-top: 10px;
-    font-size: 0.75rem;
-    opacity: 0.7;
-    transition: 0.5s;
-}
-
-.footer-bottom:hover .made-with {
-    opacity: 1;
-    letter-spacing: 1px;
-}
-
-/* حركة القلب النابض */
-.heart-icon {
-    color: #ff4757;
-    transition: 0.3s;
-    display: inline-block;
-}
-
-.footer-bottom:hover .heart-icon {
-    animation: pulseHeart 0.8s infinite;
-}
-
-@keyframes pulseHeart {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.4); }
-    100% { transform: scale(1); }
-}
-</style>
 
         <h3 class="section-title">طلب تسعيرة لمناسبة</h3>
         <div class="order-form">
@@ -510,7 +345,8 @@
                 <div class="faq-answer">بالتأكيد، نوفر أسعاراً خاصة ومخفضة للطلبيات الكبيرة والمحلات التجارية.</div>
             </div>
         </div>
-        <footer class="main-footer">
+
+         <footer class="main-footer">
     <div class="footer-logo">مدرسة أمير</div>
     <p class="footer-tagline">فن صناعة الحلويات والمملحات وتكوينات احترافية</p>
     
