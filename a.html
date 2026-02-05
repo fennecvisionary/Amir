@@ -212,7 +212,41 @@
         .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
         .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 18px; border-radius: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3); transition: 0.3s; }
         .btn-send:hover { background: #26c167; transform: scale(1.02); }
+/* تنسيقات إضافية للسلة */
+.cart-floating-btn {
+    position: fixed; bottom: 80px; left: 20px; 
+    background: var(--primary-dark); color: white;
+    width: 60px; height: 60px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 2500; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+.cart-count {
+    position: absolute; top: 0; right: 0;
+    background: var(--success); color: white;
+    font-size: 0.7rem; padding: 4px 8px; border-radius: 50%;
+}
+.add-to-cart-btn {
+    background: var(--primary); color: white; border: none;
+    padding: 8px 15px; border-radius: 10px; cursor: pointer;
+    margin-top: 10px; font-family: 'Cairo'; font-size: 0.8rem;
+    transition: 0.3s; width: 100%;
+}
+.add-to-cart-btn:hover { background: var(--primary-dark); }
 
+/* نافذة السلة */
+.cart-modal {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); z-index: 4000; align-items: center; justify-content: center;
+}
+.cart-content {
+    background: white; width: 90%; max-width: 500px; padding: 25px;
+    border-radius: 20px; max-height: 80vh; overflow-y: auto; position: relative;
+}
+.cart-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid #eee;
+}
+.qty-input { width: 60px; padding: 5px; border-radius: 8px; border: 1px solid #ddd; text-align: center; }
 /* التذييل المطور */
         .main-footer { margin-top: 60px; background: #2d3436; color: white; padding: 50px 20px 20px; border-radius: 40px 40px 0 0; }
         .footer-logo { font-size: 1.8rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
@@ -439,7 +473,110 @@ const sweets = [
     { name: "طابع الطلية", price: "40 دج", img: "images/tabaatalia.jpg" },
     { name: "غريبية", price: "50 دج", img: "images/ghriba.jpg" }
 ];
+let cart = [];
 
+// 1. تحديث عرض الحلويات مع زر الإضافة
+function renderSweets() {
+    const container = document.getElementById("sweetsContainer");
+    container.innerHTML = "";
+    sweets.forEach((s, index) => {
+        container.innerHTML += `
+            <div class="sweet-card">
+                <img src="${s.img}" class="sweet-img" onerror="this.src='https://via.placeholder.com/200x150?text=Amir+School'">
+                <div class="sweet-name">${s.name}</div>
+                <div class="sweet-price">${s.price}</div>
+                <button class="add-to-cart-btn" onclick="addToCart(${index})">
+                    <i class="fas fa-cart-plus"></i> أضف للطلب
+                </button>
+            </div>`;
+    });
+}
+
+// 2. وظائف السلة
+function addToCart(index) {
+    const item = sweets[index];
+    const existing = cart.find(c => c.name === item.name);
+    if (existing) {
+        existing.qty += 1;
+    } else {
+        cart.push({ ...item, qty: 10 }); // نبدأ بـ 10 حبات كأقل كمية مثلاً
+    }
+    updateCartUI();
+}
+
+function updateCartUI() {
+    const count = cart.reduce((sum, item) => sum + 1, 0);
+    document.getElementById("cartCount").innerText = count;
+}
+
+function toggleCart() {
+    const modal = document.getElementById("cartModal");
+    modal.style.display = (modal.style.display === "flex") ? "none" : "flex";
+    renderCartItems();
+}
+
+function renderCartItems() {
+    const container = document.getElementById("cartItemsList");
+    let total = 0;
+    container.innerHTML = cart.length === 0 ? "<p>السلة فارغة</p>" : "";
+    
+    cart.forEach((item, index) => {
+        const priceValue = parseInt(item.price); // تحويل "70 دج" إلى 70
+        const subtotal = priceValue * item.qty;
+        total += subtotal;
+        
+        container.innerHTML += `
+            <div class="cart-item">
+                <div>
+                    <strong>${item.name}</strong><br>
+                    <small>${item.price} للحبة</small>
+                </div>
+                <div>
+                    <input type="number" class="qty-input" value="${item.qty}" 
+                           onchange="updateQty(${index}, this.value)"> حبة
+                </div>
+                <button onclick="removeFromCart(${index})" style="color:red; border:none; background:none; cursor:pointer">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>`;
+    });
+    document.getElementById("totalPrice").innerText = total + " دج";
+}
+
+function updateQty(index, val) {
+    cart[index].qty = parseInt(val);
+    renderCartItems();
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    renderCartItems();
+    updateCartUI();
+}
+
+// 3. إرسال الطلب النهائي (واتساب + طباعة)
+function finalizeOrder() {
+    if (cart.length === 0) { alert("السلة فارغة!"); return; }
+    
+    let message = `*طلب جديد من مدرسة أمير*%0A`;
+    message += `--------------------------%0A`;
+    let printContent = `طلب مدرسة أمير\n------------------\n`;
+    
+    cart.forEach(item => {
+        message += `• ${item.name}: ${item.qty} حبة%0A`;
+        printContent += `• ${item.name}: ${item.qty} حبة\n`;
+    });
+    
+    const total = document.getElementById("totalPrice").innerText;
+    message += `--------------------------%0A*المجموع الإجمالي:* ${total}%0A%0A*شكراً لثقتكم بمدرسة أمير!*`;
+    
+    // خيار 1: إرسال واتساب
+    window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
+    
+    // خيار 2: طباعة (اختياري)
+    // alert("سيتم فتح نافذة الطباعة...");
+    // window.print();
+}
 const container = document.getElementById("sweetsContainer");
 sweets.forEach(s => {
     container.innerHTML += `<div class="sweet-card">
@@ -494,4 +631,24 @@ window.onload = () => {
 };
 </script>
 </body>
+  <div class="cart-floating-btn" onclick="toggleCart()">
+    <i class="fas fa-shopping-basket"></i>
+    <span class="cart-count" id="cartCount">0</span>
+</div>
+
+<div id="cartModal" class="cart-modal">
+    <div class="cart-content">
+        <h3 style="margin-bottom:20px; color:var(--primary-dark)">سلة الطلبيات</h3>
+        <div id="cartItemsList"></div>
+        <div style="margin-top:20px; padding-top:10px; border-top:2px solid #eee">
+            <strong>المجموع التقديري: </strong>
+            <span id="totalPrice" style="font-size:1.2rem; color:var(--success)">0 دج</span>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--muted); margin: 10px 0;">* الأسعار قد تتغير حسب الحشو أو التزيين.</p>
+        <button class="btn-send" onclick="finalizeOrder()" style="margin-top:15px">
+            <i class="fab fa-whatsapp"></i> تأكيد الطلب وإرسال
+        </button>
+        <button onclick="toggleCart()" style="margin-top:10px; background:#eee; border:none; width:100%; padding:10px; border-radius:10px; cursor:pointer">إغلاق</button>
+    </div>
+</div>
 </html>
