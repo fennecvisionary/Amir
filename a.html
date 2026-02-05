@@ -228,40 +228,135 @@
         .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 18px; border-radius: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3); transition: 0.3s; }
         .btn-send:hover { background: #26c167; transform: scale(1.02); }
 /* تنسيقات إضافية للسلة */
-.cart-floating-btn {
-    position: fixed; bottom: 80px; left: 20px; 
-    background: var(--primary-dark); color: white;
-    width: 60px; height: 60px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; z-index: 2500; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-.cart-count {
-    position: absolute; top: 0; right: 0;
-    background: var(--success); color: white;
-    font-size: 0.7rem; padding: 4px 8px; border-radius: 50%;
-}
-.add-to-cart-btn {
-    background: var(--primary); color: white; border: none;
-    padding: 8px 15px; border-radius: 10px; cursor: pointer;
-    margin-top: 10px; font-family: 'Cairo'; font-size: 0.8rem;
-    transition: 0.3s; width: 100%;
-}
-.add-to-cart-btn:hover { background: var(--primary-dark); }
+/* --- تحسينات السلة الجمالية --- */
 
-/* نافذة السلة */
+/* الزر العائم */
+.cart-floating-btn {
+    position: fixed; 
+    bottom: 30px; /* خفضناه قليلاً ليكون متناسقاً */
+    left: 20px; 
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    width: 65px; 
+    height: 65px; 
+    border-radius: 50%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer; 
+    z-index: 2500; 
+    box-shadow: 0 8px 25px rgba(255, 107, 129, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid white;
+}
+
+.cart-floating-btn:hover {
+    transform: translateY(-5px) rotate(10deg);
+    box-shadow: 0 12px 30px rgba(255, 107, 129, 0.5);
+}
+
+.cart-floating-btn i { font-size: 1.5rem; }
+
+/* شارة الرقم */
+.cart-count {
+    position: absolute; 
+    top: -5px; 
+    right: -5px;
+    background: var(--success); 
+    color: white;
+    font-size: 0.8rem; 
+    font-weight: bold;
+    min-width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* زر "أضف للطلب" في بطاقة المنتج */
+.add-to-cart-btn {
+    background: var(--secondary-bg); 
+    color: var(--primary-dark); 
+    border: 2px solid var(--primary-dark);
+    padding: 10px 15px; 
+    border-radius: 15px; 
+    cursor: pointer;
+    margin-top: 12px; 
+    font-family: 'Cairo'; 
+    font-size: 0.85rem; 
+    font-weight: 700;
+    transition: all 0.3s ease; 
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-to-cart-btn:hover { 
+    background: var(--primary-dark); 
+    color: white;
+    transform: scale(1.02);
+}
+
+/* نافذة السلة (الخلفية) */
 .cart-modal {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5); z-index: 4000; align-items: center; justify-content: center;
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0,0,0,0.6); 
+    backdrop-filter: blur(5px); /* تعتيم الخلفية بشكل عصري */
+    z-index: 4000; 
+    align-items: center; 
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
 }
+
+/* محتوى السلة */
 .cart-content {
-    background: white; width: 90%; max-width: 500px; padding: 25px;
-    border-radius: 20px; max-height: 80vh; overflow-y: auto; position: relative;
+    background: white; 
+    width: 95%; 
+    max-width: 450px; 
+    padding: 30px;
+    border-radius: 30px; 
+    max-height: 85vh; 
+    overflow-y: auto; 
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    animation: slideUp 0.4s ease;
 }
+
 .cart-item {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 0; border-bottom: 1px solid #eee;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 15px 0; 
+    border-bottom: 1px dashed #eee;
 }
-.qty-input { width: 60px; padding: 5px; border-radius: 8px; border: 1px solid #ddd; text-align: center; }
+
+.qty-input { 
+    width: 55px; 
+    padding: 6px; 
+    border-radius: 10px; 
+    border: 1px solid #ddd; 
+    text-align: center; 
+    font-weight: bold;
+    color: var(--primary-dark);
+}
+
+/* حركات الأنميشن */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* شريط التمرير داخل السلة */
+.cart-content::-webkit-scrollbar { width: 6px; }
+.cart-content::-webkit-scrollbar-thumb { background: #eee; border-radius: 10px; }
 /* التذييل المطور */
        /* --- تنسيق التذييل الجديد --- */
 .main-footer {
