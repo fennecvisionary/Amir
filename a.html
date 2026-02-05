@@ -458,6 +458,17 @@ const testimonials = [
     { name: "فايزة أم أنس", text: "حمرتولي وجهي في عرس خويا، الضياف قاع سألو على الحلويات.", stars: 5 }
 ];
 
+const testiList = document.getElementById("testimonialsList");
+[...testimonials, ...testimonials].forEach(t => {
+    let starHtml = "";
+    for(let i=0; i<t.stars; i++) starHtml += `<i class="fas fa-star"></i>`;
+    testiList.innerHTML += `<div class="testimonial-card">
+        <div class="testi-name">${t.name}</div>
+        <div class="stars">${starHtml}</div>
+        <p class="testi-text">"${t.text}"</p>
+    </div>`;
+});
+
 let cart = [];
 let charIdx = 0;
 const typingText = "فن صناعة الحلويات والمملحات وتكوينات احترافية";
