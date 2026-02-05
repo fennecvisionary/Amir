@@ -489,20 +489,6 @@ function renderSweets() {
     `).join('');
 }
 
-function renderTestimonials() {
-    const testiList = document.getElementById("testimonialsList");
-    if (!testiList) return;
-    // مضاعفة القائمة لعمل تأثير الأنميشن المستمر
-    [...testimonials, ...testimonials].forEach(t => {
-        let stars = '<i class="fas fa-star"></i>'.repeat(t.stars);
-        testiList.innerHTML += `
-            <div class="testimonial-card">
-                <div class="testi-name">${t.name}</div>
-                <div class="stars">${stars}</div>
-                <p class="testi-text">"${t.text}"</p>
-            </div>`;
-    });
-}
 
 function typeEffect() {
     const desc = document.getElementById("schoolDesc");
