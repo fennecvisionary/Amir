@@ -604,7 +604,73 @@ const testiList = document.getElementById("testimonialsList");
         <p class="testi-text">"${t.text}"</p>
     </div>`;
 });
+// 3. منطق السلة
+function addToCart(index) {
+    const item = sweets[index];
+    const existing = cart.find(c => c.name === item.name);
+    if (existing) {
+        existing.qty += 10;
+    } else {
+        cart.push({ ...item, qty: 50 });
+    }
+    updateCartUI();
+    
+    const btn = event.currentTarget;
+    btn.innerText = "تمت الإضافة ✓";
+    setTimeout(() => btn.innerText = "أضف للطلب", 1000);
+}
 
+function updateCartUI() {
+    const count = cart.length;
+    document.getElementById("cartCount").innerText = count;
+}
+
+function toggleCart() {
+    const modal = document.getElementById("cartModal");
+    modal.style.display = (modal.style.display === "flex") ? "none" : "flex";
+    if(modal.style.display === "flex") renderCartItems();
+}
+
+function renderCartItems() {
+    const list = document.getElementById("cartItemsList");
+    let total = 0;
+    if(cart.length === 0) {
+        list.innerHTML = "السلة فارغة";
+        document.getElementById("totalPrice").innerText = "0 دج";
+        return;
+    }
+    list.innerHTML = cart.map((item, index) => {
+        const subtotal = parseInt(item.price) * item.qty;
+        total += subtotal;
+        return `
+            <div class="cart-item">
+                <div><b>${item.name}</b><br><small>${item.price}</small></div>
+                <input type="number" class="qty-input" value="${item.qty}" onchange="updateQty(${index}, this.value)">
+                <i class="fas fa-trash" style="color:red; cursor:pointer" onclick="removeItem(${index})"></i>
+            </div>
+        `;
+    }).join('');
+    document.getElementById("totalPrice").innerText = total + " دج";
+}
+
+function updateQty(index, val) {
+    cart[index].qty = parseInt(val) || 0;
+    renderCartItems();
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+    renderCartItems();
+}
+
+function finalizeOrder() {
+    if(cart.length === 0) return alert("السلة فارغة");
+    let msg = "*طلب جديد من مدرسة أمير*%0A";
+    cart.forEach(i => msg += `- ${i.name}: ${i.qty} حبة%0A`);
+    msg += `*الإجمالي:* ${document.getElementById("totalPrice").innerText}`;
+    window.open(`https://wa.me/213699748196?text=${msg}`);
+}
 function sendToWhatsApp() {
     const name = document.getElementById('custName').value;
     const type = document.getElementById('eventType').value;
@@ -629,6 +695,15 @@ window.onload = () => {
     typeEffect();
     document.getElementById("year").innerText = new Date().getFullYear();
 };
+ // التشغيل عند التحميل
+window.onload = () => {
+    renderSweets();
+    renderTestimonials();
+    typeEffect();
+    updateStatus();
+    updateCountdowns();
+    document.getElementById("year").innerText = new Date().getFullYear();
+};   
 </script>
 </body>
 </html>
