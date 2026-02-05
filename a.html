@@ -186,6 +186,21 @@
         .testi-name { font-weight: 700; color: var(--primary); font-size: 0.95rem; margin-bottom: 5px; }
         .stars { color: var(--star-color); font-size: 0.9rem; margin-bottom: 8px; }
         .testi-text { font-size: 0.9rem; color: var(--text); line-height: 1.5; font-style: italic; }
+        /* هذه هي القاعدة التي تنقصك لتفعيل الحركة */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* سيتحرك الشريط جهة اليمين ليناسب اتجاه الصفحة العربي */
+        transform: translateX(calc(280px * 5 + 20px * 5)); 
+    }
+}
+
+/* اختياري: توقف الحركة عند وضع الفأرة فوق الرأي ليسهل قراءته */
+.testimonials-wrapper:hover .testimonials-slider {
+    animation-play-state: paused;
+}
 
         /* الأسئلة الشائعة */
         .faq-container { margin: 0 20px; text-align: start; }
