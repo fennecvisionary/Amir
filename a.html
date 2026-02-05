@@ -682,23 +682,5 @@ window.onload = () => {
 };
 </script>
     </body>
-  <div class="cart-floating-btn" onclick="toggleCart()">
-    <i class="fas fa-shopping-basket"></i>
-    <span class="cart-count" id="cartCount">0</span>
-</div>
-<div id="cartModal" class="cart-modal">
-    <div class="cart-content">
-        <h3 style="margin-bottom:20px; color:var(--primary-dark)">سلة الطلبيات</h3>
-        <div id="cartItemsList"></div>
-        <div style="margin-top:20px; padding-top:10px; border-top:2px solid #eee">
-            <strong>المجموع التقديري: </strong>
-            <span id="totalPrice" style="font-size:1.2rem; color:var(--success)">0 دج</span>
-        </div>
-        <p style="font-size: 0.8rem; color: var(--muted); margin: 10px 0;">* الأسعار قد تتغير حسب الحشو أو التزيين.</p>
-        <button class="btn-send" onclick="finalizeOrder()" style="margin-top:15px">
-            <i class="fab fa-whatsapp"></i> تأكيد الطلب وإرسال
-        </button>
-        <button onclick="toggleCart()" style="margin-top:10px; background:#eee; border:none; width:100%; padding:10px; border-radius:10px; cursor:pointer">إغلاق</button>
-    </div>
 </div>
 </html>
