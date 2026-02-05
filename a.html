@@ -450,25 +450,6 @@ const sweets = [
     { name: "غريبية", price: "50 دج", img: "images/ghriba.jpg" }
 ];
 
-const testimonials = [
-    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، تذوب في الفم يعطيك الصحة شاف.", stars: 5 },
-    { name: "كريمة ب.", text: "درت فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش.", stars: 5 },
-    { name: "سمية مهداوي", text: "أحسن مدرسة في الشلف، المعاملة روعة والتعليم بضمير.", stars: 5 },
-    { name: "فاطمة الزهراء", text: "المقروض جاني مرمل ومعسل للقلب، ربي يبارك في رزقكم.", stars: 5 },
-    { name: "فايزة أم أنس", text: "حمرتولي وجهي في عرس خويا، الضياف قاع سألو على الحلويات.", stars: 5 }
-];
-
-const testiList = document.getElementById("testimonialsList");
-[...testimonials, ...testimonials].forEach(t => {
-    let starHtml = "";
-    for(let i=0; i<t.stars; i++) starHtml += `<i class="fas fa-star"></i>`;
-    testiList.innerHTML += `<div class="testimonial-card">
-        <div class="testi-name">${t.name}</div>
-        <div class="stars">${starHtml}</div>
-        <p class="testi-text">"${t.text}"</p>
-    </div>`;
-});
-
 let cart = [];
 let charIdx = 0;
 const typingText = "فن صناعة الحلويات والمملحات وتكوينات احترافية";
@@ -641,7 +622,24 @@ function sendToWhatsApp() {
     const message = `*طلب تسعيرة جديد*%0A*الاسم:* ${name}%0A*المناسبة:* ${type}%0A*التفاصيل:* ${notes}`;
     window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
 }
+const testimonials = [
+    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، تذوب في الفم يعطيك الصحة شاف.", stars: 5 },
+    { name: "كريمة ب.", text: "درت فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش.", stars: 5 },
+    { name: "سمية مهداوي", text: "أحسن مدرسة في الشلف، المعاملة روعة والتعليم بضمير.", stars: 5 },
+    { name: "فاطمة الزهراء", text: "المقروض جاني مرمل ومعسل للقلب، ربي يبارك في رزقكم.", stars: 5 },
+    { name: "فايزة أم أنس", text: "حمرتولي وجهي في عرس خويا، الضياف قاع سألو على الحلويات.", stars: 5 }
+];
 
+const testiList = document.getElementById("testimonialsList");
+[...testimonials, ...testimonials].forEach(t => {
+    let starHtml = "";
+    for(let i=0; i<t.stars; i++) starHtml += `<i class="fas fa-star"></i>`;
+    testiList.innerHTML += `<div class="testimonial-card">
+        <div class="testi-name">${t.name}</div>
+        <div class="stars">${starHtml}</div>
+        <p class="testi-text">"${t.text}"</p>
+    </div>`;
+});
 // 5. التحكم في الصفحة (Scroll & Events)
 window.onscroll = function() {
     const btn = document.getElementById("backToTop");
@@ -652,7 +650,6 @@ window.onscroll = function() {
 // تهيئة كل شيء عند تحميل الصفحة
 window.onload = () => {
     renderSweets();
-    renderTestimonials();
     typeEffect();
     updateShopStatus();
     updateCountdowns();
