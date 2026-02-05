@@ -400,52 +400,29 @@
     </div>
 </div>
 
+<div class="cart-floating-btn" onclick="toggleCart()">
+    <i class="fas fa-shopping-basket"></i>
+    <span class="cart-count" id="cartCount">0</span>
+</div>
+
+<div id="cartModal" class="cart-modal">
+    <div class="cart-content">
+        <h3 style="margin-bottom:20px; color:var(--primary-dark)">سلة الطلبيات</h3>
+        <div id="cartItemsList"></div>
+        <div style="margin-top:20px; padding-top:10px; border-top:2px solid #eee">
+            <strong>المجموع التقديري: </strong>
+            <span id="totalPrice" style="font-size:1.2rem; color:var(--success)">0 دج</span>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--muted); margin: 10px 0;">* الأسعار قد تتغير حسب الحشو أو التزيين.</p>
+        <button class="btn-send" onclick="finalizeOrder()" style="margin-top:15px">
+            <i class="fab fa-whatsapp"></i> تأكيد الطلب وإرسال
+        </button>
+        <button onclick="toggleCart()" style="margin-top:10px; background:#eee; border:none; width:100%; padding:10px; border-radius:10px; cursor:pointer">إغلاق</button>
+    </div>
+</div>
+
 <script>
-const typingContent = "فن صناعة الحلويات والمملحات وتكوينات احترافية";
-let charIdx = 0;
-function typeEffect() {
-    if (charIdx < typingContent.length) {
-        document.getElementById("schoolDesc").innerHTML += typingContent.charAt(charIdx);
-        charIdx++;
-        setTimeout(typeEffect, 80);
-    }
-}
-
-function updateCountdowns() {
-    // التواريخ الصحيحة لعام 2026
-    const ramadanDate = new Date("February 18, 2026 00:00:00").getTime();
-    const eidDate = new Date("March 20, 2026 00:00:00").getTime();
-    const now = new Date().getTime();
-
-    function setDays(id, target) {
-        const diff = target - now;
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        document.getElementById(id).innerText = days > 0 ? days : "0";
-    }
-
-    setDays("ramadan-days", ramadanDate);
-    setDays("eid-days", eidDate);
-}
-function updateShopStatus() {
-    const now = new Date();
-    const day = now.getDay();
-    const currentTime = now.getHours() + now.getMinutes() / 60;
-    let isOpen = false;
-    let nextAction = "";
-    if (day === 5) { // الجمعة
-        if (currentTime >= 14 && currentTime < 17) { isOpen = true; nextAction = "نغلق الساعة 17:00"; }
-        else if (currentTime < 14) nextAction = "نفتح اليوم الساعة 14:00";
-        else nextAction = "نفتح غداً الساعة 09:00";
-    } else {
-        if (currentTime >= 9 && currentTime < 17) { isOpen = true; nextAction = "نغلق الساعة 17:00"; }
-        else if (currentTime < 9) nextAction = "نفتح اليوم الساعة 09:00";
-        else nextAction = (day === 4) ? "نفتح غداً الساعة 14:00" : "نفتح غداً الساعة 09:00";
-    }
-    document.getElementById('shopStatus').className = isOpen ? "status-badge status-open" : "status-badge status-closed";
-    document.getElementById('statusDot').className = isOpen ? "dot dot-open" : "dot dot-closed";
-    document.getElementById('statusText').innerText = isOpen ? "مرحباً! محلنا مفتوح حالياً ✅" : "نعتذر، المحل مغلق الآن ❌";
-    document.getElementById('statusTimer').innerText = nextAction;
-}
+// 1. البيانات الأساسية
 const sweets = [
     { name: "تشارك مسكّر", price: "70 دج", img: "images/tcharakmsakar.jpg" },
     { name: "تشارك العريان", price: "70 دج", img: "images/tcharakarian.jpg" },
@@ -453,7 +430,7 @@ const sweets = [
     { name: "كعيكعات", price: "80 دج", img: "images/kaikat.jpg" },
     { name: "مقروض زمان", price: "70 دج", img: "images/maqrout.jpg" },
     { name: "مقروض اللوز", price: "100 دج", img: "images/maqroutlouz.jpg" },
-    { name: "كفتة", price: "200 دج", img: "images/kefta.jpg" }, // تم تبسيط السعر للحساب
+    { name: "كفتة", price: "200 دج", img: "images/kefta.jpg" },
     { name: "دزيريات", price: "100 دج", img: "images/dziriyat.jpg" },
     { name: "بقلاوة", price: "80 دج", img: "images/baklawa.jpg" },
     { name: "بقلاوة تركية", price: "80 دج", img: "images/turkish.jpg" },
@@ -473,40 +450,78 @@ const sweets = [
     { name: "غريبية", price: "50 دج", img: "images/ghriba.jpg" }
 ];
 
-let cart = [];
+const testimonials = [
+    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، تذوب في الفم يعطيك الصحة شاف.", stars: 5 },
+    { name: "كريمة ب.", text: "درت فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش.", stars: 5 },
+    { name: "سمية مهداوي", text: "أحسن مدرسة في الشلف، المعاملة روعة والتعليم بضمير.", stars: 5 },
+    { name: "فاطمة الزهراء", text: "المقروض جاني مرمل ومعسل للقلب، ربي يبارك في رزقكم.", stars: 5 },
+    { name: "فايزة أم أنس", text: "حمرتولي وجهي في عرس خويا، الضياف قاع سألو على الحلويات.", stars: 5 }
+];
 
-// 1. عرض الحلويات بطريقة صحيحة (مرة واحدة فقط)
+let cart = [];
+let charIdx = 0;
+const typingText = "فن صناعة الحلويات والمملحات وتكوينات احترافية";
+
+// 2. وظائف العرض (UI Rendering)
 function renderSweets() {
     const container = document.getElementById("sweetsContainer");
-    if(!container) return;
-    container.innerHTML = "";
-    sweets.forEach((s, index) => {
-        container.innerHTML += `
-            <div class="sweet-card">
-                <img src="${s.img}" class="sweet-img" onerror="this.src='https://via.placeholder.com/200x150?text=Amir+School'">
-                <div class="sweet-name">${s.name}</div>
-                <div class="sweet-price">${s.price}</div>
-                <button class="add-to-cart-btn" onclick="addToCart(${index})">
-                    <i class="fas fa-cart-plus"></i> أضف للطلب
-                </button>
+    if (!container) return;
+    container.innerHTML = sweets.map((s, index) => `
+        <div class="sweet-card">
+            <img src="${s.img}" class="sweet-img" onerror="this.src='https://via.placeholder.com/200x150?text=Amir+School'">
+            <div class="sweet-name">${s.name}</div>
+            <div class="sweet-price">${s.price}</div>
+            <button class="add-to-cart-btn" onclick="addToCart(${index})">
+                <i class="fas fa-cart-plus"></i> أضف للطلب
+            </button>
+        </div>
+    `).join('');
+}
+
+function renderTestimonials() {
+    const testiList = document.getElementById("testimonialsList");
+    if (!testiList) return;
+    // مضاعفة القائمة لعمل تأثير الأنميشن المستمر
+    [...testimonials, ...testimonials].forEach(t => {
+        let stars = '<i class="fas fa-star"></i>'.repeat(t.stars);
+        testiList.innerHTML += `
+            <div class="testimonial-card">
+                <div class="testi-name">${t.name}</div>
+                <div class="stars">${stars}</div>
+                <p class="testi-text">"${t.text}"</p>
             </div>`;
     });
 }
 
-// 2. وظائف السلة
+function typeEffect() {
+    const desc = document.getElementById("schoolDesc");
+    if (desc && charIdx < typingText.length) {
+        desc.innerHTML += typingText.charAt(charIdx);
+        charIdx++;
+        setTimeout(typeEffect, 80);
+    }
+}
+
+// 3. منطق السلة (Cart Logic)
 function addToCart(index) {
     const item = sweets[index];
     const existing = cart.find(c => c.name === item.name);
     if (existing) {
         existing.qty += 10;
     } else {
-        cart.push({ ...item, qty: 50 }); // أقل كمية افتراضية 50 حبة
+        cart.push({ ...item, qty: 50 }); // الحد الأدنى 50 حبة
     }
     updateCartUI();
-    // تنبيه بسيط
+    
+    // تأثير بصري بسيط للزر
     const btn = event.currentTarget;
+    const originalText = btn.innerHTML;
     btn.innerHTML = "تمت الإضافة ✓";
-    setTimeout(() => { btn.innerHTML = '<i class="fas fa-cart-plus"></i> أضف للطلب'; }, 1000);
+    btn.style.background = "#28a745";
+    setTimeout(() => { 
+        btn.innerHTML = originalText;
+        btn.style.background = ""; 
+    }, 1000);
 }
 
 function updateCartUI() {
@@ -516,38 +531,44 @@ function updateCartUI() {
 function toggleCart() {
     const modal = document.getElementById("cartModal");
     modal.style.display = (modal.style.display === "flex") ? "none" : "flex";
-    renderCartItems();
+    if (modal.style.display === "flex") renderCartItems();
 }
 
 function renderCartItems() {
     const container = document.getElementById("cartItemsList");
     let total = 0;
-    container.innerHTML = cart.length === 0 ? "<p style='text-align:center; padding:20px;'>السلة فارغة</p>" : "";
     
-    cart.forEach((item, index) => {
-        const priceValue = parseInt(item.price); 
+    if (cart.length === 0) {
+        container.innerHTML = "<p style='text-align:center; padding:20px;'>السلة فارغة</p>";
+        document.getElementById("totalPrice").innerText = "0 دج";
+        return;
+    }
+
+    container.innerHTML = cart.map((item, index) => {
+        const priceValue = parseInt(item.price);
         const subtotal = priceValue * item.qty;
         total += subtotal;
-        
-        container.innerHTML += `
+        return `
             <div class="cart-item">
                 <div style="flex:2">
                     <strong>${item.name}</strong><br>
                     <small>${item.price} للحبة</small>
                 </div>
                 <div style="flex:1">
-                    <input type="number" class="qty-input" value="${item.qty}" onchange="updateQty(${index}, this.value)"> حبة
+                    <input type="number" class="qty-input" value="${item.qty}" min="1" 
+                           onchange="updateQty(${index}, this.value)"> حبة
                 </div>
                 <button onclick="removeFromCart(${index})" style="color:red; border:none; background:none; cursor:pointer">
                     <i class="fas fa-trash"></i>
                 </button>
             </div>`;
-    });
+    }).join('');
+    
     document.getElementById("totalPrice").innerText = total + " دج";
 }
 
 function updateQty(index, val) {
-    cart[index].qty = parseInt(val) || 0;
+    cart[index].qty = Math.max(1, parseInt(val) || 0);
     renderCartItems();
 }
 
@@ -557,59 +578,63 @@ function removeFromCart(index) {
     updateCartUI();
 }
 
+// 4. أدوات المساعدة (Status, Countdowns, WhatsApp)
+function updateShopStatus() {
+    const now = new Date();
+    const day = now.getDay();
+    const currentTime = now.getHours() + now.getMinutes() / 60;
+    let isOpen = false;
+    let nextAction = "";
+
+    if (day === 5) { // الجمعة
+        if (currentTime >= 14 && currentTime < 17) { isOpen = true; nextAction = "نغلق الساعة 17:00"; }
+        else if (currentTime < 14) nextAction = "نفتح اليوم الساعة 14:00";
+        else nextAction = "نفتح غداً الساعة 09:00";
+    } else {
+        if (currentTime >= 9 && currentTime < 17) { isOpen = true; nextAction = "نغلق الساعة 17:00"; }
+        else if (currentTime < 9) nextAction = "نفتح اليوم الساعة 09:00";
+        else nextAction = (day === 4) ? "نفتح غداً الساعة 14:00" : "نفتح غداً الساعة 09:00";
+    }
+
+    const statusBadge = document.getElementById('shopStatus');
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+    const statusTimer = document.getElementById('statusTimer');
+
+    if(statusBadge) {
+        statusBadge.className = isOpen ? "status-badge status-open" : "status-badge status-closed";
+        statusDot.className = isOpen ? "dot dot-open" : "dot dot-closed";
+        statusText.innerText = isOpen ? "مرحباً! محلنا مفتوح حالياً ✅" : "نعتذر، المحل مغلق الآن ❌";
+        statusTimer.innerText = nextAction;
+    }
+}
+
+function updateCountdowns() {
+    const ramadanDate = new Date("February 18, 2026 00:00:00").getTime();
+    const eidDate = new Date("March 20, 2026 00:00:00").getTime();
+    const now = new Date().getTime();
+
+    const setDays = (id, target) => {
+        const el = document.getElementById(id);
+        if (el) {
+            const diff = target - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            el.innerText = days > 0 ? days : "0";
+        }
+    };
+
+    setDays("ramadan-days", ramadanDate);
+    setDays("eid-days", eidDate);
+}
+
 function finalizeOrder() {
     if (cart.length === 0) { alert("السلة فارغة!"); return; }
-    let message = `*طلب جديد من مدرسة أمير*%0A`;
-    message += `--------------------------%0A`;
-    cart.forEach(item => {
-        message += `• ${item.name}: ${item.qty} حبة%0A`;
-    });
+    let message = `*طلب جديد من مدرسة أمير*%0A--------------------------%0A`;
+    cart.forEach(item => message += `• ${item.name}: ${item.qty} حبة%0A`);
     const total = document.getElementById("totalPrice").innerText;
-    message += `--------------------------%0A*المجموع التقديري:* ${total}%0A%0A*يرجى تأكيد الطلبية.*`;
+    message += `--------------------------%0A*المجموع التقديري:* ${total}%0A%0A*شكراً لكم!*`;
     window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
 }
-
-// 3. باقي الوظائف (الحالة، العداد، إلخ)
-function typeEffect() {
-    const typingContent = "فن صناعة الحلويات والمملحات وتكوينات احترافية";
-    let charIdx = 0;
-    const desc = document.getElementById("schoolDesc");
-    function type() {
-        if (charIdx < typingContent.length) {
-            desc.innerHTML += typingContent.charAt(charIdx);
-            charIdx++; setTimeout(type, 80);
-        }
-    }
-    type();
-}
-
-// تشغيل الوظائف عند التحميل
-window.onload = () => {
-    renderSweets(); // عرض الحلويات بالزر الصحيح
-    typeEffect();
-    // تأكد من وجود دالة updateShopStatus و updateCountdowns في الكود الأصلي لديك
-    if(typeof updateShopStatus === 'function') updateShopStatus();
-    if(typeof updateCountdowns === 'function') updateCountdowns();
-    document.getElementById("year").innerText = new Date().getFullYear();
-};
-    const testimonials = [
-    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، تذوب في الفم يعطيك الصحة شاف.", stars: 5 },
-    { name: "كريمة ب.", text: "درت فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش.", stars: 5 },
-    { name: "سمية مهداوي", text: "أحسن مدرسة في الشلف، المعاملة روعة والتعليم بضمير.", stars: 5 },
-    { name: "فاطمة الزهراء", text: "المقروض جاني مرمل ومعسل للقلب، ربي يبارك في رزقكم.", stars: 5 },
-    { name: "فايزة أم أنس", text: "حمرتولي وجهي في عرس خويا، الضياف قاع سألو على الحلويات.", stars: 5 }
-];
-
-const testiList = document.getElementById("testimonialsList");
-[...testimonials, ...testimonials].forEach(t => {
-    let starHtml = "";
-    for(let i=0; i<t.stars; i++) starHtml += `<i class="fas fa-star"></i>`;
-    testiList.innerHTML += `<div class="testimonial-card">
-        <div class="testi-name">${t.name}</div>
-        <div class="stars">${starHtml}</div>
-        <p class="testi-text">"${t.text}"</p>
-    </div>`;
-});
 
 function sendToWhatsApp() {
     const name = document.getElementById('custName').value;
@@ -620,28 +645,36 @@ function sendToWhatsApp() {
     window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
 }
 
-document.querySelectorAll(".faq-question").forEach(q => {
-    q.onclick = () => q.parentElement.classList.toggle("active");
-});
-
+// 5. التحكم في الصفحة (Scroll & Events)
 window.onscroll = function() {
-    document.getElementById("backToTop").style.display = (window.scrollY > 500) ? "flex" : "none";
+    const btn = document.getElementById("backToTop");
+    if(btn) btn.style.display = (window.scrollY > 500) ? "flex" : "none";
 };
+
 function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
 
+// تهيئة كل شيء عند تحميل الصفحة
 window.onload = () => {
+    renderSweets();
+    renderTestimonials();
+    typeEffect();
     updateShopStatus();
     updateCountdowns();
-    typeEffect();
-    document.getElementById("year").innerText = new Date().getFullYear();
+    
+    // تفعيل الأسئلة الشائعة
+    document.querySelectorAll(".faq-question").forEach(q => {
+        q.onclick = () => q.parentElement.classList.toggle("active");
+    });
+
+    const yearEl = document.getElementById("year");
+    if(yearEl) yearEl.innerText = new Date().getFullYear();
 };
 </script>
-</body>
+    </body>
   <div class="cart-floating-btn" onclick="toggleCart()">
     <i class="fas fa-shopping-basket"></i>
     <span class="cart-count" id="cartCount">0</span>
 </div>
-
 <div id="cartModal" class="cart-modal">
     <div class="cart-content">
         <h3 style="margin-bottom:20px; color:var(--primary-dark)">سلة الطلبيات</h3>
