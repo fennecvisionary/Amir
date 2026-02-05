@@ -592,6 +592,49 @@ window.onload = () => {
     if(typeof updateCountdowns === 'function') updateCountdowns();
     document.getElementById("year").innerText = new Date().getFullYear();
 };
+    const testimonials = [
+    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، تذوب في الفم يعطيك الصحة شاف.", stars: 5 },
+    { name: "كريمة ب.", text: "درت فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش.", stars: 5 },
+    { name: "سمية مهداوي", text: "أحسن مدرسة في الشلف، المعاملة روعة والتعليم بضمير.", stars: 5 },
+    { name: "فاطمة الزهراء", text: "المقروض جاني مرمل ومعسل للقلب، ربي يبارك في رزقكم.", stars: 5 },
+    { name: "فايزة أم أنس", text: "حمرتولي وجهي في عرس خويا، الضياف قاع سألو على الحلويات.", stars: 5 }
+];
+
+const testiList = document.getElementById("testimonialsList");
+[...testimonials, ...testimonials].forEach(t => {
+    let starHtml = "";
+    for(let i=0; i<t.stars; i++) starHtml += `<i class="fas fa-star"></i>`;
+    testiList.innerHTML += `<div class="testimonial-card">
+        <div class="testi-name">${t.name}</div>
+        <div class="stars">${starHtml}</div>
+        <p class="testi-text">"${t.text}"</p>
+    </div>`;
+});
+
+function sendToWhatsApp() {
+    const name = document.getElementById('custName').value;
+    const type = document.getElementById('eventType').value;
+    const notes = document.getElementById('orderNotes').value;
+    if(!name || !notes) { alert("من فضلك املأ البيانات"); return; }
+    const message = `*طلب تسعيرة جديد*%0A*الاسم:* ${name}%0A*المناسبة:* ${type}%0A*التفاصيل:* ${notes}`;
+    window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
+}
+
+document.querySelectorAll(".faq-question").forEach(q => {
+    q.onclick = () => q.parentElement.classList.toggle("active");
+});
+
+window.onscroll = function() {
+    document.getElementById("backToTop").style.display = (window.scrollY > 500) ? "flex" : "none";
+};
+function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
+
+window.onload = () => {
+    updateShopStatus();
+    updateCountdowns();
+    typeEffect();
+    document.getElementById("year").innerText = new Date().getFullYear();
+};
 </script>
 </body>
   <div class="cart-floating-btn" onclick="toggleCart()">
