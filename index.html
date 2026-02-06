@@ -303,7 +303,7 @@
         .faq-item.active .faq-answer { max-height: 200px; padding: 18px; border-top: 1px solid #fce4ec; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
         
-/* أوقات العمل */
+/* قسم أوقات العمل - الإصلاح النهائي */
 .hours-card { 
     background: #fff; 
     margin: 20px; 
@@ -326,49 +326,46 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
-.hours-table td { 
-    padding: 15px; 
-    font-weight: 700; 
-    color: #444; 
-}
-
 /* عمود الأيام */
 .hours-table td:first-child { 
     border-radius: 0 10px 10px 0; 
     text-align: right; 
     color: #f54c03; 
+    font-weight: 700;
     display: flex;
     align-items: center;
     gap: 8px;
+    padding: 15px;
 }
 
-/* عمود الوقت - الإصلاح الجذري للانقلاب */
-.hours-table td:last-child { 
+/* عمود الوقت - حل مشكلة الترتيب */
+.hours-table td.time-cell { 
     border-radius: 10px 0 0 10px; 
-    display: flex; /* تحويل الخلية إلى flex */
-    flex-direction: row-reverse; /* ترتيب العناصر من اليمين لليسار بدقة */
-    justify-content: flex-end; /* محاذاة لليسار */
-    gap: 5px; /* مسافة بين الرقم والكلمة */
+    display: flex !important;
+    flex-direction: row-reverse; /* السحر هنا: يقلب ترتيب الـ spans بصرياً */
+    justify-content: flex-end;   /* يحاذي المحتوى لجهة اليسار */
+    align-items: center;
+    gap: 4px; 
     color: #666;
     font-family: 'Arial', sans-serif;
-    direction: ltr; /* للحفاظ على سلامة الأرقام */
+    font-weight: 700;
+    padding: 15px;
+    direction: ltr; /* يحافظ على تنسيق الأرقام 17:00 كما هي */
 }
 
-/* خلية الوقت المخصصة */
-.time-cell {
-    white-space: nowrap;
+/* تنسيق الفاصلة بين الوقتين */
+.dash {
+    margin: 0 8px;
+    color: #f54c03;
+    font-weight: bold;
 }
 
+/* حالة العمل */
 .working-status {
     text-align: center;
     margin-top: 15px;
     font-weight: bold;
     color: #444;
-}
-
-.working-status i {
-    font-size: 1.1rem;
-    vertical-align: middle;
 }
         /* نموذج الطلب */
         .order-form { text-align: right; padding: 25px; background: #fff; border-radius: 20px; border: 1px solid #fce4ec; margin: 0 20px; }
