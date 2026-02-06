@@ -303,20 +303,19 @@
         .faq-item.active .faq-answer { max-height: 200px; padding: 18px; border-top: 1px solid #fce4ec; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
         
-/* قسم أوقات العمل - الإصلاح النهائي */
+/* أوقات العمل - التصميم النهائي */
 .hours-card { 
     background: #fff; 
-    margin: 20px; 
+    margin: 20px auto; 
     padding: 25px; 
     border-radius: 20px; 
     border: 1px solid #fce4ec; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    max-width: 500px;
 }
 
 .hours-table { 
     width: 100%; 
-    max-width: 500px; 
-    margin: 0 auto; 
     border-collapse: separate; 
     border-spacing: 0 10px; 
 }
@@ -326,46 +325,69 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
+.hours-table td { 
+    padding: 15px; 
+    font-weight: 700; 
+}
+
 /* عمود الأيام */
 .hours-table td:first-child { 
     border-radius: 0 10px 10px 0; 
     text-align: right; 
     color: #f54c03; 
-    font-weight: 700;
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 15px;
 }
 
-/* عمود الوقت - حل مشكلة الترتيب */
-.hours-table td.time-cell { 
+/* عمود الوقت - حل مشكلة الانقلاب */
+.time-cell { 
     border-radius: 10px 0 0 10px; 
     display: flex !important;
-    flex-direction: row-reverse; /* السحر هنا: يقلب ترتيب الـ spans بصرياً */
-    justify-content: flex-end;   /* يحاذي المحتوى لجهة اليسار */
+    flex-direction: row-reverse; /* ترتيب المجموعات من اليمين لليسار */
+    justify-content: flex-end;   /* محاذاة النص لجهة اليسار في الخلية */
     align-items: center;
-    gap: 4px; 
     color: #666;
     font-family: 'Arial', sans-serif;
-    font-weight: 700;
-    padding: 15px;
-    direction: ltr; /* يحافظ على تنسيق الأرقام 17:00 كما هي */
+    white-space: nowrap;
 }
 
-/* تنسيق الفاصلة بين الوقتين */
+/* تنسيق مجموعة (الرقم + الكلمة) */
+.time-wrap {
+    display: flex;
+    flex-direction: row-reverse; /* يضع الرقم يمين الكلمة بصرياً */
+    gap: 4px;
+    direction: ltr; /* يحمي الرقم 09:00 من الانقلاب */
+}
+
 .dash {
     margin: 0 8px;
     color: #f54c03;
     font-weight: bold;
 }
 
-/* حالة العمل */
 .working-status {
     text-align: center;
     margin-top: 15px;
     font-weight: bold;
     color: #444;
+}
+
+/* تأثير نبض بسيط للأيقونة الخضراء */
+.pulse-icon {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+/* التجاوب مع الهاتف */
+@media (max-width: 480px) {
+    .hours-table td { padding: 12px 8px; font-size: 0.85rem; }
+    .time-wrap { gap: 2px; }
 }
         /* نموذج الطلب */
         .order-form { text-align: right; padding: 25px; background: #fff; border-radius: 20px; border: 1px solid #fce4ec; margin: 0 20px; }
