@@ -566,12 +566,12 @@
     <i class="fas fa-shopping-basket"></i>
     <span class="cart-count" id="cartCount">0</span>
 </div>
-
 <div id="cartModal" class="cart-modal">
     <div class="cart-content">
         <div class="cart-header">
             <i class="fas fa-shopping-basket"></i>
-            <h3>طلباتك اللذيذة</h3>
+            <h3>طلباتك المختارة</h3>
+            <span class="close-modal" onclick="toggleCart()">&times;</span>
         </div>
 
         <div id="cartItemsList" class="cart-body">
@@ -579,24 +579,30 @@
 
         <div class="cart-footer">
             <div class="total-section">
-                <span>المجموع النهائي:</span>
+                <span>إجمالي الطلب:</span>
                 <span id="totalPrice">0 دج</span>
             </div>
             
             <div class="cart-actions">
                 <button class="btn-whatsapp" onclick="finalizeOrder()">
-                    <i class="fab fa-whatsapp"></i> إرسال الطلب للواتساب
+                    <i class="fab fa-whatsapp"></i> إرسال الطلب الآن
                 </button>
-                
                 <div class="secondary-actions">
-                    <button class="btn-close-cart" onclick="toggleCart()">إكمال التسوق</button>
-                    <button class="btn-clear-cart" onclick="clearCart()">مسح السلة</button>
+                    <button class="btn-close-cart" onclick="toggleCart()">
+                         إكمال التسوق <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button class="btn-clear-cart" onclick="clearCart()">
+                        حذف الكل <i class="far fa-trash-alt"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<button class="add-to-cart-btn" onclick="addToCart(id)">
+    <i class="fas fa-plus-circle"></i> أضف للطلب
+</button>
 <script>
 // 1. البيانات الأساسية
 const sweets = [
