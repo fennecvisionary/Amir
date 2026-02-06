@@ -303,82 +303,69 @@
         .faq-item.active .faq-answer { max-height: 200px; padding: 18px; border-top: 1px solid #fce4ec; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
         
-        /* تصميم حاوية أوقات العمل */
-.hours-card {
-    background: linear-gradient(145deg, #ffffff, #fffcf9); /* تدرج لوني خفيف */
-    margin: 20px;
-    padding: 30px;
-    border-radius: 24px;
-    border: 1px solid rgba(245, 76, 3, 0.1); /* حدود برتقالية شفافة جداً */
-    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
-    position: relative;
-    overflow: hidden;
+/* أوقات العمل */
+.hours-card { 
+    background: #fff; 
+    margin: 20px; 
+    padding: 25px; 
+    border-radius: 20px; 
+    border: 1px solid #fce4ec; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
-/* إضافة لمسة فنية في الخلفية */
-.hours-card::before {
-    content: '🕒';
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    font-size: 5rem;
-    opacity: 0.03;
-    transform: rotate(-15deg);
+.hours-table { 
+    width: 100%; 
+    max-width: 500px; 
+    margin: 0 auto; 
+    border-collapse: separate; 
+    border-spacing: 0 10px; 
 }
 
-.hours-table {
-    width: 100%;
-    max-width: 550px;
-    margin: 0 auto;
-    border-collapse: separate;
-    border-spacing: 0 12px;
+.hours-table tr { 
+    background: white; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
-.hours-table tr {
-    background: #ffffff;
-    transition: all 0.3s ease;
-    cursor: default;
+.hours-table td { 
+    padding: 15px; 
+    font-weight: 700; 
+    color: #444; 
 }
 
-/* تأثير عند تمرير الماوس على اليوم */
-.hours-table tr:hover {
-    transform: scale(1.02);
-    box-shadow: 0 5px 15px rgba(245, 76, 3, 0.1);
-}
-
-.hours-table td {
-    padding: 18px 20px;
-    font-weight: 600;
-    color: #444;
-    border: 1px solid #f9f9f9;
-}
-
-/* تنسيق العمود الأول (الأيام) */
-.hours-table td:first-child {
-    border-radius: 0 15px 15px 0; /* حواف دائرية لليمين */
-    text-align: right;
-    color: #f54c03; /* لونك البرتقالي الهوية */
+/* عمود الأيام - اللون البرتقالي المعتاد */
+.hours-table td:first-child { 
+    border-radius: 0 10px 10px 0; 
+    text-align: right; 
+    color: #f54c03; /* لون أمير ديليس */
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
-/* تنسيق العمود الثاني (الوقت) */
-.hours-table td:last-child {
-    border-radius: 15px 0 0 15px; /* حواف دائرية لليسار */
-    text-align: left;
-    direction: ltr;
-    font-family: 'Segoe UI', sans-serif;
+/* عمود الوقت - إصلاح الانقلاب */
+.hours-table td:last-child { 
+    border-radius: 10px 0 0 10px; 
+    text-align: left; 
+    direction: ltr; /* يضمن بقاء الوقت من اليسار لليمين */
     color: #666;
-    background: #fffaf7;
+    font-family: 'Arial', sans-serif;
 }
 
-/* التجاوب مع الهاتف */
-@media (max-width: 480px) {
-    .hours-table td {
-        padding: 12px 15px;
-        font-size: 0.9rem;
-    }
+/* خلية الوقت المخصصة */
+.time-cell {
+    white-space: nowrap; /* يمنع نزول الوقت لسطر جديد */
+}
+
+.working-status {
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #444;
+}
+
+.working-status i {
+    font-size: 1.1rem;
+    vertical-align: middle;
 }
 
         /* نموذج الطلب */
@@ -851,7 +838,7 @@
                 <i class="fas fa-calendar-day"></i> 
                 <span>السبت – الخميس</span>
             </td>
-            <td>09:00 صباحاً - 17:00 مساءً</td>
+            <td class="time-cell">09:00 صباحاً &ndash; 17:00 مساءً</td>
         </tr>
         
         <tr>
@@ -859,15 +846,15 @@
                 <i class="fas fa-heart"></i> 
                 <span>الجمعة</span>
             </td>
-            <td>14:00 مساءً - 17:00 مساءً</td>
+            <td class="time-cell">14:00 مساءً &ndash; 17:00 مساءً</td>
         </tr>
     </table>
     
     <p class="working-status">
-        <i class="fas fa-check-circle"></i> نحن جاهزون لاستقبال طلبياتكم
+        <i class="fas fa-check-circle" style="color: #2ecc71; margin-left: 5px;"></i> 
+        نحن جاهزون لاستقبال طلبياتكم
     </p>
 </div>
-
         <div class="links-container">
             <a href="tel:+213699748196" class="link-btn"><i class="fa fa-phone"></i> 96 81 74 0699</a>
             <a href="tel:+213660508949" class="link-btn"><i class="fa fa-phone"></i> 49 89 50 0660</a>
