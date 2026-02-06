@@ -683,7 +683,6 @@ function renderSweets() {
     `).join('');
 }
 
-
 function typeEffect() {
     const desc = document.getElementById("schoolDesc");
     if (desc && charIdx < typingText.length) {
@@ -697,14 +696,15 @@ function typeEffect() {
 function addToCart(index) {
     const item = sweets[index];
     const existing = cart.find(c => c.name === item.name);
+    
+    // عند الإضافة لأول مرة نبدأ بـ 50، وعند التكرار نزيد بـ 10 أو 1 كما تفضل
     if (existing) {
-        existing.qty += 10;
+        existing.qty += 10; 
     } else {
-        cart.push({ ...item, qty: 50 }); // الحد الأدنى 50 حبة
+        cart.push({ ...item, qty: 50 }); // الحد الأدنى عند أول إضافة
     }
     updateCartUI();
     
-    // تأثير بصري بسيط للزر
     const btn = event.currentTarget;
     const originalText = btn.innerHTML;
     btn.innerHTML = "تمت الإضافة ✓";
@@ -716,13 +716,21 @@ function addToCart(index) {
 }
 
 function updateCartUI() {
-    document.getElementById("cartCount").innerText = cart.length;
+    const cartCount = document.getElementById("cartCount");
+    if (cartCount) cartCount.innerText = cart.length;
 }
 
 function toggleCart() {
     const modal = document.getElementById("cartModal");
+    if (!modal) return;
+    
     modal.style.display = (modal.style.display === "flex") ? "none" : "flex";
-    if (modal.style.display === "flex") renderCartItems();
+    if (modal.style.display === "flex") {
+        document.body.style.overflow = "hidden"; // منع التمرير عند فتح السلة
+        renderCartItems();
+    } else {
+        document.body.style.overflow = "auto";
+    }
 }
 
 function renderCartItems() {
@@ -733,7 +741,7 @@ function renderCartItems() {
     if (cart.length === 0) {
         container.innerHTML = `
             <div style="text-align:center; padding:50px 20px;">
-                <i class="fas fa-shopping-basket" style="font-size:4rem; color:#eee; mb-3"></i>
+                <i class="fas fa-shopping-basket" style="font-size:4rem; color:#eee; margin-bottom:15px;"></i>
                 <p style="color:#888; font-weight:bold">سلة التسوق فارغة حالياً</p>
             </div>`;
         if (totalEl) totalEl.innerText = "0 دج";
@@ -746,17 +754,17 @@ function renderCartItems() {
 
         return `
             <div class="cart-item-card">
-                <img src="${item.img}" class="item-img-mini">
-                <div style="flex-grow:1">
+                <img src="${item.img}" class="item-img-mini" onerror="this.src='https://via.placeholder.com/60'">
+                <div style="flex-grow:1; margin-right: 10px;">
                     <h4 style="margin:0; font-size:0.95rem; color:#333">${item.name}</h4>
                     <span style="color:#27ae60; font-weight:bold; font-size:0.85rem">${item.price}</span>
                 </div>
                 <div class="qty-wrapper">
-                    <button class="qty-btn-small" onclick="updateQty(${index}, -10)">-</button>
-                    <span style="font-weight:bold; font-size:0.9rem">${item.qty}</span>
-                    <button class="qty-btn-small" onclick="updateQty(${index}, 10)">+</button>
+                    <button class="qty-btn-small" onclick="changeQty(${index}, -1)">-</button>
+                    <span style="font-weight:bold; font-size:0.9rem; min-width: 25px; text-align: center;">${item.qty}</span>
+                    <button class="qty-btn-small" onclick="changeQty(${index}, 1)">+</button>
                 </div>
-                <button onclick="removeFromCart(${index})" style="background:none; border:none; color:#ff4757; cursor:pointer; padding:5px">
+                <button onclick="removeFromCart(${index})" style="background:none; border:none; color:#ff4757; cursor:pointer; padding:5px; margin-right: 5px;">
                     <i class="far fa-trash-alt"></i>
                 </button>
             </div>`;
@@ -765,8 +773,14 @@ function renderCartItems() {
     if (totalEl) totalEl.innerText = total.toLocaleString() + " دج";
 }
 
-function updateQty(index, val) {
-    cart[index].qty = Math.max(1, parseInt(val) || 0);
+/**
+ * دالة تغيير الكمية بالزيادة أو النقصان
+ * @param {number} index - ترتيب المنتج في السلة
+ * @param {number} delta - القيمة المراد إضافتها (1 أو -1 مثلاً)
+ */
+function changeQty(index, delta) {
+    // نضمن أن الكمية لا تقل عن 1 (أو 10 حسب رغبتك في الحد الأدنى)
+    cart[index].qty = Math.max(1, cart[index].qty + delta);
     renderCartItems();
 }
 
