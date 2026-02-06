@@ -228,10 +228,17 @@
         .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 18px; border-radius: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3); transition: 0.3s; }
         .btn-send:hover { background: #26c167; transform: scale(1.02); }
 /* =========================================
-   تنسيق السلة والسهم المطور (الإصدار الاحترافي)
+   تنسيق السلة الاحترافي الشامل (الإصدار المطور)
    ========================================= */
 
-/* 1. سهم الصعود للأعلى */
+:root {
+    --primary: #ff6b81;
+    --primary-dark: #ff4757;
+    --success: #27ae60;
+    --bg-light: #f8f9fa;
+}
+
+/* 1. سهم الصعود للأعلى (الجهة اليمنى) */
 #backToTop {
     position: fixed; bottom: 30px; right: 20px; 
     width: 50px; height: 50px; background: white;
@@ -242,7 +249,7 @@
 }
 #backToTop:hover { background: var(--primary-dark); color: white; transform: translateY(-5px); }
 
-/* 2. الزر العائم للسلة */
+/* 2. الزر العائم للسلة (الجهة اليسرى) */
 .cart-floating-btn {
     position: fixed; bottom: 30px; left: 20px; 
     width: 65px; height: 65px; border-radius: 50%;
@@ -256,13 +263,23 @@
 
 .cart-count {
     position: absolute; top: -2px; right: -2px;
-    background: var(--success); color: white; font-size: 0.8rem; 
+    background: var(--success); color: white; font-size: 0.85rem; 
     font-weight: bold; min-width: 24px; height: 24px;
     display: flex; align-items: center; justify-content: center;
     border-radius: 50%; border: 2px solid white;
 }
 
-/* 3. نافذة السلة (Modal) */
+/* 3. زر "أضف للطلب" في المتجر الرئيسي */
+.add-to-cart-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none; padding: 12px; border-radius: 15px;
+    width: 100%; cursor: pointer; font-weight: bold; margin-top: 10px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    box-shadow: 0 4px 15px rgba(255, 107, 129, 0.3); transition: 0.3s ease;
+}
+.add-to-cart-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255, 107, 129, 0.5); }
+
+/* 4. نافذة السلة (Modal) */
 .cart-modal {
     display: none; position: fixed; top: 0; left: 0; 
     width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6);
@@ -279,57 +296,75 @@
 
 /* بطاقة المنتج داخل السلة */
 .cart-item-card {
-    display: flex; align-items: center; background: #fdfdfd;
-    padding: 12px; border-radius: 18px; margin-bottom: 12px;
-    gap: 12px; border: 1px solid #f0f0f0; transition: 0.3s;
+    display: flex; align-items: center; background: #ffffff;
+    padding: 15px; border-radius: 20px; margin-bottom: 15px;
+    gap: 15px; border: 1px solid #f8f9fa; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02); transition: 0.3s;
 }
-.cart-item-card:hover { transform: scale(1.02); background: #fffafa; }
+.cart-item-card:hover { transform: translateX(-5px); border-color: #eee; }
 
-.item-img { width: 55px; height: 55px; border-radius: 12px; object-fit: cover; }
+.item-img { width: 65px; height: 65px; border-radius: 15px; object-fit: cover; box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
+
 .item-info { flex-grow: 1; }
-.item-info h4 { font-size: 0.9rem; margin-bottom: 2px; color: #333; }
-.item-info .price { color: var(--primary); font-weight: bold; font-size: 0.8rem; }
+.item-info h4 { font-size: 1rem; color: #2d3436; margin-bottom: 5px; font-weight: 700; }
+.item-info .price { color: var(--success); font-weight: 800; font-size: 0.95rem; display: block; }
 
-/* التحكم بالكمية */
+/* أزرار التحكم بالكمية */
 .qty-controls {
-    display: flex; align-items: center; background: #eee;
-    border-radius: 20px; padding: 2px; gap: 8px;
+    display: flex; align-items: center; background: #f1f2f6; 
+    border-radius: 12px; padding: 4px; border: 1px solid #eee;
 }
 .qty-btn {
-    width: 25px; height: 25px; border-radius: 50%; border: none;
-    background: white; cursor: pointer; font-weight: bold; font-size: 1rem;
+    width: 28px; height: 28px; border-radius: 8px; border: none;
+    background: white; color: var(--primary-dark); cursor: pointer;
+    font-weight: bold; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
-.qty-val { font-weight: bold; font-size: 0.85rem; min-width: 15px; text-align: center; }
+.qty-btn:hover { background: var(--primary); color: white; }
+.qty-val { font-weight: bold; margin: 0 8px; font-size: 0.9rem; }
 
-/* زر الحذف */
+/* أيقونة الحذف */
 .btn-remove {
-    background: #fff0f0; color: #ff4757; border: none;
-    width: 32px; height: 32px; border-radius: 10px; cursor: pointer;
+    background: #fff5f5; color: #ff4757; border: 1px solid #ffdada;
+    width: 38px; height: 38px; border-radius: 12px; cursor: pointer;
     transition: 0.3s; display: flex; align-items: center; justify-content: center;
 }
-.btn-remove:hover { background: #ff4757; color: white; }
+.btn-remove:hover { background: #ff4757; color: white; transform: rotate(10deg); }
 
 /* الأزرار السفلية */
 .cart-actions { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 15px; }
 .btn-whatsapp {
-    background: #25D366; color: white; border: none; padding: 14px;
+    background: #25D366; color: white; border: none; padding: 15px;
     border-radius: 15px; font-weight: bold; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1.1rem;
 }
+.btn-whatsapp:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
 
 .secondary-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.btn-close-cart, .btn-clear-cart {
-    padding: 10px; border-radius: 12px; border: 1px solid #ddd;
-    background: white; cursor: pointer; font-family: 'Cairo'; font-size: 0.8rem;
-}
-.btn-clear-cart { color: #ff4757; border-color: #ffdce0; }
 
-@media (max-width: 480px) {
-    .cart-content { padding: 20px; border-radius: 20px; }
-    .cart-item-card { padding: 10px; gap: 8px; }
+.btn-close-cart {
+    background: #f8f9fa !important; color: #2d3436 !important;
+    border: 1px solid #eee !important; font-weight: 700 !important;
+    padding: 10px; border-radius: 12px; cursor: pointer;
+}
+.btn-clear-cart {
+    background: #fff !important; color: #ff4757 !important;
+    border: 1px solid #ffdada !important; font-weight: 600 !important;
+    padding: 10px; border-radius: 12px; cursor: pointer;
+}
+
+#totalPrice { color: var(--success); font-size: 1.4rem; font-weight: 900; }
+
+.close-modal {
+    position: absolute; top: 15px; left: 20px; font-size: 2rem;
+    color: #ccc; cursor: pointer; transition: 0.3s;
 }
 
 @keyframes modalSlideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+@media (max-width: 480px) {
+    .cart-content { padding: 20px; border-radius: 20px; }
+    .cart-item-card { padding: 10px; gap: 10px; }
+}
 /* التذييل المطور */
        /* --- تنسيق التذييل الجديد --- */
 .main-footer {
@@ -562,37 +597,33 @@
     </div>
 </footer>
 
-<div class="cart-floating-btn" onclick="toggleCart()">
-    <i class="fas fa-shopping-basket"></i>
-    <span class="cart-count" id="cartCount">0</span>
-</div>
 <div id="cartModal" class="cart-modal">
     <div class="cart-content">
-        <div class="cart-header">
-            <i class="fas fa-shopping-basket"></i>
-            <h3>طلباتك المختارة</h3>
-            <span class="close-modal" onclick="toggleCart()">&times;</span>
+        <span class="close-modal" onclick="toggleCart()">&times;</span>
+        <div class="cart-header" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+            <i class="fas fa-shopping-basket" style="color: var(--primary-dark); font-size: 1.5rem;"></i>
+            <h3 style="margin: 0; font-size: 1.3rem;">سلة طلبياتك</h3>
         </div>
 
-        <div id="cartItemsList" class="cart-body">
+        <div id="cartItemsList" class="cart-body" style="overflow-y: auto; flex-grow: 1;">
             </div>
 
-        <div class="cart-footer">
-            <div class="total-section">
-                <span>إجمالي الطلب:</span>
+        <div class="cart-footer" style="border-top: 2px solid #f8f8f8; padding-top: 15px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <span style="font-weight: bold; color: #555;">المجموع الكلي:</span>
                 <span id="totalPrice">0 دج</span>
             </div>
             
             <div class="cart-actions">
                 <button class="btn-whatsapp" onclick="finalizeOrder()">
-                    <i class="fab fa-whatsapp"></i> إرسال الطلب الآن
+                    <i class="fab fa-whatsapp"></i> تأكيد الطلب عبر واتساب
                 </button>
                 <div class="secondary-actions">
                     <button class="btn-close-cart" onclick="toggleCart()">
-                         إكمال التسوق <i class="fas fa-arrow-left"></i>
+                        إكمال التسوق <i class="fas fa-reply"></i>
                     </button>
                     <button class="btn-clear-cart" onclick="clearCart()">
-                        حذف الكل <i class="far fa-trash-alt"></i>
+                        مسح الكل <i class="far fa-trash-alt"></i>
                     </button>
                 </div>
             </div>
