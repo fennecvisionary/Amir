@@ -874,29 +874,48 @@ const testiList = document.getElementById("testimonialsList");
         <p class="testi-text">"${t.text}"</p>
     </div>`;
 });
-// 5. التحكم في الصفحة (Scroll & Events)
+// 1. دالة الصعود للأعلى (يجب أن تكون خارج onload لتكون عامة)
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// 2. التحكم في ظهور الزر عند التمرير
 window.onscroll = function() {
     const btn = document.getElementById("backToTop");
-    if(btn) btn.style.display = (window.scrollY > 500) ? "flex" : "none";
+    if (btn) {
+        // سيظهر الزر بعد تجاوز 500 بكسل من الأعلى
+        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+            btn.style.display = "flex";
+        } else {
+            btn.style.display = "none";
+        }
+    }
 };
 
-
-// تهيئة كل شيء عند تحميل الصفحة
+// 3. تهيئة الأحداث عند تحميل الصفحة
 window.onload = () => {
-    renderSweets();
-    typeEffect();
-    updateShopStatus();
-    updateCountdowns();
-    
-   function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
-// تفعيل الأسئلة الشائعة
+    if (typeof renderSweets === "function") renderSweets();
+    if (typeof typeEffect === "function") typeEffect();
+    if (typeof updateShopStatus === "function") updateShopStatus();
+    if (typeof updateCountdowns === "function") updateCountdowns();
+
+    // ربط زر الصعود بالدالة برمجياً لضمان العمل
+    const btnTop = document.getElementById("backToTop");
+    if (btnTop) {
+        btnTop.onclick = scrollToTop;
+    }
+
+    // تفعيل الأسئلة الشائعة
     document.querySelectorAll(".faq-question").forEach(q => {
         q.onclick = () => q.parentElement.classList.toggle("active");
     });
 
     const yearEl = document.getElementById("year");
-    if(yearEl) yearEl.innerText = new Date().getFullYear();
-}; 
+    if (yearEl) yearEl.innerText = new Date().getFullYear();
+};
 </script>
     </body>
 </div>
