@@ -381,6 +381,95 @@
     from { transform: translateY(100px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
+       /* =========================================
+   تنسيقات التجاوب للهواتف الذكية (Responsiveness)
+   ========================================= */
+
+@media (max-width: 768px) {
+    /* 1. ضبط الأزرار العائمة (السلة والصعود) */
+    .cart-floating-btn {
+        width: 55px;
+        height: 55px;
+        bottom: 20px;
+        left: 15px;
+        box-shadow: 0 10px 25px rgba(255, 71, 87, 0.3);
+    }
+
+    #backToTop {
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        right: 15px;
+    }
+
+    /* 2. زر "أضف للطلب" في المتجر */
+    .add-to-cart-btn {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+        border-radius: 14px;
+        margin-top: 8px;
+    }
+
+    /* 3. نافذة السلة (Modal) */
+    .cart-content {
+        padding: 20px;
+        width: 95%; /* أخذ عرض أكبر على الهاتف */
+        max-height: 90vh;
+        border-radius: 25px;
+    }
+
+    /* 4. بطاقة المنتج داخل السلة */
+    .cart-item-card {
+        padding: 10px;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .item-img-mini {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+    }
+
+    .item-info h4 {
+        font-size: 0.85rem;
+    }
+
+    /* 5. عناصر التحكم بالكمية (تكبير الأزرار لسهولة اللمس) */
+    .qty-wrapper {
+        gap: 5px;
+        padding: 2px;
+    }
+
+    .qty-btn-small {
+        width: 32px; /* أكبر قليلاً لسهولة الضغط بالإصبع */
+        height: 32px;
+        font-size: 1.1rem;
+    }
+
+    .qty-val {
+        font-size: 0.85rem;
+        min-width: 20px;
+    }
+
+    /* 6. المجموع النهائي */
+    #totalPrice {
+        font-size: 1.2rem;
+    }
+}
+
+/* تعديل إضافي للشاشات الصغيرة جداً */
+@media (max-width: 380px) {
+    .cart-item-card {
+        flex-wrap: wrap; /* السماح للعناصر بالنزول لسطر جديد إذا ضاقت المساحة */
+    }
+    
+    .qty-wrapper {
+        order: 3; /* دفع أزرار الكمية للأسفل في الشاشات الضيقة جداً */
+        margin-top: 5px;
+    }
+} 
+            
 /* التذييل المطور */
        /* --- تنسيق التذييل الجديد --- */
 .main-footer {
