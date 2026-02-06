@@ -569,23 +569,29 @@
 
 <div id="cartModal" class="cart-modal">
     <div class="cart-content">
-        <span class="close-cart" onclick="toggleCart()">&times;</span>
         <div class="cart-header">
             <i class="fas fa-shopping-basket"></i>
-            <h3>سلة الطلبيات</h3>
+            <h3>طلباتك اللذيذة</h3>
         </div>
-        <div id="cartItemsList" class="cart-body"></div>
+
+        <div id="cartItemsList" class="cart-body">
+            </div>
+
         <div class="cart-footer">
             <div class="total-section">
-                <span>المجموع التقديري:</span>
+                <span>المجموع النهائي:</span>
                 <span id="totalPrice">0 دج</span>
             </div>
-            <p class="cart-note">* الأسعار قد تتغير حسب الحشو أو التزيين.</p>
+            
             <div class="cart-actions">
-                <button class="btn-send-whatsapp" onclick="finalizeOrder()">
-                    <i class="fab fa-whatsapp"></i> تأكيد الطلب عبر واتساب
+                <button class="btn-whatsapp" onclick="finalizeOrder()">
+                    <i class="fab fa-whatsapp"></i> إرسال الطلب للواتساب
                 </button>
-                <button onclick="toggleCart()" style="background:none; border:none; color:#777; cursor:pointer; margin-top:10px; text-decoration:underline; width:100%">إكمال التسوق</button>
+                
+                <div class="secondary-actions">
+                    <button class="btn-close-cart" onclick="toggleCart()">إكمال التسوق</button>
+                    <button class="btn-clear-cart" onclick="clearCart()">مسح السلة</button>
+                </div>
             </div>
         </div>
     </div>
