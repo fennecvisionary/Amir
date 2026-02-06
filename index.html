@@ -303,15 +303,19 @@
         .faq-item.active .faq-answer { max-height: 200px; padding: 18px; border-top: 1px solid #fce4ec; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
         
-/* أوقات العمل - التصميم النهائي */
+/* أوقات العمل - نسخة رشيقة مع الحفاظ على اللون الوردي */
 .hours-card { 
     background: #fff; 
     margin: 20px auto; 
-    padding: 25px; 
+    padding: 20px; 
     border-radius: 20px; 
+    /* اللون الوردي المفضل لديك */
     border: 1px solid #fce4ec; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    max-width: 500px;
+    
+    /* ضبط العرض ليكون أنيقاً على الكمبيوتر (ليس عريضاً جداً) */
+    max-width: 450px; 
+    width: 92%; 
 }
 
 .hours-table { 
@@ -323,29 +327,36 @@
 .hours-table tr { 
     background: white; 
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: transform 0.2s ease;
+}
+
+/* تأثير عند تمرير الماوس في الكمبيوتر */
+.hours-table tr:hover {
+    transform: scale(1.02);
 }
 
 .hours-table td { 
-    padding: 15px; 
+    padding: 15px 12px; 
     font-weight: 700; 
 }
 
-/* عمود الأيام */
+/* عمود الأيام - البرتقالي الخاص بالموقع */
 .hours-table td:first-child { 
-    border-radius: 0 10px 10px 0; 
+    border-radius: 0 12px 12px 0; 
     text-align: right; 
     color: #f54c03; 
     display: flex;
     align-items: center;
     gap: 8px;
+    font-size: 0.95rem;
 }
 
 /* عمود الوقت - حل مشكلة الانقلاب */
 .time-cell { 
-    border-radius: 10px 0 0 10px; 
+    border-radius: 12px 0 0 12px; 
     display: flex !important;
-    flex-direction: row-reverse; /* ترتيب المجموعات من اليمين لليسار */
-    justify-content: flex-end;   /* محاذاة النص لجهة اليسار في الخلية */
+    flex-direction: row-reverse; 
+    justify-content: flex-end;   
     align-items: center;
     color: #666;
     font-family: 'Arial', sans-serif;
@@ -355,9 +366,9 @@
 /* تنسيق مجموعة (الرقم + الكلمة) */
 .time-wrap {
     display: flex;
-    flex-direction: row-reverse; /* يضع الرقم يمين الكلمة بصرياً */
+    flex-direction: row-reverse; 
     gap: 4px;
-    direction: ltr; /* يحمي الرقم 09:00 من الانقلاب */
+    direction: ltr; 
 }
 
 .dash {
@@ -371,23 +382,33 @@
     margin-top: 15px;
     font-weight: bold;
     color: #444;
+    font-size: 0.9rem;
 }
 
-/* تأثير نبض بسيط للأيقونة الخضراء */
+/* تأثير نبض للأيقونة الخضراء */
 .pulse-icon {
+    color: #2ecc71;
     animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
+    50% { transform: scale(1.1); }
     100% { transform: scale(1); }
 }
 
-/* التجاوب مع الهاتف */
+/* التجاوب مع الهاتف الذكي */
 @media (max-width: 480px) {
-    .hours-table td { padding: 12px 8px; font-size: 0.85rem; }
+    .hours-card {
+        padding: 15px;
+        margin: 15px auto;
+    }
+    .hours-table td { 
+        padding: 12px 8px; 
+        font-size: 0.8rem; /* تصغير الخط ليناسب شاشة الهاتف */
+    }
     .time-wrap { gap: 2px; }
+    .dash { margin: 0 4px; }
 }
         /* نموذج الطلب */
         .order-form { text-align: right; padding: 25px; background: #fff; border-radius: 20px; border: 1px solid #fce4ec; margin: 0 20px; }
