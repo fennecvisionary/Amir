@@ -703,16 +703,44 @@
     color: inherit; /* Takes the color of the parent text */
     transition: 0.3s;
 }
-
-.designed-by a:hover {
-    color: #f54c03; /* Changes to your primary color on hover */
+/* التنسيق الأساسي للجزء السفلي */
+.designed-by {
+    margin-top: 20px;       /* ينزل قليلاً عن العناصر التي فوقه */
+    font-size: 0.9rem;      /* حجم الخط الأساسي للحاسوب */
+    text-align: center;
+    transition: all 0.3s ease;
 }
 
-/* Utility class for bold orange text */
+.designed-by a {
+    text-decoration: none;  /* إزالة السطر */
+    display: inline-block;  /* للسماح بحركات التحويل (Transform) */
+    transition: transform 0.3s ease; /* نعومة الحركة */
+}
+
+/* التنسيق الخاص باسمك */
 .highlight-primary {
-    color: #f54c03;
+    color: #f54c03;         /* اللون البرتقالي المطلوب */
     font-weight: bold;
 }
+
+/* تأثير الهوفر (عند تمرير الماوس) */
+.designed-by a:hover {
+    transform: translateY(3px); /* ينزل قليلاً تحت عند الهوفر */
+    opacity: 0.8;               /* شفافية خفيفة تعطي جمالية */
+}
+
+/* التجاوب مع الهاتف (Media Query) */
+@media (max-width: 768px) {
+    .designed-by {
+        font-size: 0.75rem;    /* يصغر حجم الخط في الهاتف */
+        margin-top: 15px;      /* تقليل المسافة قليلاً لتناسب الشاشات الصغيرة */
+    }
+    
+    .highlight-primary {
+        font-size: 0.7rem;     /* تصغير الاسم أكثر ليتناسب مع الهاتف */
+    }
+}
+
     </style>
 </head>
 
