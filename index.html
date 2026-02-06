@@ -227,41 +227,124 @@
         .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
         .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 18px; border-radius: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3); transition: 0.3s; }
         .btn-send:hover { background: #26c167; transform: scale(1.02); }
-/* تنسيقات إضافية للسلة */
-.cart-floating-btn {
-    position: fixed; bottom: 80px; left: 20px; 
-    background: var(--primary-dark); color: white;
-    width: 60px; height: 60px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; z-index: 2500; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-.cart-count {
-    position: absolute; top: 0; right: 0;
-    background: var(--success); color: white;
-    font-size: 0.7rem; padding: 4px 8px; border-radius: 50%;
-}
-.add-to-cart-btn {
-    background: var(--primary); color: white; border: none;
-    padding: 8px 15px; border-radius: 10px; cursor: pointer;
-    margin-top: 10px; font-family: 'Cairo'; font-size: 0.8rem;
-    transition: 0.3s; width: 100%;
-}
-.add-to-cart-btn:hover { background: var(--primary-dark); }
+/* =========================================
+   تنسيق السلة المطور (جمالية وعصرية)
+   ========================================= */
 
-/* نافذة السلة */
+/* 1. الزر العائم (جهة اليسار) */
+.cart-floating-btn {
+    position: fixed; 
+    bottom: 30px; 
+    left: 20px; 
+    width: 65px; 
+    height: 65px; 
+    border-radius: 50%;
+    /* تدرج لوني فخم */
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer; 
+    z-index: 2500; 
+    border: 3px solid white;
+    box-shadow: 0 10px 25px rgba(255, 107, 129, 0.4);
+    /* حركة ناعمة عند التفاعل */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cart-floating-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(255, 107, 129, 0.5);
+}
+
+.cart-floating-btn i { font-size: 1.6rem; }
+
+/* شارة العدد فوق الزر */
+.cart-count {
+    position: absolute; 
+    top: -2px; 
+    right: -2px;
+    background: var(--success); 
+    color: white;
+    font-size: 0.8rem; 
+    font-weight: bold;
+    min-width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+/* 2. زر أضف للطلب (تحت السعر - تحسين المظهر فقط) */
+.add-to-cart-btn {
+    background: var(--primary); 
+    color: white; 
+    border: none;
+    padding: 10px 15px; 
+    border-radius: 12px; 
+    cursor: pointer;
+    margin-top: 10px; 
+    font-family: 'Cairo'; 
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease; 
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-to-cart-btn:hover { 
+    background: var(--primary-dark); 
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 71, 129, 0.3);
+}
+
+/* 3. نافذة السلة (Modal) بتأثير زجاجي */
 .cart-modal {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5); z-index: 4000; align-items: center; justify-content: center;
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0,0,0,0.6); 
+    backdrop-filter: blur(8px); /* تعتيم الخلفية بشكل عصري */
+    z-index: 4000; 
+    align-items: center; 
+    justify-content: center;
 }
+
 .cart-content {
-    background: white; width: 90%; max-width: 500px; padding: 25px;
-    border-radius: 20px; max-height: 80vh; overflow-y: auto; position: relative;
+    background: white; 
+    width: 92%; 
+    max-width: 450px; 
+    padding: 30px;
+    border-radius: 25px; 
+    max-height: 85vh; 
+    overflow-y: auto; 
+    position: relative;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+    animation: slideUp 0.4s ease-out;
 }
-.cart-item {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 0; border-bottom: 1px solid #eee;
+
+/* 4. سهم الصعود (ضمان التوافق) */
+#backToTop {
+    z-index: 5000 !important; /* ليكون دائماً فوق السلة */
+    bottom: 30px; 
+    right: 20px; /* في الجهة المقابلة تماماً لزر السلة */
 }
-.qty-input { width: 60px; padding: 5px; border-radius: 8px; border: 1px solid #ddd; text-align: center; }
+
+/* حركة ظهور السلة */
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
 /* التذييل المطور */
        /* --- تنسيق التذييل الجديد --- */
 .main-footer {
@@ -734,29 +817,50 @@ const testiList = document.getElementById("testimonialsList");
         <p class="testi-text">"${t.text}"</p>
     </div>`;
 });
-// 5. التحكم في الصفحة (Scroll & Events)
+// 1. تعريف دالة الصعود للأعلى (خارج أي نطاق لتكون عامة)
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// 2. التحكم في ظهور واختفاء زر الصعود عند التمرير
 window.onscroll = function() {
     const btn = document.getElementById("backToTop");
-    if(btn) btn.style.display = (window.scrollY > 500) ? "flex" : "none";
+    if (btn) {
+        // إذا نزل المستخدم أكثر من 500 بكسل يظهر الزر
+        btn.style.display = (window.scrollY > 500) ? "flex" : "none";
+    }
 };
 
-
-// تهيئة كل شيء عند تحميل الصفحة
+// 3. تهيئة كل شيء عند تحميل الصفحة
 window.onload = () => {
-    renderSweets();
-    typeEffect();
-    updateShopStatus();
-    updateCountdowns();
-    
-   function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
-// تفعيل الأسئلة الشائعة
+    // الوظائف الخاصة بمتجرك
+    if (typeof renderSweets === "function") renderSweets();
+    if (typeof typeEffect === "function") typeEffect();
+    if (typeof updateShopStatus === "function") updateShopStatus();
+    if (typeof updateCountdowns === "function") updateCountdowns();
+
+    // تفعيل الأسئلة الشائعة
     document.querySelectorAll(".faq-question").forEach(q => {
-        q.onclick = () => q.parentElement.classList.toggle("active");
+        q.onclick = () => {
+            q.parentElement.classList.toggle("active");
+        };
     });
 
+    // تحديث السنة في التذييل
     const yearEl = document.getElementById("year");
-    if(yearEl) yearEl.innerText = new Date().getFullYear();
-}; 
+    if (yearEl) {
+        yearEl.innerText = new Date().getFullYear();
+    }
+    
+    // ربط زر backToTop بالدالة برمجياً للتأكد من عمله
+    const btn = document.getElementById("backToTop");
+    if (btn) {
+        btn.onclick = scrollToTop;
+    }
+};
 </script>
     </body>
 </div>
