@@ -522,7 +522,68 @@
         max-height: 90vh;
         border-radius: 25px;
     }
+@media (max-width: 768px) {
+    /* ضبط الحاوية لتكون مرنة جداً */
+    .cart-item-card {
+        padding: 10px;
+        gap: 8px; /* تقليل المسافة بين العناصر */
+        flex-direction: row; /* التأكد من البقاء في سطر واحد */
+        justify-content: space-between;
+        align-items: center;
+    }
 
+    /* تصغير الصورة قليلاً لتوفير مساحة */
+    .item-img-mini {
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+    }
+
+    /* ضبط منطقة المعلومات لتأخذ المساحة المتاحة */
+    .cart-item-card > div:nth-child(2) {
+        flex: 1; /* تأخذ أكبر قدر من المساحة */
+        min-width: 0; /* يمنع خروج النص عن الإطار */
+    }
+
+    .cart-item-card h4 {
+        font-size: 0.85rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; /* إضافة نقاط إذا كان الاسم طويلاً */
+        margin-bottom: 2px;
+    }
+
+    /* تصغير أزرار الكمية لتناسب السطر */
+    .qty-wrapper {
+        gap: 5px;
+        padding: 2px;
+    }
+
+    .qty-btn-small {
+        width: 24px;
+        height: 24px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+    }
+
+    .qty-wrapper span {
+        font-size: 0.8rem;
+        min-width: 15px;
+        text-align: center;
+    }
+
+    /* زر الحذف */
+    .cart-item-card button[onclick*="removeFromCart"] {
+        padding: 5px;
+        font-size: 0.9rem;
+    }
+}
+
+/* للهواتف الصغيرة جداً (مثل iPhone SE) */
+@media (max-width: 360px) {
+    .item-img-mini { display: none; } /* إخفاء الصورة لتوفير مساحة قصوى للتحكم */
+    .cart-item-card h4 { font-size: 0.8rem; }
+}
              
 /* التذييل المطور */
        /* --- تنسيق التذييل الجديد --- */
