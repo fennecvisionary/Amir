@@ -449,142 +449,129 @@
     animation: slideUp 0.5s ease;
 }
 
-/* بطاقة المنتج داخل السلة */
+/* 4. نافذة السلة (Modal) - الخلفية الثابتة */
+.cart-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+/* محتوى السلة - الحاوية البيضاء */
+.cart-content {
+    background: var(--glass-bg);
+    width: 100%;
+    max-width: 480px;
+    padding: 25px;
+    border-radius: 30px;
+    max-height: 85vh; /* تحديد أقصى ارتفاع */
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column; /* ترتيب عمودي للرأس، القائمة، والمجموع */
+    position: relative;
+    animation: slideUp 0.5s ease;
+}
+
+/* الجزء السحري: حاوية المنتجات القابلة للتمرير */
+#cartItemsList {
+    flex: 1; /* تأخذ المساحة المتاحة وتدفع المجموع للأسفل */
+    overflow-y: auto; /* تفعيل التمرير العمودي */
+    overflow-x: hidden; /* منع أي اهتزاز أفقي */
+    padding-right: 5px; /* مساحة بسيطة لشريط التمرير */
+    margin: 15px 0;
+}
+
+/* تخصيص شكل السكرول (Scrollbar) ليكون ناعماً */
+#cartItemsList::-webkit-scrollbar { width: 5px; }
+#cartItemsList::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+#cartItemsList::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+/* بطاقة المنتج - تصميم السطر الواحد */
 .cart-item-card {
     display: flex;
     align-items: center;
     gap: 15px;
-    padding: 15px;
+    padding: 12px;
     background: #fdfdfd;
-    border-radius: 20px;
-    margin-bottom: 12px;
+    border-radius: 18px;
+    margin-bottom: 10px;
     border: 1px solid #f0f0f0;
-    transition: 0.3s;
 }
 
 .item-img-mini {
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
-    object-fit: cover;
+    width: 60px; height: 60px;
+    border-radius: 12px; object-fit: cover;
 }
 
 .qty-wrapper {
     display: flex;
     align-items: center;
     background: #eee;
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 3px;
-    gap: 10px;
+    gap: 8px;
 }
 
 .qty-btn-small {
-    width: 28px;
-    height: 28px;
-    border-radius: 10px;
-    border: none;
-    background: white;
-    cursor: pointer;
-    font-weight: bold;
-    color: #ff4757;
+    width: 28px; height: 28px;
+    border-radius: 8px; border: none;
+    background: white; cursor: pointer;
+    font-weight: bold; color: #ff4757;
 }
 
-#totalPrice { font-size: 1.5rem; color: #27ae60; font-weight: 900; }
-
-@keyframes slideUp {
-    from { transform: translateY(100px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-       /* =========================================
+/* =========================================
    تنسيقات التجاوب للهواتف الذكية (Responsiveness)
    ========================================= */
 
 @media (max-width: 768px) {
-    /* 1. ضبط الأزرار العائمة (السلة والصعود) */
-    .cart-floating-btn {
-        width: 55px;
-        height: 55px;
-        bottom: 20px;
-        left: 15px;
-        box-shadow: 0 10px 25px rgba(255, 71, 87, 0.3);
-    }
+    /* ضبط الأزرار العائمة */
+    .cart-floating-btn { width: 55px; height: 55px; bottom: 20px; left: 15px; }
+    #backToTop { width: 45px; height: 45px; bottom: 20px; right: 15px; }
 
-    #backToTop {
-        width: 45px;
-        height: 45px;
-        bottom: 20px;
-        right: 15px;
-    }
-    /* 3. نافذة السلة (Modal) */
+    /* نافذة السلة على الهاتف */
     .cart-content {
         padding: 20px;
-        width: 95%; /* أخذ عرض أكبر على الهاتف */
+        width: 95%;
         max-height: 90vh;
-        border-radius: 25px;
     }
-@media (max-width: 768px) {
-    /* ضبط الحاوية لتكون مرنة جداً */
+
+    /* بطاقة المنتج - إجبار السطر الواحد */
     .cart-item-card {
-        padding: 10px;
-        gap: 8px; /* تقليل المسافة بين العناصر */
-        flex-direction: row; /* التأكد من البقاء في سطر واحد */
+        padding: 8px;
+        gap: 8px;
         justify-content: space-between;
-        align-items: center;
     }
 
-    /* تصغير الصورة قليلاً لتوفير مساحة */
-    .item-img-mini {
-        width: 45px;
-        height: 45px;
-        border-radius: 10px;
-    }
+    .item-img-mini { width: 45px; height: 45px; }
 
-    /* ضبط منطقة المعلومات لتأخذ المساحة المتاحة */
+    /* منطقة النص (الاسم والسعر) */
     .cart-item-card > div:nth-child(2) {
-        flex: 1; /* تأخذ أكبر قدر من المساحة */
-        min-width: 0; /* يمنع خروج النص عن الإطار */
+        flex: 1;
+        min-width: 0;
+        margin: 0 5px;
     }
 
     .cart-item-card h4 {
         font-size: 0.85rem;
         white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsis; /* إضافة نقاط إذا كان الاسم طويلاً */
-        margin-bottom: 2px;
+        text-overflow: ellipsis;
     }
 
-    /* تصغير أزرار الكمية لتناسب السطر */
-    .qty-wrapper {
-        gap: 5px;
-        padding: 2px;
-    }
-
-    .qty-btn-small {
-        width: 24px;
-        height: 24px;
-        border-radius: 8px;
-        font-size: 0.8rem;
-    }
-
-    .qty-wrapper span {
-        font-size: 0.8rem;
-        min-width: 15px;
-        text-align: center;
-    }
-
-    /* زر الحذف */
-    .cart-item-card button[onclick*="removeFromCart"] {
-        padding: 5px;
-        font-size: 0.9rem;
-    }
+    /* أزرار الكمية في الهاتف */
+    .qty-wrapper { gap: 4px; }
+    .qty-btn-small { width: 25px; height: 25px; font-size: 0.8rem; }
 }
 
-/* للهواتف الصغيرة جداً (مثل iPhone SE) */
+/* للهواتف الصغيرة جداً */
 @media (max-width: 360px) {
-    .item-img-mini { display: none; } /* إخفاء الصورة لتوفير مساحة قصوى للتحكم */
-    .cart-item-card h4 { font-size: 0.8rem; }
-}
-             
+    .item-img-mini { display: none; } /* إخفاء الصورة لتوفير مساحة للتحكم */
+}       
 /* التذييل المطور */
        /* --- تنسيق التذييل الجديد --- */
 .main-footer {
