@@ -913,14 +913,15 @@ function updateCartUI() {
 
 function toggleCart() {
     const modal = document.getElementById("cartModal");
-    if (!modal) return;
+    const isOpen = modal.style.display === "flex";
     
-    modal.style.display = (modal.style.display === "flex") ? "none" : "flex";
-    if (modal.style.display === "flex") {
-        document.body.style.overflow = "hidden"; // منع التمرير عند فتح السلة
-        renderCartItems();
+    if (isOpen) {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto"; // إعادة التمرير للصفحة
     } else {
-        document.body.style.overflow = "auto";
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden"; // منع تمرير الصفحة خلف السلة
+        renderCartItems();
     }
 }
 
