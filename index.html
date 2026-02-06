@@ -160,14 +160,106 @@
         .cd-days { font-size: 2rem; font-weight: 800; color: white; display: block; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .cd-label { font-size: 0.85rem; font-weight: 600; opacity: 0.95; }
 
-        /* لماذا نحن */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px; }
-        .feature-card { background: #fff; padding: 20px; border-radius: 20px; border: 1px solid #fce4ec; transition: 0.3s; }
-        .feature-card:hover { border-color: var(--primary); background: var(--secondary-bg); }
-        .feature-card i { font-size: 2.2rem; color: var(--primary); margin-bottom: 12px; display: block; }
+        /* --- قسم لماذا نحن --- */
+.features-grid { 
+    display: grid; 
+    /* للكمبيوتر: توزيع تلقائي، للهاتف: سيتم تعديله أدناه */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px; 
+    margin: 20px; 
+}
 
-        .packaging-banner { background: var(--secondary-bg); margin: 20px; border-radius: 20px; padding: 25px; display: flex; align-items: center; gap: 20px; border: 2px dashed var(--primary); text-align: right; }
-        .packaging-icon { font-size: 2.5rem; color: var(--primary); }
+.feature-card { 
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 20px; 
+    border: 1px solid #fce4ec; 
+    transition: 0.3s; 
+    text-align: center; /* توسيط المحتوى */
+}
+
+.feature-card:hover { 
+    border-color: var(--primary); 
+    background: var(--secondary-bg); 
+    transform: translateY(-5px);
+}
+
+.feature-card i { 
+    font-size: 2.2rem; 
+    color: var(--primary); 
+    margin-bottom: 12px; 
+    display: block; 
+}
+
+/* --- بانر التغليف --- */
+.packaging-banner { 
+    background: var(--secondary-bg); 
+    margin: 20px; 
+    border-radius: 20px; 
+    padding: 25px; 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+    border: 2px dashed var(--primary); 
+    text-align: right; 
+}
+
+.packaging-icon { font-size: 2.5rem; color: var(--primary); }
+
+/* =========================================
+   تنسيقات التجاوب (Mobile Responsiveness)
+   ========================================= */
+
+@media (max-width: 768px) {
+    /* 1. إجبار البطاقات الثلاث على البقاء في سطر واحد */
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 8px; /* تقليل الفجوة لتوفير مساحة */
+        margin: 15px 10px;
+    }
+
+    .feature-card {
+        padding: 15px 5px; /* تقليل الحشوة الداخلية */
+    }
+
+    .feature-card i {
+        font-size: 1.6rem; /* تصغير الأيقونة لتناسب العرض */
+        margin-bottom: 8px;
+    }
+
+    .feature-card h3 {
+        font-size: 0.8rem; /* تصغير الخط لضمان عدم انقسام الكلمات */
+        white-space: nowrap; /* منع النص من النزول لسطر جديد */
+    }
+
+    /* 2. تحويل بانر التغليف ليكون عمودياً (اختياري) أو تصغيره */
+    .packaging-banner {
+        flex-direction: row; /* الحفاظ عليه أفقياً */
+        padding: 15px;
+        gap: 12px;
+        margin: 15px 10px;
+    }
+
+    .packaging-icon {
+        font-size: 1.8rem;
+    }
+
+    .packaging-banner p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+}
+
+/* للهواتف الصغيرة جداً */
+@media (max-width: 380px) {
+    .feature-card h3 {
+        font-size: 0.7rem;
+    }
+    .packaging-banner {
+        flex-direction: column; /* تحويله لعمودي في الشاشات الضيقة جداً */
+        text-align: center;
+    }
+}
 
         /* الحلويات */
         .sweets-grid { display: grid; gap: 15px; padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
