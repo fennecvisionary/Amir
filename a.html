@@ -160,14 +160,106 @@
         .cd-days { font-size: 2rem; font-weight: 800; color: white; display: block; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .cd-label { font-size: 0.85rem; font-weight: 600; opacity: 0.95; }
 
-        /* لماذا نحن */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px; }
-        .feature-card { background: #fff; padding: 20px; border-radius: 20px; border: 1px solid #fce4ec; transition: 0.3s; }
-        .feature-card:hover { border-color: var(--primary); background: var(--secondary-bg); }
-        .feature-card i { font-size: 2.2rem; color: var(--primary); margin-bottom: 12px; display: block; }
+        /* --- قسم لماذا نحن --- */
+.features-grid { 
+    display: grid; 
+    /* للكمبيوتر: توزيع تلقائي، للهاتف: سيتم تعديله أدناه */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px; 
+    margin: 20px; 
+}
 
-        .packaging-banner { background: var(--secondary-bg); margin: 20px; border-radius: 20px; padding: 25px; display: flex; align-items: center; gap: 20px; border: 2px dashed var(--primary); text-align: right; }
-        .packaging-icon { font-size: 2.5rem; color: var(--primary); }
+.feature-card { 
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 20px; 
+    border: 1px solid #fce4ec; 
+    transition: 0.3s; 
+    text-align: center; /* توسيط المحتوى */
+}
+
+.feature-card:hover { 
+    border-color: var(--primary); 
+    background: var(--secondary-bg); 
+    transform: translateY(-5px);
+}
+
+.feature-card i { 
+    font-size: 2.2rem; 
+    color: var(--primary); 
+    margin-bottom: 12px; 
+    display: block; 
+}
+
+/* --- بانر التغليف --- */
+.packaging-banner { 
+    background: var(--secondary-bg); 
+    margin: 20px; 
+    border-radius: 20px; 
+    padding: 25px; 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+    border: 2px dashed var(--primary); 
+    text-align: right; 
+}
+
+.packaging-icon { font-size: 2.5rem; color: var(--primary); }
+
+/* =========================================
+   تنسيقات التجاوب (Mobile Responsiveness)
+   ========================================= */
+
+@media (max-width: 768px) {
+    /* 1. إجبار البطاقات الثلاث على البقاء في سطر واحد */
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 8px; /* تقليل الفجوة لتوفير مساحة */
+        margin: 15px 10px;
+    }
+
+    .feature-card {
+        padding: 15px 5px; /* تقليل الحشوة الداخلية */
+    }
+
+    .feature-card i {
+        font-size: 1.6rem; /* تصغير الأيقونة لتناسب العرض */
+        margin-bottom: 8px;
+    }
+
+    .feature-card h3 {
+        font-size: 0.8rem; /* تصغير الخط لضمان عدم انقسام الكلمات */
+        white-space: nowrap; /* منع النص من النزول لسطر جديد */
+    }
+
+    /* 2. تحويل بانر التغليف ليكون عمودياً (اختياري) أو تصغيره */
+    .packaging-banner {
+        flex-direction: row; /* الحفاظ عليه أفقياً */
+        padding: 15px;
+        gap: 12px;
+        margin: 15px 10px;
+    }
+
+    .packaging-icon {
+        font-size: 1.8rem;
+    }
+
+    .packaging-banner p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+}
+
+/* للهواتف الصغيرة جداً */
+@media (max-width: 380px) {
+    .feature-card h3 {
+        font-size: 0.7rem;
+    }
+    .packaging-banner {
+        flex-direction: column; /* تحويله لعمودي في الشاشات الضيقة جداً */
+        text-align: center;
+    }
+}
 
         /* الحلويات */
         .sweets-grid { display: grid; gap: 15px; padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
@@ -211,14 +303,113 @@
         .faq-item.active .faq-answer { max-height: 200px; padding: 18px; border-top: 1px solid #fce4ec; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
         
-        /* أوقات العمل */
-        .hours-card { background: var(--secondary-bg); margin: 0 20px; padding: 25px; border-radius: 20px; border: 1px solid #fce4ec; }
-        .hours-table { width: 100%; max-width: 500px; margin: 0 auto; border-collapse: separate; border-spacing: 0 10px; }
-        .hours-table tr { background: white; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .hours-table td { padding: 15px; font-weight: 700; color: var(--text); }
-        .hours-table td:first-child { border-radius: 0 10px 10px 0; text-align: right; color: var(--primary-dark); }
-        .hours-table td:last-child { border-radius: 10px 0 0 10px; text-align: left; direction: ltr; }
+/* أوقات العمل - نسخة رشيقة مع الحفاظ على اللون الوردي */
+.hours-card { 
+    background: #fff5f7; 
+    margin: 20px auto; 
+    padding: 20px; 
+    border-radius: 20px; 
+    /* اللون الوردي المفضل لديك */
+    border: 1px solid #fce4ec; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    
+    /* ضبط العرض ليكون أنيقاً على الكمبيوتر (ليس عريضاً جداً) */
+    max-width: 900px; 
+    width: 92%; 
+}
 
+.hours-table { 
+    width: 100%; 
+    border-collapse: separate; 
+    border-spacing: 0 10px; 
+}
+
+.hours-table tr { 
+    background: white; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: transform 0.2s ease;
+}
+
+/* تأثير عند تمرير الماوس في الكمبيوتر */
+.hours-table tr:hover {
+    transform: scale(1.02);
+}
+
+.hours-table td { 
+    padding: 15px 12px; 
+    font-weight: 700; 
+}
+
+/* عمود الأيام - البرتقالي الخاص بالموقع */
+.hours-table td:first-child { 
+    border-radius: 0 12px 12px 0; 
+    text-align: right; 
+    color: #ff6b81; 
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+}
+
+/* عمود الوقت - حل مشكلة الانقلاب */
+.time-cell { 
+    border-radius: 12px 0 0 12px; 
+    display: flex !important;
+    flex-direction: row-reverse; 
+    justify-content: flex-end;   
+    align-items: center;
+    color: #666;
+    font-family: 'Arial', sans-serif;
+    white-space: nowrap;
+}
+
+/* تنسيق مجموعة (الرقم + الكلمة) */
+.time-wrap {
+    display: flex;
+    flex-direction: row-reverse; 
+    gap: 4px;
+    direction: ltr; 
+}
+
+.dash {
+    margin: 0 8px;
+    color: #f54c03;
+    font-weight: bold;
+}
+
+.working-status {
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #444;
+    font-size: 0.9rem;
+}
+
+/* تأثير نبض للأيقونة الخضراء */
+.pulse-icon {
+    color: #2ecc71;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* التجاوب مع الهاتف الذكي */
+@media (max-width: 480px) {
+    .hours-card {
+        padding: 15px;
+        margin: 15px auto;
+    }
+    .hours-table td { 
+        padding: 12px 8px; 
+        font-size: 0.8rem; /* تصغير الخط ليناسب شاشة الهاتف */
+    }
+    .time-wrap { gap: 2px; }
+    .dash { margin: 0 4px; }
+}
         /* نموذج الطلب */
         .order-form { text-align: right; padding: 25px; background: #fff; border-radius: 20px; border: 1px solid #fce4ec; margin: 0 20px; }
         .form-group { margin-bottom: 15px; }
@@ -227,200 +418,405 @@
         .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
         .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 18px; border-radius: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3); transition: 0.3s; }
         .btn-send:hover { background: #26c167; transform: scale(1.02); }
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --primary-gradient: linear-gradient(135deg, #ff6b81, #ff4757);
+    --success-color: #2ed573;
+}
 
-/* =========================================
-   تعديلات التوافقية والترتيب (سهم الصعود + السلة + الزر)
-   ========================================= */
-
-/* 1. سهم الصعود للأعلى (ضمان ظهوره فوق السلة دائماً) */
+/* 1. سهم الصعود للأعلى (الجهة اليمنى) */
 #backToTop {
-    position: fixed; 
-    bottom: 110px; /* مرفوع ليتجنب التداخل مع زر السلة العائم */
-    right: 20px; 
-    background: var(--white);
-    color: var(--primary); 
-    width: 48px; 
-    height: 48px; 
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: white;
+    color: #ff4757;
+    border: 2px solid #ff4757;
     border-radius: 50%;
-    display: none; 
-    align-items: center; 
+    display: none; /* يظهر بواسطة JS */
+    align-items: center;
     justify-content: center;
-    cursor: pointer; 
-    z-index: 5000; /* القيمة الأعلى لضمان ظهوره فوق المودال (4000) والسلة (2500) */
-    border: 2px solid var(--primary);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    cursor: pointer;
+    z-index: 4000; /* أقل من السلة */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
 }
+#backToTop:hover { transform: translateY(-5px); background: #ff4757; color: white; }
 
-#backToTop:hover {
-    background: var(--primary);
-    color: white;
-    transform: translateY(-5px);
-}
-
-/* 2. الزر العائم للسلة */
+/* 2. الزر العائم للسلة (الجهة اليسرى) */
 .cart-floating-btn {
-    position: fixed; 
-    bottom: 30px; 
-    left: 20px; 
-    width: 65px; 
-    height: 65px; 
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    position: fixed;
+    bottom: 30px;
+    left: 20px;
+    background: var(--primary-gradient);
     color: white;
-    display: flex; 
-    align-items: center; 
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    cursor: pointer; 
-    z-index: 2500; /* أقل من المودال وسهم الصعود */
-    border: 2px solid white;
-    box-shadow: 0 8px 25px rgba(255, 107, 129, 0.4);
+    cursor: pointer;
+    z-index: 5000; /* أعلى من سهم الصعود */
+    box-shadow: 0 15px 35px rgba(255, 71, 87, 0.4);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 3px solid white;
 }
-
-.cart-floating-btn:hover {
-    transform: translateY(-5px) rotate(10deg);
-}
+.cart-floating-btn:hover { transform: translateY(-5px) scale(1.1); }
 
 .cart-count {
-    position: absolute; 
-    top: -5px; 
-    right: -5px;
-    min-width: 24px;
-    height: 24px;
-    background: var(--success); 
-    color: white;
-    font-size: 0.8rem; 
+    position: absolute; top: -5px; right: -5px;
+    background: var(--success-color); color: white;
+    font-size: 0.8rem; min-width: 25px; height: 25px;
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; border: 2px solid white;
     font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    border: 2px solid white;
-    pointer-events: none;
 }
 
-/* 3. زر "أضف للطلب" المتجاوب مع الهاتف */
+/* 3. زر "أضف للطلب" المطور - تصميم نحيف وأنيق */
 .add-to-cart-btn {
-    width: 100%;
-    margin-top: 12px; 
-    padding: 10px 8px; 
-    border-radius: 12px; 
-    border: 2px solid var(--primary-dark);
-    background: var(--secondary-bg); 
-    color: var(--primary-dark); 
-    font-family: 'Cairo', sans-serif; 
-    font-size: 0.85rem; 
-    font-weight: 700;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    /* تقليل الارتفاع من 14px إلى 10px للحصول على مظهر أنحف */
+    padding: 10px 18px; 
+    border-radius: 12px; /* حواف ناعمة لكن أقل استدارة */
+    font-weight: 600; /* وزن خط متوسط لجمالية أكثر */
+    font-size: 0.9rem; /* حجم خط متناسق */
+    font-family: 'Cairo', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* ظل خفيف وغير مبالغ فيه */
+    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.15);
+    width: 100%;
+    margin-top: 12px;
 }
 
-/* تحسينات الشاشات الصغيرة جداً */
-@media (max-width: 380px) {
-    .add-to-cart-btn {
-        font-size: 0.75rem; 
-        padding: 8px 4px;
-        gap: 4px;
-    }
-    .add-to-cart-btn i { font-size: 0.8rem; }
+/* تأثير التحويم - ارتفاع بسيط جداً */
+.add-to-cart-btn:hover {
+    transform: translateY(-1.5px); 
+    box-shadow: 0 6px 15px rgba(255, 71, 87, 0.25);
+    filter: brightness(1.05);
 }
 
-.add-to-cart-btn:hover { 
-    background: var(--primary-dark); 
-    color: white;
-}
-
+/* تأثير الضغط - انكماش خفيف */
 .add-to-cart-btn:active {
-    transform: scale(0.96);
+    transform: scale(0.97);
 }
 
-/* 4. نافذة السلة (Modal Overlay) */
+/* التجاوب للهاتف */
+@media (max-width: 768px) {
+    .add-to-cart-btn {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+        border-radius: 10px;
+    }
+}
+
+/* 4. نافذة السلة (Modal) */
 .cart-modal {
-    display: none; 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%;
-    background: rgba(0,0,0,0.6); 
-    backdrop-filter: blur(5px); 
-    z-index: 4000; /* فوق زر السلة وتحت سهم الصعود */
-    align-items: center; 
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: 9999; /* فوق كل شيء */
+    align-items: center;
     justify-content: center;
     padding: 15px;
 }
 
-/* 5. محتوى النافذة (Modal Content) */
 .cart-content {
-    background: white; 
-    width: 100%; 
-    max-width: 450px; 
+    background: var(--glass-bg);
+    width: 100%;
+    max-width: 480px;
     padding: 30px;
-    border-radius: 30px; 
-    max-height: 85vh; 
-    overflow-y: auto; 
+    border-radius: 30px;
+    max-height: 85vh;
+    overflow: hidden;
     position: relative;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.5s ease;
 }
 
-/* 6. عناصر السلة (Cart Items) */
-.cart-item {
-    display: flex; 
-    justify-content: space-between; 
+/* 4. نافذة السلة (Modal) - الخلفية الثابتة */
+.cart-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
     align-items: center;
-    padding: 15px 0; 
-    border-bottom: 1px dashed #eee;
+    justify-content: center;
+    padding: 15px;
 }
 
-.qty-input { 
-    width: 55px; 
-    padding: 6px; 
-    border-radius: 10px; 
-    border: 1px solid #ddd; 
-    text-align: center; 
-    font-weight: bold;
-    color: var(--primary-dark);
+/* محتوى السلة - الحاوية البيضاء */
+.cart-content {
+    background: var(--glass-bg);
+    width: 100%;
+    max-width: 480px;
+    padding: 25px;
+    border-radius: 30px;
+    max-height: 85vh; /* تحديد أقصى ارتفاع */
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column; /* ترتيب عمودي للرأس، القائمة، والمجموع */
+    position: relative;
+    animation: slideUp 0.5s ease;
 }
 
-/* 7. الحركات (Animations) */
-@keyframes slideUp {
-    0% { transform: translateY(50px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+/* الجزء السحري: حاوية المنتجات القابلة للتمرير */
+#cartItemsList {
+    flex: 1; /* تأخذ المساحة المتاحة وتدفع المجموع للأسفل */
+    overflow-y: auto; /* تفعيل التمرير العمودي */
+    overflow-x: hidden; /* منع أي اهتزاز أفقي */
+    padding-right: 5px; /* مساحة بسيطة لشريط التمرير */
+    margin: 15px 0;
 }
 
-/* 8. شريط التمرير المخصص */
-.cart-content::-webkit-scrollbar { width: 6px; }
-.cart-content::-webkit-scrollbar-thumb { 
-    background: #e0e0e0; 
-    border-radius: 10px; 
+/* تخصيص شكل السكرول (Scrollbar) ليكون ناعماً */
+#cartItemsList::-webkit-scrollbar { width: 5px; }
+#cartItemsList::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+#cartItemsList::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+/* بطاقة المنتج - تصميم السطر الواحد */
+.cart-item-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    background: #fdfdfd;
+    border-radius: 18px;
+    margin-bottom: 10px;
+    border: 1px solid #f0f0f0;
 }
-.cart-content::-webkit-scrollbar-thumb:hover { 
-    background: var(--primary); 
+
+.item-img-mini {
+    width: 60px; height: 60px;
+    border-radius: 12px; object-fit: cover;
 }
+
+.qty-wrapper {
+    display: flex;
+    align-items: center;
+    background: #eee;
+    border-radius: 10px;
+    padding: 3px;
+    gap: 8px;
+}
+
+.qty-btn-small {
+    width: 28px; height: 28px;
+    border-radius: 8px; border: none;
+    background: white; cursor: pointer;
+    font-weight: bold; color: #ff4757;
+}
+
+/* =========================================
+   تنسيقات التجاوب للهواتف الذكية (Responsiveness)
+   ========================================= */
+
+@media (max-width: 768px) {
+    /* ضبط الأزرار العائمة */
+    .cart-floating-btn { width: 55px; height: 55px; bottom: 20px; left: 15px; }
+    #backToTop { width: 45px; height: 45px; bottom: 20px; right: 15px; }
+
+    /* نافذة السلة على الهاتف */
+    .cart-content {
+        padding: 20px;
+        width: 95%;
+        max-height: 90vh;
+    }
+
+    /* بطاقة المنتج - إجبار السطر الواحد */
+    .cart-item-card {
+        padding: 8px;
+        gap: 8px;
+        justify-content: space-between;
+    }
+
+    .item-img-mini { width: 45px; height: 45px; }
+
+    /* منطقة النص (الاسم والسعر) */
+    .cart-item-card > div:nth-child(2) {
+        flex: 1;
+        min-width: 0;
+        margin: 0 5px;
+    }
+
+    .cart-item-card h4 {
+        font-size: 0.85rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* أزرار الكمية في الهاتف */
+    .qty-wrapper { gap: 4px; }
+    .qty-btn-small { width: 25px; height: 25px; font-size: 0.8rem; }
+}
+
+/* للهواتف الصغيرة جداً */
+@media (max-width: 360px) {
+    .item-img-mini { display: none; } /* إخفاء الصورة لتوفير مساحة للتحكم */
+} 
+
+/* ستايل قسم التوصيل المتطور */
+        .delivery-section {
+            background: #fdf2f4;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid #ffccd5;
+            text-align: right;
+        }
+
+        .delivery-input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .delivery-input-group input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            font-family: 'Cairo';
+            font-size: 0.9rem;
+        }
+
+        .delivery-input-group i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+        }
+
+        .delivery-track {
+            height: 6px;
+            background: #e0e0e0;
+            width: 100%;
+            margin: 35px 0 10px;
+            position: relative;
+            border-radius: 10px;
+        }
+
+        .moto-icon {
+            position: absolute;
+            top: -28px;
+            right: 0%;
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            transition: right 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 5;
+        }
+
+        .location-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #777;
+            font-weight: bold;
+        }
+
+        .delivery-result {
+            display: flex;
+            justify-content: space-between;
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* ستايل السلة المحدث */
+        .cart-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 15px; }
+        .cart-content { background: var(--white); width: 100%; max-width: 500px; padding: 25px; border-radius: 30px; max-height: 95vh; box-shadow: 0 25px 50px rgba(0,0,0,0.2); display: flex; flex-direction: column; position: relative; }
+        #cartItemsList { flex: 1; overflow-y: auto; margin: 15px 0; padding-left: 5px; }
+        .cart-item-card { display: flex; align-items: center; gap: 12px; padding: 10px; background: #fdfdfd; border-radius: 15px; margin-bottom: 10px; border: 1px solid #f0f0f0; }
+        .item-img-mini { width: 55px; height: 55px; border-radius: 10px; object-fit: cover; }
+        .qty-wrapper { display: flex; align-items: center; background: #eee; border-radius: 8px; padding: 2px; }
+        .qty-btn-small { width: 25px; height: 25px; border: none; background: white; border-radius: 5px; cursor: pointer; color: var(--primary); font-weight: bold; }
+
+        .cart-floating-btn {
+            position: fixed; bottom: 30px; left: 20px; background: var(--primary-dark); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5000; box-shadow: 0 15px 35px rgba(255, 71, 87, 0.4); border: 3px solid white;
+        }
+        .cart-count { position: absolute; top: -5px; right: -5px; background: #2ed573; color: white; font-size: 0.8rem; min-width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; font-weight: bold; }
+
+        .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 16px; border-radius: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; transition: 0.3s; }
+        
+        /* لتغطية نتائج قوقل في الموبايل */
+        .pac-container { z-index: 10000 !important; font-family: 'Cairo' !important; border-radius: 10px; }
+
+        @media (max-width: 768px) {
+            .cart-content { padding: 15px; }
+            .moto-icon { font-size: 1.4rem; top: -22px; }
+        }      
+      
+      
 /* التذييل المطور */
        /* --- تنسيق التذييل الجديد --- */
 .main-footer {
-    margin-top: 60px;
+    margin-top: 30px;
     background: #2d3436;
     color: white;
-    padding: 50px 20px 30px;
+    padding: 40px 15px 20px;
     border-radius: 40px 40px 0 0;
     position: relative;
     overflow: hidden;
 }
+.footer-logo {
+    font-family: 'Cairo', sans-serif;
+    font-size: 2.5rem; /* حجم كبير وبارز */
+    font-weight: 700;
+    text-align: center;
+    margin: 18px 0;
+    
+    /* تدرج لوني وردي احترافي */
+    background: linear-gradient(to right, #ff4757 20%, #ff6b81 40%, #ffffff 50%, #ff6b81 60%, #ff4757 80%);
+    background-size: 200% auto;
+    
+    /* جعل التدرج يظهر داخل النص فقط */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    /* أنيميشن التلألؤ */
+    animation: shine 3s linear infinite;
+    
+    /* ظل خفيف لإعطاء عمق */
+    filter: drop-shadow(0 5px 15px rgba(255, 71, 87, 0.2));
+}
 
+/* حركة التلألؤ */
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* التجاوب مع الهاتف */
+@media (max-width: 768px) {
+    .footer-logo {
+        font-size: 1.2rem; /* تصغير الحجم ليناسب الموبايل */
+        margin: 15px 0;
+    }
+}
 .footer-tagline {
     opacity: 0.8;
-    margin-bottom: 25px;
+    margin-bottom: 18px;
     transition: 0.3s;
 }
 
@@ -453,8 +849,8 @@
 /* منطقة الحقوق السفلى */
 .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin-top: 35px;
-    padding-top: 25px;
+    margin-top: 20px;
+    padding-top: 18px;
 }
 
 .school-name {
@@ -495,6 +891,50 @@
     50% { transform: scale(1.4); }
     100% { transform: scale(1); }
 }
+/* Container link styling */
+.designed-by a {
+    text-decoration: none;
+    color: inherit; /* Takes the color of the parent text */
+    transition: 0.3s;
+}
+/* التنسيق الأساسي للجزء السفلي */
+.designed-by {
+    margin-top: 20px;       /* ينزل قليلاً عن العناصر التي فوقه */
+    font-size: 0.9rem;      /* حجم الخط الأساسي للحاسوب */
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.designed-by a {
+    text-decoration: none;  /* إزالة السطر */
+    display: inline-block;  /* للسماح بحركات التحويل (Transform) */
+    transition: transform 0.3s ease; /* نعومة الحركة */
+}
+
+/* التنسيق الخاص باسمك */
+.highlight-primary {
+    color: #f54c03;         /* اللون البرتقالي المطلوب */
+    font-weight: bold;
+}
+
+/* تأثير الهوفر (عند تمرير الماوس) */
+.designed-by a:hover {
+    transform: translateY(3px); /* ينزل قليلاً تحت عند الهوفر */
+    opacity: 0.8;               /* شفافية خفيفة تعطي جمالية */
+}
+
+/* التجاوب مع الهاتف (Media Query) */
+@media (max-width: 768px) {
+    .designed-by {
+        font-size: 0.75rem;    /* يصغر حجم الخط في الهاتف */
+        margin-top: 15px;      /* تقليل المسافة قليلاً لتناسب الشاشات الصغيرة */
+    }
+    
+    .highlight-primary {
+        font-size: 0.75rem;     /* تصغير الاسم أكثر ليتناسب مع الهاتف */
+    }
+}
+
     </style>
 </head>
 
@@ -526,7 +966,42 @@
                 <div id="statusTimer" class="status-timer"></div>
             </div>
         </div>
+<h3 class="section-title">
+    <i class="far fa-clock" style="color: #f54c03; margin-left: 8px;"></i> أوقات العمل
+</h3>
 
+<div class="hours-card">
+    <table class="hours-table">
+        <tr>
+            <td>
+                <i class="fas fa-calendar-day"></i> 
+                <span>السبت – الخميس</span>
+            </td>
+            <td class="time-cell">
+                <div class="time-wrap"><span>17:00</span> <span>مساءً</span></div>
+                <span class="dash">&ndash;</span>
+                <div class="time-wrap"><span>09:00</span> <span>صباحاً</span></div>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <i class="fas fa-heart"></i> 
+                <span>الجمعة</span>
+            </td>
+            <td class="time-cell">
+                <div class="time-wrap"><span>17:00</span> <span>مساءً</span></div>
+                <span class="dash">&ndash;</span>
+                <div class="time-wrap"><span>14:00</span> <span>مساءً</span></div>
+            </td>
+        </tr>
+    </table>
+    
+    <p class="working-status">
+        <i class="fas fa-check-circle pulse-icon" style="color: #2ecc71; margin-left: 5px;"></i> 
+        نحن جاهزون لاستقبال طلبياتكم
+    </p>
+</div>
         <div class="links-container">
             <a href="tel:+213699748196" class="link-btn"><i class="fa fa-phone"></i> 96 81 74 0699</a>
             <a href="tel:+213660508949" class="link-btn"><i class="fa fa-phone"></i> 49 89 50 0660</a>
@@ -538,7 +1013,7 @@
 
         <h3 class="section-title">عدّاد المناسبات القادمة</h3>
         <div class="countdown-container">
-            <p style="font-weight: 700; margin-bottom: 15px;">لا تتركي اللحظات الأخيرة، احجزي طلبيتك الآن!</p>
+            <p style="font-weight: 700; margin-bottom: 15px;">⏳ لا تؤجلي للحظة الأخيرة… احجزي طلبيتك الآن!</p>
             <div class="countdown-grid">
                 <div class="countdown-item">
                     <span id="ramadan-days" class="cd-days">--</span>
@@ -551,35 +1026,45 @@
             </div>
         </div>
 
-        <h3 class="section-title">أوقات العمل</h3>
-        <div class="hours-card">
-            <table class="hours-table">
-                <tr>
-                    <td><i class="far fa-calendar-alt"></i> السبت – الخميس</td>
-                    <td>09:00 - 17:00</td>
-                </tr>
-                <tr>
-                    <td><i class="far fa-clock"></i> الجمعة</td>
-                    <td>14:00 - 17:00</td>
-                </tr>
-            </table>
+    
+        <section class="quote-section">
+    <h3 class="section-title">✨ طلب تسعيرة لمناسبة</h3>
+    <div class="order-form">
+        <div class="form-group">
+            <label><i class="fas fa-user"></i> الاسم الكامل:</label>
+            <input type="text" id="custName" placeholder="أدخل اسمك الكريم">
+        </div>
+        
+        <div class="form-group">
+            <label><i class="fas fa-calendar-check"></i> نوع المناسبة:</label>
+            <select id="eventType">
+                <option value="عرس">💍 عرس</option>
+                <option value="خطوبة / فاتحة">💎 خطوبة / فاتحة</option>
+                <option value="ختان">🕯️ ختان</option>
+                <option value="حفلة نجاح / تخرج">🎓 حفلة نجاح / تخرج</option>
+                <option value="أخرى">✨ أخرى</option>
+            </select>
         </div>
 
-        <h3 class="section-title">طلب تسعيرة لمناسبة</h3>
-        <div class="order-form">
-            <div class="form-group"><label>الاسم الكامل:</label><input type="text" id="custName" placeholder="أدخل اسمك الكريم"></div>
-            <div class="form-group"><label>نوع المناسبة:</label>
-                <select id="eventType">
-                    <option>عرس</option>
-                    <option>خطوبة / فاتحة</option>
-                    <option>ختان</option>
-                    <option>حفلة نجاح / تخرج</option>
-                    <option>أخرى</option>
-                </select>
-            </div>
-            <div class="form-group"><label>التفاصيل (الكمية والأنواع):</label><textarea id="orderNotes" rows="3" placeholder="مثال: 100 حبة عرايش و 50 بقلاوة..."></textarea></div>
-            <button class="btn-send" onclick="sendToWhatsApp()"><i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب</button>
+        <div class="form-group">
+            <label><i class="fas fa-clock"></i> تاريخ المناسبة التقريبي:</label>
+            <input type="date" id="eventDate">
         </div>
+        
+        <div class="form-group">
+            <label><i class="fas fa-pen"></i> تفاصيل إضافية:</label>
+            <textarea id="orderNotes" rows="3" placeholder="مثال: أريد إضافة تزيين خاص، أو استفسار عن السعر..."></textarea>
+        </div>
+
+        <div id="cartStatusNote" style="font-size: 0.8rem; color: #666; margin-bottom: 15px; background: #fff8f0; padding: 10px; border-right: 3px solid #f54c03;">
+            💡 سيتم إرفاق قائمة الحلويات الموجودة في سلتك تلقائياً مع هذا الطلب.
+        </div>
+        
+        <button class="btn-send" onclick="sendToWhatsApp()">
+            <i class="fab fa-whatsapp"></i> إرسال تفاصيل المناسبة
+        </button>
+    </div>
+</section>
 
         <h3 class="section-title">لماذا مدرسة أمير؟</h3>
         <div class="features-grid">
@@ -621,8 +1106,8 @@
         </div>
 
 <footer class="main-footer">
-    <div class="footer-logo">مدرسة أمير</div>
-    <p class="footer-tagline">فن صناعة الحلويات والمملحات وتكوينات احترافية</p>
+    <div class="footer-logo">مدرسة أمير للتكوين المحترف</div>
+    <p class="footer-tagline">فن صناعة الحلويات والمملحات والتكوينات الإحترافية</p>
     
     <div class="footer-social">
         <a href="https://www.facebook.com/amirformation" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
@@ -631,12 +1116,20 @@
     </div>
 
     <div class="footer-bottom">
-        <p class="copyright">© <span id="year"></span> <span class="school-name">مدرسة أمير</span> - جميع الحقوق محفوظة</p>
+        <p class="copyright">© <span id="year"></span> <span class="school-name">مدرسة أمير للتكوين المحترف</span> - جميع الحقوق محفوظة</p>
         <p class="made-with">
         صُنع بكل <i class="fas fa-heart heart-icon"></i> من الشلف إلى كل ربوع الجزائر
         </p>
     </div>
 </footer>
+        <div class="footer-bottom-info">
+    <p class="designed-by">
+        <span data-lang-key="footer_designed_by">صُمم وطُوِّر بواسطة</span> 
+        <a href="https://fennecvisionary.vercel.app/DevProfile.html" target="_blank" rel="noopener noreferrer">
+            <span class="highlight-primary" data-lang-key="developer_name">🦊 برادعي عبد الرحمن</span>
+        </a>
+    </p>
+</div>
 
 <div class="cart-floating-btn" onclick="toggleCart()">
     <i class="fas fa-shopping-basket"></i>
@@ -644,21 +1137,60 @@
 </div>
 
 <div id="cartModal" class="cart-modal">
-    <div class="cart-content">
-        <h3 style="margin-bottom:20px; color:var(--primary-dark)">سلة الطلبيات</h3>
-        <div id="cartItemsList"></div>
-        <div style="margin-top:20px; padding-top:10px; border-top:2px solid #eee">
-            <strong>المجموع التقديري: </strong>
-            <span id="totalPrice" style="font-size:1.2rem; color:var(--success)">0 دج</span>
+            <div class="cart-content">
+                <h3 style="text-align:right; color:var(--primary-dark); margin-bottom:10px;">🛒 سلة الطلبيات</h3>
+                
+                <div id="cartItemsList"></div>
+
+                <div class="delivery-section">
+                    <h4 style="font-size: 0.9rem; margin-bottom: 15px;"><i class="fas fa-truck-loading"></i> حساب تكلفة التوصيل الآلي</h4>
+                    
+                    <div class="delivery-input-group">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="destinationInput" placeholder="اكتب وجهة التوصيل (مثلاً: وسط مدينة الشلف)">
+                    </div>
+
+                    <div class="delivery-track">
+                        <i class="fas fa-motorcycle moto-icon" id="motoIcon"></i>
+                    </div>
+                    <div class="location-labels">
+                        <span>أولاد محمد</span>
+                        <span id="targetLabel">الوجهة</span>
+                    </div>
+
+                    <div class="delivery-result">
+                        <div>
+                            <span style="font-size: 0.8rem; color: #666;">المسافة:</span>
+                            <span id="distVal" style="font-weight: bold; color: var(--primary);">0 كم</span>
+                        </div>
+                        <div>
+                            <span style="font-size: 0.8rem; color: #666;">السعر:</span>
+                            <span id="deliveryCostText" style="font-weight: bold; color: var(--primary-dark);">0 دج</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top:15px; border-top:2px solid #eee; padding-top:10px; text-align: right;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                        <span>مجموع الحلويات:</span>
+                        <span id="subtotalPrice">0 دج</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <strong style="font-size: 1.1rem;">الإجمالي النهائي:</strong>
+                        <span id="totalWithDelivery" style="font-size:1.2rem; color:var(--success); font-weight: 800;">0 دج</span>
+                    </div>
+                </div>
+
+                <button class="btn-send" onclick="finalizeOrder()" style="margin-top:15px">
+                    <i class="fab fa-whatsapp"></i> تأكيد الطلب وإرسال عبر واتساب
+                </button>
+                <button onclick="toggleCart()" style="margin-top:8px; background:#f5f5f5; border:none; width:100%; padding:10px; border-radius:10px; cursor:pointer; font-family:'Cairo'">إغلاق</button>
+            </div>
         </div>
-        <p style="font-size: 0.8rem; color: var(--muted); margin: 10px 0;">* الأسعار قد تتغير حسب الحشو أو التزيين.</p>
-        <button class="btn-send" onclick="finalizeOrder()" style="margin-top:15px">
-            <i class="fab fa-whatsapp"></i> تأكيد الطلب وإرسال
-        </button>
-        <button onclick="toggleCart()" style="margin-top:10px; background:#eee; border:none; width:100%; padding:10px; border-radius:10px; cursor:pointer">إغلاق</button>
+
     </div>
 </div>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places"></script>
 <script>
 // 1. البيانات الأساسية
 const sweets = [
@@ -688,9 +1220,14 @@ const sweets = [
     { name: "غريبية", price: "50 دج", img: "images/ghriba.jpg" }
 ];
 
+// 1. المتغيرات الأساسية
 let cart = [];
 let charIdx = 0;
 const typingText = "فن صناعة الحلويات والمملحات وتكوينات احترافية";
+let deliveryCost = 0; // تكلفة التوصيل
+let finalDistance = 0; // المسافة المحسوبة
+let selectedAddress = ""; // العنوان المختار
+const originAddress = "أولاد محمد، الشلف، الجزائر"; // نقطة الانطلاق الثابتة
 
 // 2. وظائف العرض (UI Rendering)
 function renderSweets() {
@@ -708,7 +1245,6 @@ function renderSweets() {
     `).join('');
 }
 
-
 function typeEffect() {
     const desc = document.getElementById("schoolDesc");
     if (desc && charIdx < typingText.length) {
@@ -718,18 +1254,90 @@ function typeEffect() {
     }
 }
 
-// 3. منطق السلة (Cart Logic)
+// 3. دمج خرائط قوقل وحساب المسافة (Google Maps Integration)
+function initGoogleAutocomplete() {
+    const input = document.getElementById('destinationInput'); // تأكد من وجود هذا الأي دي في HTML
+    if (!input) return;
+
+    const options = {
+        componentRestrictions: { country: "dz" }, // حصر البحث في الجزائر
+        fields: ["formatted_address", "geometry"],
+        types: ["geocode"]
+    };
+
+    const autocomplete = new google.maps.places.Autocomplete(input, options);
+
+    autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (!place.geometry) return;
+
+        selectedAddress = place.formatted_address;
+        if(document.getElementById('targetLabel')) {
+            document.getElementById('targetLabel').innerText = place.formatted_address.split(',')[0];
+        }
+        calculateDistance(place.formatted_address);
+    });
+}
+
+function calculateDistance(dest) {
+    const service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix({
+        origins: [originAddress],
+        destinations: [dest],
+        travelMode: 'DRIVING',
+    }, (response, status) => {
+        if (status === 'OK') {
+            const results = response.rows[0].elements[0];
+            if (results.status === 'OK') {
+                const distanceKm = results.distance.value / 1000;
+                finalDistance = distanceKm.toFixed(1);
+                applyDeliveryLogic(distanceKm);
+            }
+        }
+    });
+}
+
+// 4. خوارزمية حساب السعر (150 دج، 200 دج، +50 دج لكل 3 كم)
+function applyDeliveryLogic(dist) {
+    let cost = 0;
+    if (dist > 0 && dist < 5) {
+        cost = 150;
+    } else if (dist >= 5 && dist < 5.1) { // 5 كم بالضبط
+        cost = 200;
+    } else if (dist > 5) {
+        let extra = dist - 5;
+        let extraCharges = Math.ceil(extra / 3);
+        cost = 200 + (extraCharges * 50);
+    }
+
+    deliveryCost = cost;
+    
+    // تحديث الواجهة
+    if(document.getElementById('distVal')) document.getElementById('distVal').innerText = dist.toFixed(1) + " كم";
+    if(document.getElementById('deliveryCostText')) document.getElementById('deliveryCostText').innerText = cost + " دج";
+    
+    // تحريك أيقونة الدراجة
+    const moto = document.getElementById('motoIcon');
+    if(moto) {
+        let movePercent = Math.min(dist * 6, 92); 
+        moto.style.right = movePercent + "%";
+    }
+
+    renderCartItems(); // تحديث المجموع النهائي في السلة
+}
+
+// 5. منطق السلة (Cart Logic)
 function addToCart(index) {
     const item = sweets[index];
     const existing = cart.find(c => c.name === item.name);
+    
     if (existing) {
-        existing.qty += 10;
+        existing.qty += 10; 
     } else {
-        cart.push({ ...item, qty: 50 }); // الحد الأدنى 50 حبة
+        cart.push({ ...item, qty: 50 }); 
     }
     updateCartUI();
     
-    // تأثير بصري بسيط للزر
     const btn = event.currentTarget;
     const originalText = btn.innerHTML;
     btn.innerHTML = "تمت الإضافة ✓";
@@ -741,52 +1349,101 @@ function addToCart(index) {
 }
 
 function updateCartUI() {
-    document.getElementById("cartCount").innerText = cart.length;
+    const cartCount = document.getElementById("cartCount");
+    if (cartCount) cartCount.innerText = cart.length;
 }
 
 function toggleCart() {
     const modal = document.getElementById("cartModal");
-    modal.style.display = (modal.style.display === "flex") ? "none" : "flex";
-    if (modal.style.display === "flex") renderCartItems();
+    const isOpen = modal.style.display === "flex";
+    
+    if (isOpen) {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+    } else {
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+        renderCartItems();
+    }
 }
 
 function renderCartItems() {
     const container = document.getElementById("cartItemsList");
-    let total = 0;
+    const subtotalEl = document.getElementById("subtotalPrice"); // مجموع الحلويات فقط
+    const totalWithDeliveryEl = document.getElementById("totalWithDelivery"); // المجموع الكلي
+    let subtotal = 0;
     
     if (cart.length === 0) {
-        container.innerHTML = "<p style='text-align:center; padding:20px;'>السلة فارغة</p>";
-        document.getElementById("totalPrice").innerText = "0 دج";
+        container.innerHTML = `<div style="text-align:center; padding:30px;"><p>السلة فارغة</p></div>`;
+        if (subtotalEl) subtotalEl.innerText = "0 دج";
+        if (totalWithDeliveryEl) totalWithDeliveryEl.innerText = "0 دج";
         return;
     }
 
     container.innerHTML = cart.map((item, index) => {
-        const priceValue = parseInt(item.price);
-        const subtotal = priceValue * item.qty;
-        total += subtotal;
+        const priceNum = parseInt(item.price.toString().replace(/\D/g, '')) || 0;
+        subtotal += priceNum * item.qty;
+
         return `
-            <div class="cart-item">
-                <div style="flex:2">
-                    <strong>${item.name}</strong><br>
-                    <small>${item.price} للحبة</small>
+            <div class="cart-item-card">
+                <img src="${item.img}" class="item-img-mini">
+                <div style="flex-grow:1; margin-right: 10px;">
+                    <h4 style="margin:0;">${item.name}</h4>
+                    <span style="color:#27ae60;">${item.price}</span>
                 </div>
-                <div style="flex:1">
-                    <input type="number" class="qty-input" value="${item.qty}" min="1" 
-                           onchange="updateQty(${index}, this.value)"> حبة
+                <div class="qty-wrapper">
+                    <button class="qty-btn-small" onclick="changeQty(${index}, -10)">-</button>
+                    <span>${item.qty}</span>
+                    <button class="qty-btn-small" onclick="changeQty(${index}, 10)">+</button>
                 </div>
-                <button onclick="removeFromCart(${index})" style="color:red; border:none; background:none; cursor:pointer">
-                    <i class="fas fa-trash"></i>
+                <button onclick="removeFromCart(${index})" style="background:none; border:none; color:#ff4757;">
+                    <i class="far fa-trash-alt"></i>
                 </button>
             </div>`;
     }).join('');
     
-    document.getElementById("totalPrice").innerText = total + " دج";
+    if (subtotalEl) subtotalEl.innerText = subtotal.toLocaleString() + " دج";
+    if (totalWithDeliveryEl) totalWithDeliveryEl.innerText = (subtotal + deliveryCost).toLocaleString() + " دج";
 }
 
-function updateQty(index, val) {
-    cart[index].qty = Math.max(1, parseInt(val) || 0);
+function changeQty(index, delta) {
+    cart[index].qty = Math.max(10, cart[index].qty + delta);
     renderCartItems();
 }
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    renderCartItems();
+    updateCartUI();
+}
+
+// 6. إرسال الطلب النهائي (WhatsApp)
+function finalizeOrder() {
+    if (cart.length === 0) return alert("السلة فارغة!");
+    if (deliveryCost === 0 && selectedAddress === "") return alert("يرجى تحديد وجهة التوصيل أولاً عبر البحث");
+
+    let message = `*🌟 طلب جديد - Amir Délices 🌟*%0A`;
+    message += `-----------------------------------%0A`;
+    cart.forEach(item => {
+        message += `🔸 *${item.name}* (${item.qty} حبة)%0A`;
+    });
+    message += `-----------------------------------%0A`;
+    message += `📍 الوجهة: ${selectedAddress}%0A`;
+    message += `📏 المسافة: ${finalDistance} كم%0A`;
+    message += `🚚 التوصيل: ${deliveryCost} دج%0A`;
+    message += `💰 *الإجمالي: ${document.getElementById("totalWithDelivery").innerText}*%0A`;
+    
+    window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
+}
+
+// 7. التحميل عند البدء
+window.onload = () => {
+    renderSweets();
+    typeEffect();
+    if (typeof google !== 'undefined') {
+        initGoogleAutocomplete();
+    }
+};
 
 function removeFromCart(index) {
     cart.splice(index, 1);
@@ -844,21 +1501,76 @@ function updateCountdowns() {
 }
 
 function finalizeOrder() {
-    if (cart.length === 0) { alert("السلة فارغة!"); return; }
-    let message = `*طلب جديد من مدرسة أمير*%0A--------------------------%0A`;
-    cart.forEach(item => message += `• ${item.name}: ${item.qty} حبة%0A`);
+    if (cart.length === 0) { 
+        alert("السلة فارغة!"); 
+        return; 
+    }
+
+    // رأس الرسالة بشكل أنيق
+    let message = `*🌟 طلب جديد - Amir Délices 🌟*%0A`;
+    message += `-----------------------------------%0A`;
+    message += `📦 *تفاصيل الطلبية:*%0A%0A`;
+
+    // قائمة المنتجات مع تنسيق الرموز
+    cart.forEach(item => {
+        message += `🔸 *${item.name}* %0A   🔹 الكمية: ${item.qty} حبة%0A`;
+    });
+
+    // المجموع التقديري
     const total = document.getElementById("totalPrice").innerText;
-    message += `--------------------------%0A*المجموع التقديري:* ${total}%0A%0A*شكراً لكم!*`;
+    message += `%0A-----------------------------------%0A`;
+    message += `💰 *المجموع التقديري:* ${total}%0A`;
+    message += `-----------------------------------%0A`;
+
+    // تذييل الرسالة
+    message += `✨ *شكراً لاختياركم حلوياتنا!*%0A`;
+    message += `📍 تم الطلب عبر الموقع الرسمي.`;
+
+    // فتح واتساب
     window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
 }
 
 function sendToWhatsApp() {
-    const name = document.getElementById('custName').value;
+    const name = document.getElementById('custName').value.trim();
     const type = document.getElementById('eventType').value;
-    const notes = document.getElementById('orderNotes').value;
-    if(!name || !notes) { alert("من فضلك املأ البيانات"); return; }
-    const message = `*طلب تسعيرة جديد*%0A*الاسم:* ${name}%0A*المناسبة:* ${type}%0A*التفاصيل:* ${notes}`;
-    window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
+    const date = document.getElementById('eventDate').value;
+    const notes = document.getElementById('orderNotes').value.trim();
+
+    // التحقق من الاسم
+    if (!name) {
+        alert("⚠️ من فضلك، املأ اسمك الكريم.");
+        return;
+    }
+
+    // 1. رأس الرسالة
+    let message = `*📋 طلب تسعيرة لمناسبة خاصة*%0A`;
+    message += `-----------------------------------%0A`;
+    message += `👤 *المرسل:* ${name}%0A`;
+    message += `🎉 *نوع المناسبة:* ${type}%0A`;
+    message += `📅 *التاريخ:* ${date ? date : 'غير محدد بعد'}%0A`;
+    message += `-----------------------------------%0A%0A`;
+
+    // 2. دمج محتويات السلة (إذا كانت موجودة)
+    if (typeof cart !== 'undefined' && cart.length > 0) {
+        message += `📦 *الحلويات المختارة من السلة:*%0A`;
+        cart.forEach(item => {
+            message += `• ${item.name} (${item.qty} حبة)%0A`;
+        });
+        message += `%0A`;
+    }
+
+    // 3. إضافة الملاحظات الإضافية
+    if (notes) {
+        message += `📝 *ملاحظات إضافية:*%0A${notes}%0A`;
+    }
+
+    message += `-----------------------------------%0A`;
+    message += `✨ *تم الإرسال من الموقع الرسمي لـ Amir Délices*`;
+
+    const phoneNumber = "213699748196";
+    const url = `https://wa.me/${phoneNumber}?text=${message}`;
+    
+    window.open(url, '_blank');
 }
 const testimonials = [
     { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، تذوب في الفم يعطيك الصحة شاف.", stars: 5 },
@@ -878,29 +1590,48 @@ const testiList = document.getElementById("testimonialsList");
         <p class="testi-text">"${t.text}"</p>
     </div>`;
 });
-// 5. التحكم في الصفحة (Scroll & Events)
+// 1. دالة الصعود للأعلى (يجب أن تكون خارج onload لتكون عامة)
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// 2. التحكم في ظهور الزر عند التمرير
 window.onscroll = function() {
     const btn = document.getElementById("backToTop");
-    if(btn) btn.style.display = (window.scrollY > 500) ? "flex" : "none";
+    if (btn) {
+        // سيظهر الزر بعد تجاوز 500 بكسل من الأعلى
+        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+            btn.style.display = "flex";
+        } else {
+            btn.style.display = "none";
+        }
+    }
 };
 
-
-// تهيئة كل شيء عند تحميل الصفحة
+// 3. تهيئة الأحداث عند تحميل الصفحة
 window.onload = () => {
-    renderSweets();
-    typeEffect();
-    updateShopStatus();
-    updateCountdowns();
-    
-   function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
-// تفعيل الأسئلة الشائعة
+    if (typeof renderSweets === "function") renderSweets();
+    if (typeof typeEffect === "function") typeEffect();
+    if (typeof updateShopStatus === "function") updateShopStatus();
+    if (typeof updateCountdowns === "function") updateCountdowns();
+
+    // ربط زر الصعود بالدالة برمجياً لضمان العمل
+    const btnTop = document.getElementById("backToTop");
+    if (btnTop) {
+        btnTop.onclick = scrollToTop;
+    }
+
+    // تفعيل الأسئلة الشائعة
     document.querySelectorAll(".faq-question").forEach(q => {
         q.onclick = () => q.parentElement.classList.toggle("active");
     });
 
     const yearEl = document.getElementById("year");
-    if(yearEl) yearEl.innerText = new Date().getFullYear();
-}; 
+    if (yearEl) yearEl.innerText = new Date().getFullYear();
+};
 </script>
     </body>
 </div>
