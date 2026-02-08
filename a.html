@@ -1138,391 +1138,173 @@
     </div>
 </div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<div id="sweetsGrid"></div> <div id="cartCount">0</div> <div id="cartItemsList"></div> <div id="totalWithDelivery">0 دج</div> <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
-<script>
-// 1. البيانات الأساسية
+// 1. البيانات الأساسية - تم إضافة معرف (id) لكل منتج ليعمل نظام السلة
 const sweets = [
-    { name: "تشارك مسكّر", price: "70 دج", img: "images/tcharakmsakar.jpg" },
-    { name: "تشارك العريان", price: "70 دج", img: "images/tcharakarian.jpg" },
-    { name: "عرايش", price: "90 دج", img: "images/araiech.jpg" },
-    { name: "كعيكعات", price: "80 دج", img: "images/kaikat.jpg" },
-    { name: "مقروض زمان", price: "70 دج", img: "images/maqrout.jpg" },
-    { name: "مقروض اللوز", price: "100 دج", img: "images/maqroutlouz.jpg" },
-    { name: "كفتة", price: "200 دج", img: "images/kefta.jpg" },
-    { name: "دزيريات", price: "100 دج", img: "images/dziriyat.jpg" },
-    { name: "بقلاوة", price: "80 دج", img: "images/baklawa.jpg" },
-    { name: "بقلاوة تركية", price: "80 دج", img: "images/turkish.jpg" },
-    { name: "قنيدلات", price: "80 دج", img: "images/qnidlet.jpg" },
-    { name: "مشوك الباي", price: "200 دج", img: "images/mcheweklouz.jpg" },
-    { name: "الفاكهة", price: "200 دج", img: "images/fruits.jpg" },
-    { name: "صابلي المعجون", price: "40 دج", img: "images/sabli.jpg" },
-    { name: "مشوك", price: "60 دج", img: "images/mchewek.jpg" },
-    { name: "جلجلانية", price: "70 دج", img: "images/djeljlania.jpg" },
-    { name: "مخبز", price: "120 دج", img: "images/mkhabez.jpg" },
-    { name: "كعك النقاش", price: "70 دج", img: "images/naqach.jpg" },
-    { name: "سنيكرز", price: "80 دج", img: "images/snickers.jpg" },
-    { name: "قلوب الشكولاطة", price: "80 دج", img: "images/chikoula.jpg" },
-    { name: "بنيون", price: "80 دج", img: "images/bniwen.jpg" },
-    { name: "طابع زمان", price: "30 دج", img: "images/tabaa.jpg" },
-    { name: "طابع الطلية", price: "40 دج", img: "images/tabaatalia.jpg" },
-    { name: "غريبية", price: "50 دج", img: "images/ghriba.jpg" }
+    { id: 1, name: "تشارك مسكّر", price: 70, img: "images/tcharakmsakar.jpg" },
+    { id: 2, name: "تشارك العريان", price: 70, img: "images/tcharakarian.jpg" },
+    { id: 3, name: "عرايش", price: 90, img: "images/araiech.jpg" },
+    { id: 4, name: "كعيكعات", price: 80, img: "images/kaikat.jpg" },
+    { id: 5, name: "مقروض زمان", price: 70, img: "images/maqrout.jpg" },
+    { id: 6, name: "مقروض اللوز", price: 100, img: "images/maqroutlouz.jpg" },
+    { id: 7, name: "كفتة", price: 200, img: "images/kefta.jpg" },
+    { id: 8, name: "دزيريات", price: 100, img: "images/dziriyat.jpg" },
+    { id: 9, name: "بقلاوة", price: 80, img: "images/baklawa.jpg" },
+    { id: 10, name: "بقلاوة تركية", price: 80, img: "images/turkish.jpg" },
+    { id: 11, name: "قنيدلات", price: 80, img: "images/qnidlet.jpg" },
+    { id: 12, name: "مشوك الباي", price: 200, img: "images/mcheweklouz.jpg" },
+    { id: 13, name: "الفاكهة", price: 200, img: "images/fruits.jpg" },
+    { id: 14, name: "صابلي المعجون", price: 40, img: "images/sabli.jpg" },
+    { id: 15, name: "مشوك", price: 60, img: "images/mchewek.jpg" },
+    { id: 16, name: "جلجلانية", price: 70, img: "images/djeljlania.jpg" },
+    { id: 17, name: "مخبز", price: 120, img: "images/mkhabez.jpg" },
+    { id: 18, name: "كعك النقاش", price: 70, img: "images/naqach.jpg" },
+    { id: 19, name: "سنيكرز", price: 80, img: "images/snickers.jpg" },
+    { id: 20, name: "قلوب الشكولاطة", price: 80, img: "images/chikoula.jpg" },
+    { id: 21, name: "بنيون", price: 80, img: "images/bniwen.jpg" },
+    { id: 22, name: "طابع زمان", price: 30, img: "images/tabaa.jpg" },
+    { id: 23, name: "طابع الطلية", price: 40, img: "images/tabaatalia.jpg" },
+    { id: 24, name: "غريبية", price: 50, img: "images/ghriba.jpg" }
 ];
 
 let cart = [];
-    let deliveryCost = 0;
-    const origin = { lat: 36.1622, lng: 1.3417 }; // أولاد محمد
+let deliveryCost = 0;
+let selectedAddress = ""; // إضافة متغير العنوان المختار
+let finalDistance = 0;    // إضافة متغير المسافة
+const origin = { lat: 36.1622, lng: 1.3417 }; // أولاد محمد
 
-    // 1. عرض المنتجات
-    function renderSweets() {
-        const grid = document.getElementById('sweetsGrid');
-        grid.innerHTML = sweets.map(s => `
-            <div class="sweet-card">
-                <img src="${s.img}" class="sweet-img" onerror="this.src='https://via.placeholder.com/150'">
-                <div style="font-weight:bold; margin:8px 0; font-size:0.9rem;">${s.name}</div>
-                <div style="color:var(--primary-dark); font-weight:800;">${s.price} دج</div>
-                <button class="add-to-cart-btn" onclick="addToCart(${s.id})">أضف للطلب</button>
+// 2. عرض المنتجات (تم تصليح id)
+function renderSweets() {
+    const grid = document.getElementById('sweetsGrid');
+    if(!grid) return;
+    grid.innerHTML = sweets.map(s => `
+        <div class="sweet-card">
+            <img src="${s.img}" class="sweet-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div style="font-weight:bold; margin:8px 0; font-size:0.9rem;">${s.name}</div>
+            <div style="color:var(--primary-dark); font-weight:800;">${s.price} دج</div>
+            <button class="add-to-cart-btn" onclick="addToCart(${s.id})">أضف للطلب</button>
+        </div>
+    `).join('');
+}
+
+// 3. إدارة السلة (إصلاح البحث عن المنتج)
+function addToCart(id) {
+    const item = sweets.find(s => s.id === id);
+    const inCart = cart.find(c => c.id === id);
+    if (inCart) {
+        inCart.qty += 10; // الحلويات تطلب بالكمية عادة
+    } else {
+        cart.push({ ...item, qty: 50 }); // أقل كمية 50 حبة مثلاً
+    }
+    updateCartUI();
+}
+
+function updateCartUI() {
+    const countEl = document.getElementById('cartCount');
+    if(countEl) countEl.innerText = cart.reduce((a, b) => a + b.qty, 0);
+    
+    const list = document.getElementById('cartItemsList');
+    if(!list) return;
+
+    if (cart.length === 0) {
+        list.innerHTML = "<p style='text-align:center; padding:20px;'>السلة فارغة</p>";
+    } else {
+        list.innerHTML = cart.map((c, index) => `
+            <div class="cart-item-card" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #eee; padding:5px;">
+                <div style="text-align:right;">
+                    <div style="font-weight:bold;">${c.name}</div>
+                    <div style="font-size:0.8rem;">${c.price} دج × ${c.qty}</div>
+                </div>
+                <div style="display:flex; gap:5px;">
+                    <button onclick="changeQty(${c.id}, 10)" style="width:25px;">+</button>
+                    <button onclick="changeQty(${c.id}, -10)" style="width:25px;">-</button>
+                </div>
             </div>
         `).join('');
     }
+    calculateTotal();
+}
 
-    // 2. إدارة السلة
-    function addToCart(id) {
-        const item = sweets.find(s => s.id === id);
-        const inCart = cart.find(c => c.id === id);
-        if (inCart) inCart.qty++;
-        else cart.push({ ...item, qty: 1 });
-        updateCartUI();
-    }
-
-    function updateCartUI() {
-        document.getElementById('cartCount').innerText = cart.reduce((a, b) => a + b.qty, 0);
-        const list = document.getElementById('cartItemsList');
-        if (cart.length === 0) {
-            list.innerHTML = "<p style='text-align:center; padding:20px;'>السلة فارغة</p>";
-        } else {
-            list.innerHTML = cart.map(c => `
-                <div class="cart-item-card">
-                    <img src="${c.img}" class="item-img-mini">
-                    <div style="flex:1; text-align:right;">
-                        <div style="font-weight:bold; font-size:0.85rem;">${c.name}</div>
-                        <div style="color:var(--primary); font-size:0.8rem;">${c.price} دج</div>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:5px; background:#eee; padding:5px; border-radius:10px;">
-                        <button onclick="changeQty(${c.id}, 1)" style="border:none; background:white; width:20px; border-radius:5px;">+</button>
-                        <span>${c.qty}</span>
-                        <button onclick="changeQty(${c.id}, -1)" style="border:none; background:white; width:20px; border-radius:5px;">-</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-        calculateTotal();
-    }
-
-    function changeQty(id, delta) {
-        const item = cart.find(c => c.id === id);
+function changeQty(id, delta) {
+    const item = cart.find(c => c.id === id);
+    if(item) {
         item.qty += delta;
         if (item.qty < 1) cart = cart.filter(c => c.id !== id);
         updateCartUI();
     }
+}
 
-    function calculateTotal() {
-        const subtotal = cart.reduce((a, b) => a + (b.price * b.qty), 0);
-        document.getElementById('totalWithDelivery').innerText = (subtotal + deliveryCost) + " دج";
-    }
+function calculateTotal() {
+    const subtotal = cart.reduce((a, b) => a + (b.price * b.qty), 0);
+    const totalEl = document.getElementById('totalWithDelivery');
+    if(totalEl) totalEl.innerText = (subtotal + deliveryCost) + " دج";
+}
 
-    function toggleCart() {
-        const modal = document.getElementById('cartModal');
-        modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
-    }
-
-    // 3. نظام البحث والتوصيل
-    async function searchLocation(query) {
-        const dropdown = document.getElementById('searchSuggestions');
-        if (query.length < 3) { dropdown.style.display = 'none'; return; }
-        
-        try {
-            const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}, Chlef, Algeria&limit=5`);
-            const data = await res.json();
+// 4. نظام البحث والتوصيل (التصحيح)
+async function searchLocation(query) {
+    const dropdown = document.getElementById('searchSuggestions');
+    if (query.length < 3) { if(dropdown) dropdown.style.display = 'none'; return; }
+    
+    try {
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}, Chlef, Algeria&limit=5`);
+        const data = await res.json();
+        if(dropdown) {
             dropdown.innerHTML = data.map(d => `
-                <div class="search-item" onclick="selectLoc(${d.lat}, ${d.lon}, '${d.display_name}')">${d.display_name}</div>
+                <div class="search-item" style="cursor:pointer; padding:5px; border-bottom:1px solid #eee;" onclick="selectLoc(${d.lat}, ${d.lon}, '${d.display_name}')">${d.display_name}</div>
             `).join('');
             dropdown.style.display = 'block';
-        } catch (e) {}
-    }
-
-    function selectLoc(lat, lon, name) {
-        document.getElementById('destinationInput').value = name;
-        document.getElementById('searchSuggestions').style.display = 'none';
-        document.getElementById('targetLabel').innerText = name.split(',')[0];
-
-        // حساب المسافة الحقيقية
-        fetch(`https://router.project-osrm.org/route/v1/driving/${origin.lng},${origin.lat};${lon},${lat}?overview=false`)
-            .then(r => r.json())
-            .then(data => {
-                const dist = data.routes[0].distance / 1000;
-                document.getElementById('distVal').innerText = dist.toFixed(1) + " كم";
-                
-                // منطق التسعير
-                let cost = 150;
-                if (dist > 5) cost = 200 + Math.ceil((dist - 5) / 3) * 50;
-                deliveryCost = cost;
-                document.getElementById('deliveryCostText').innerText = cost + " دج";
-                
-                // تحريك الموتو
-                const move = Math.min((dist / 20) * 100, 92);
-                document.getElementById('motoIcon').style.right = move + "%";
-                calculateTotal();
-            });
-    }
-
-
-// 6. إرسال الطلب النهائي (WhatsApp) مع كافة الإضافات
-function finalizeOrder() {
-    // جلب بيانات العميل الإضافية (إذا كانت موجودة في HTML الخاص بك)
-    const customerName = document.getElementById("customerName") ? document.getElementById("customerName").value : "غير محدد";
-    const customerPhone = document.getElementById("customerPhone") ? document.getElementById("customerPhone").value : "غير محدد";
-
-    // التحقق من صحة البيانات قبل الإرسال
-    if (cart.length === 0) {
-        return alert("السلة فارغة! يرجى إضافة بعض الحلويات أولاً.");
-    }
-    
-    if (!selectedAddress || selectedAddress === "") {
-        return alert("يرجى تحديد وجهة التوصيل من خلال البحث على الخريطة أولاً.");
-    }
-
-    // بناء رسالة الواتساب
-    let message = `*🌟 طلب جديد من متجر مدرسة أمير 🌟*%0A%0A`;
-    
-    message += `👤 *معلومات الزبون:*%0A`;
-    message += `- الاسم: ${customerName}%0A`;
-    message += `- الهاتف: ${customerPhone}%0A`;
-    message += `-----------------------------------%0A`;
-    
-    message += `🛒 *قائمة المشتريات:*%0A`;
-    cart.forEach((item, index) => {
-        message += `${index + 1}. *${item.name}* (${item.qty} حبة) -> ${item.price * item.qty} دج%0A`;
-    });
-    
-    message += `-----------------------------------%0A`;
-    
-    message += `🚚 *تفاصيل التوصيل:*%0A`;
-    message += `📍 الوجهة: ${selectedAddress}%0A`;
-    message += `📏 المسافة: ${finalDistance} كم%0A`;
-    message += `💰 سعر التوصيل: ${deliveryCost} دج%0A`;
-    
-    // حساب المجموع الكلي النهائي
-    const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-    const totalFinal = subtotal + deliveryCost;
-
-    message += `-----------------------------------%0A`;
-    message += `💵 *الإجمالي النهائي: ${totalFinal} دج*%0A`;
-    message += `-----------------------------------%0A`;
-    message += `✨ شكراً لثقتكم بمدرسة أمير!`;
-
-    // فتح الرابط في نافذة جديدة
-    const whatsappNumber = "213699748196";
-    const url = `https://wa.me/${whatsappNumber}?text=${message}`;
-    
-    window.open(url, '_blank');
-}
-
-// 7. التحميل عند البدء
-window.onload = () => {
-    renderSweets();
-    typeEffect();
-    if (typeof google !== 'undefined') {
-        initGoogleAutocomplete();
-    }
-};
-
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    renderCartItems();
-    updateCartUI();
-}
-
-// 4. أدوات المساعدة (Status, Countdowns, WhatsApp)
-function updateShopStatus() {
-    const now = new Date();
-    const day = now.getDay();
-    const currentTime = now.getHours() + now.getMinutes() / 60;
-    let isOpen = false;
-    let nextAction = "";
-
-    if (day === 5) { // الجمعة
-        if (currentTime >= 14 && currentTime < 17) { isOpen = true; nextAction = "نغلق الساعة 17:00"; }
-        else if (currentTime < 14) nextAction = "نفتح اليوم الساعة 14:00";
-        else nextAction = "نفتح غداً الساعة 09:00";
-    } else {
-        if (currentTime >= 9 && currentTime < 17) { isOpen = true; nextAction = "نغلق الساعة 17:00"; }
-        else if (currentTime < 9) nextAction = "نفتح اليوم الساعة 09:00";
-        else nextAction = (day === 4) ? "نفتح غداً الساعة 14:00" : "نفتح غداً الساعة 09:00";
-    }
-
-    const statusBadge = document.getElementById('shopStatus');
-    const statusDot = document.getElementById('statusDot');
-    const statusText = document.getElementById('statusText');
-    const statusTimer = document.getElementById('statusTimer');
-
-    if(statusBadge) {
-        statusBadge.className = isOpen ? "status-badge status-open" : "status-badge status-closed";
-        statusDot.className = isOpen ? "dot dot-open" : "dot dot-closed";
-        statusText.innerText = isOpen ? "مرحباً! محلنا مفتوح حالياً ✅" : "نعتذر، المحل مغلق الآن ❌";
-        statusTimer.innerText = nextAction;
-    }
-}
-
-function updateCountdowns() {
-    const ramadanDate = new Date("February 18, 2026 00:00:00").getTime();
-    const eidDate = new Date("March 20, 2026 00:00:00").getTime();
-    const now = new Date().getTime();
-
-    const setDays = (id, target) => {
-        const el = document.getElementById(id);
-        if (el) {
-            const diff = target - now;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            el.innerText = days > 0 ? days : "0";
         }
-    };
-
-    setDays("ramadan-days", ramadanDate);
-    setDays("eid-days", eidDate);
+    } catch (e) { console.log("خطأ في جلب الموقع"); }
 }
 
+function selectLoc(lat, lon, name) {
+    selectedAddress = name;
+    document.getElementById('destinationInput').value = name;
+    document.getElementById('searchSuggestions').style.display = 'none';
+
+    fetch(`https://router.project-osrm.org/route/v1/driving/${origin.lng},${origin.lat};${lon},${lat}?overview=false`)
+        .then(r => r.json())
+        .then(data => {
+            finalDistance = (data.routes[0].distance / 1000).toFixed(1);
+            document.getElementById('distVal').innerText = finalDistance + " كم";
+            
+            // حساب السعر
+            deliveryCost = finalDistance > 5 ? 200 + Math.ceil((finalDistance - 5) / 3) * 50 : 150;
+            
+            document.getElementById('deliveryCostText').innerText = deliveryCost + " دج";
+            calculateTotal();
+        });
+}
+
+// 5. إرسال الطلب النهائي
 function finalizeOrder() {
-    if (cart.length === 0) { 
-        alert("السلة فارغة!"); 
-        return; 
-    }
+    if (cart.length === 0) return alert("السلة فارغة!");
+    if (!selectedAddress) return alert("يرجى تحديد العنوان أولاً!");
 
-    // رأس الرسالة بشكل أنيق
-    let message = `*🌟 طلب جديد - Amir Délices 🌟*%0A`;
+    const customerName = document.getElementById("customerName")?.value || "زبون جديد";
+    
+    let message = `*🌟 طلب جديد - مدرسة أمير 🌟*%0A`;
+    message += `👤 اسم الزبون: ${customerName}%0A`;
     message += `-----------------------------------%0A`;
-    message += `📦 *تفاصيل الطلبية:*%0A%0A`;
-
-    // قائمة المنتجات مع تنسيق الرموز
     cart.forEach(item => {
-        message += `🔸 *${item.name}* %0A   🔹 الكمية: ${item.qty} حبة%0A`;
+        message += `🔸 *${item.name}* (${item.qty} حبة)%0A`;
     });
-
-    // المجموع التقديري
-    const total = document.getElementById("totalPrice").innerText;
-    message += `%0A-----------------------------------%0A`;
-    message += `💰 *المجموع التقديري:* ${total}%0A`;
     message += `-----------------------------------%0A`;
-
-    // تذييل الرسالة
-    message += `✨ *شكراً لاختياركم حلوياتنا!*%0A`;
-    message += `📍 تم الطلب عبر الموقع الرسمي.`;
-
-    // فتح واتساب
+    message += `📍 الوجهة: ${selectedAddress}%0A`;
+    message += `🚚 التوصيل: ${deliveryCost} دج (%0A`;
+    message += `💰 *الإجمالي: ${document.getElementById("totalWithDelivery").innerText}*%0A`;
+    
     window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
 }
 
-function sendToWhatsApp() {
-    const name = document.getElementById('custName').value.trim();
-    const type = document.getElementById('eventType').value;
-    const date = document.getElementById('eventDate').value;
-    const notes = document.getElementById('orderNotes').value.trim();
-
-    // التحقق من الاسم
-    if (!name) {
-        alert("⚠️ من فضلك، املأ اسمك الكريم.");
-        return;
-    }
-
-    // 1. رأس الرسالة
-    let message = `*📋 طلب تسعيرة لمناسبة خاصة*%0A`;
-    message += `-----------------------------------%0A`;
-    message += `👤 *المرسل:* ${name}%0A`;
-    message += `🎉 *نوع المناسبة:* ${type}%0A`;
-    message += `📅 *التاريخ:* ${date ? date : 'غير محدد بعد'}%0A`;
-    message += `-----------------------------------%0A%0A`;
-
-    // 2. دمج محتويات السلة (إذا كانت موجودة)
-    if (typeof cart !== 'undefined' && cart.length > 0) {
-        message += `📦 *الحلويات المختارة من السلة:*%0A`;
-        cart.forEach(item => {
-            message += `• ${item.name} (${item.qty} حبة)%0A`;
-        });
-        message += `%0A`;
-    }
-
-    // 3. إضافة الملاحظات الإضافية
-    if (notes) {
-        message += `📝 *ملاحظات إضافية:*%0A${notes}%0A`;
-    }
-
-    message += `-----------------------------------%0A`;
-    message += `✨ *تم الإرسال من الموقع الرسمي لـ Amir Délices*`;
-
-    const phoneNumber = "213699748196";
-    const url = `https://wa.me/${phoneNumber}?text=${message}`;
-    
-    window.open(url, '_blank');
-}
-const testimonials = [
-    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، تذوب في الفم يعطيك الصحة شاف.", stars: 5 },
-    { name: "كريمة ب.", text: "درت فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش.", stars: 5 },
-    { name: "سمية مهداوي", text: "أحسن مدرسة في الشلف، المعاملة روعة والتعليم بضمير.", stars: 5 },
-    { name: "فاطمة الزهراء", text: "المقروض جاني مرمل ومعسل للقلب، ربي يبارك في رزقكم.", stars: 5 },
-    { name: "فايزة أم أنس", text: "حمرتولي وجهي في عرس خويا، الضياف قاع سألو على الحلويات.", stars: 5 }
-];
-
-const testiList = document.getElementById("testimonialsList");
-[...testimonials, ...testimonials].forEach(t => {
-    let starHtml = "";
-    for(let i=0; i<t.stars; i++) starHtml += `<i class="fas fa-star"></i>`;
-    testiList.innerHTML += `<div class="testimonial-card">
-        <div class="testi-name">${t.name}</div>
-        <div class="stars">${starHtml}</div>
-        <p class="testi-text">"${t.text}"</p>
-    </div>`;
-});
-// 1. دالة الصعود للأعلى (يجب أن تكون خارج onload لتكون عامة)
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
-
-// 2. التحكم في ظهور الزر عند التمرير
-window.onscroll = function() {
-    const btn = document.getElementById("backToTop");
-    if (btn) {
-        // سيظهر الزر بعد تجاوز 500 بكسل من الأعلى
-        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-            btn.style.display = "flex";
-        } else {
-            btn.style.display = "none";
-        }
-    }
-};
-
-// 3. تهيئة الأحداث عند تحميل الصفحة
+// التحميل عند التشغيل
 window.onload = () => {
-    if (typeof renderSweets === "function") renderSweets();
-    if (typeof typeEffect === "function") typeEffect();
+    renderSweets();
+    // استدعاء الدوال الأخرى إذا كانت موجودة
     if (typeof updateShopStatus === "function") updateShopStatus();
     if (typeof updateCountdowns === "function") updateCountdowns();
-
-    // ربط زر الصعود بالدالة برمجياً لضمان العمل
-    const btnTop = document.getElementById("backToTop");
-    if (btnTop) {
-        btnTop.onclick = scrollToTop;
-    }
-
-    // تفعيل الأسئلة الشائعة
-    document.querySelectorAll(".faq-question").forEach(q => {
-        q.onclick = () => q.parentElement.classList.toggle("active");
-    });
-
-    const yearEl = document.getElementById("year");
-    if (yearEl) yearEl.innerText = new Date().getFullYear();
 };
 </script>
     </body>
