@@ -520,35 +520,54 @@
     }
 }
 
-/* 4. نافذة السلة (Modal) */
-.cart-modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(8px);
-    z-index: 9999; /* فوق كل شيء */
+/* =========================================
+   1. المتغيرات العامة (إعدادات الألوان)
+   ========================================= */
+:root {
+    --primary-gradient: linear-gradient(135deg, #ff6b81 0%, #ff4757 100%);
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --primary: #ff6b81;
+    --primary-dark: #ff4757;
+    --success: #2ed573;
+    --white: #ffffff;
+}
+
+/* =========================================
+   2. زر "أضف للطلب" المطور (نحيف وأنيق)
+   ========================================= */
+.add-to-cart-btn {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 10px 18px; 
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: 'Cairo', sans-serif;
+    display: flex;
     align-items: center;
     justify-content: center;
-    padding: 15px;
-}
-
-.cart-content {
-    background: var(--glass-bg);
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.15);
     width: 100%;
-    max-width: 480px;
-    padding: 30px;
-    border-radius: 30px;
-    max-height: 85vh;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-    display: flex;
-    flex-direction: column;
-    animation: slideUp 0.5s ease;
+    margin-top: 12px;
 }
 
-/* 4. نافذة السلة (Modal) - الخلفية الثابتة */
+.add-to-cart-btn:hover {
+    transform: translateY(-1.5px); 
+    box-shadow: 0 6px 15px rgba(255, 71, 87, 0.25);
+    filter: brightness(1.05);
+}
+
+.add-to-cart-btn:active {
+    transform: scale(0.97);
+}
+
+/* =========================================
+   3. نافذة السلة (Modal) والتمرير الذكي
+   ========================================= */
 .cart-modal {
     display: none;
     position: fixed;
@@ -561,41 +580,44 @@
     padding: 15px;
 }
 
-/* محتوى السلة - الحاوية البيضاء */
 .cart-content {
-    background: var(--glass-bg);
+    background: var(--white);
     width: 100%;
-    max-width: 480px;
+    max-width: 500px;
     padding: 25px;
     border-radius: 30px;
-    max-height: 85vh; /* تحديد أقصى ارتفاع */
+    max-height: 95vh;
     box-shadow: 0 25px 50px rgba(0,0,0,0.2);
     display: flex;
-    flex-direction: column; /* ترتيب عمودي للرأس، القائمة، والمجموع */
+    flex-direction: column;
     position: relative;
     animation: slideUp 0.5s ease;
 }
 
-/* الجزء السحري: حاوية المنتجات القابلة للتمرير */
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
 #cartItemsList {
-    flex: 1; /* تأخذ المساحة المتاحة وتدفع المجموع للأسفل */
-    overflow-y: auto; /* تفعيل التمرير العمودي */
-    overflow-x: hidden; /* منع أي اهتزاز أفقي */
-    padding-right: 5px; /* مساحة بسيطة لشريط التمرير */
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-left: 5px;
     margin: 15px 0;
 }
 
-/* تخصيص شكل السكرول (Scrollbar) ليكون ناعماً */
+/* تخصيص السكرول بار */
 #cartItemsList::-webkit-scrollbar { width: 5px; }
 #cartItemsList::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
 #cartItemsList::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
-/* بطاقة المنتج - تصميم السطر الواحد */
+/* بطاقة المنتج داخل السلة */
 .cart-item-card {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 12px;
+    gap: 12px;
+    padding: 10px;
     background: #fdfdfd;
     border-radius: 18px;
     margin-bottom: 10px;
@@ -603,144 +625,61 @@
 }
 
 .item-img-mini {
-    width: 60px; height: 60px;
-    border-radius: 12px; object-fit: cover;
+    width: 55px; height: 55px;
+    border-radius: 10px; object-fit: cover;
 }
 
 .qty-wrapper {
     display: flex;
     align-items: center;
     background: #eee;
-    border-radius: 10px;
-    padding: 3px;
-    gap: 8px;
+    border-radius: 8px;
+    padding: 2px;
 }
 
 .qty-btn-small {
-    width: 28px; height: 28px;
-    border-radius: 8px; border: none;
+    width: 25px; height: 25px;
+    border-radius: 5px; border: none;
     background: white; cursor: pointer;
-    font-weight: bold; color: #ff4757;
+    font-weight: bold; color: var(--primary);
 }
 
 /* =========================================
-   تنسيقات التجاوب للهواتف الذكية (Responsiveness)
+   4. قسم التوصيل المتطور (تتبع الدراجة)
    ========================================= */
-
-@media (max-width: 768px) {
-    /* ضبط الأزرار العائمة */
-    .cart-floating-btn { width: 55px; height: 55px; bottom: 20px; left: 15px; }
-    #backToTop { width: 45px; height: 45px; bottom: 20px; right: 15px; }
-
-    /* نافذة السلة على الهاتف */
-    .cart-content {
-        padding: 20px;
-        width: 95%;
-        max-height: 90vh;
-    }
-
-    /* بطاقة المنتج - إجبار السطر الواحد */
-    .cart-item-card {
-        padding: 8px;
-        gap: 8px;
-        justify-content: space-between;
-    }
-
-    .item-img-mini { width: 45px; height: 45px; }
-
-    /* منطقة النص (الاسم والسعر) */
-    .cart-item-card > div:nth-child(2) {
-        flex: 1;
-        min-width: 0;
-        margin: 0 5px;
-    }
-
-    .cart-item-card h4 {
-        font-size: 0.85rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    /* أزرار الكمية في الهاتف */
-    .qty-wrapper { gap: 4px; }
-    .qty-btn-small { width: 25px; height: 25px; font-size: 0.8rem; }
+.delivery-section {
+    background: #fdf2f4;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 15px 0;
+    border: 1px solid #ffccd5;
+    text-align: right;
 }
 
-/* للهواتف الصغيرة جداً */
-@media (max-width: 360px) {
-    .item-img-mini { display: none; } /* إخفاء الصورة لتوفير مساحة للتحكم */
-} 
+.delivery-input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
 
-/* ستايل قسم التوصيل المتطور */
-        .delivery-section {
-            background: #fdf2f4;
-            border-radius: 20px;
-            padding: 20px;
-            margin: 15px 0;
-            border: 1px solid #ffccd5;
-            text-align: right;
-        }
+.delivery-input-group input {
+    width: 100%;
+    padding: 12px 40px 12px 15px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    font-family: 'Cairo';
+    font-size: 0.9rem;
+    outline: none;
+}
 
-        .delivery-input-group {
-            position: relative;
-            margin-bottom: 20px;
-        }
+.delivery-input-group i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+}
 
-        .delivery-input-group input {
-            width: 100%;
-            padding: 12px 40px 12px 15px;
-            border-radius: 12px;
-            border: 1px solid #ddd;
-            font-family: 'Cairo';
-            font-size: 0.9rem;
-        }
-
-        .delivery-input-group i {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary);
-        }
-
-        .delivery-track {
-            height: 6px;
-            background: #e0e0e0;
-            width: 100%;
-            margin: 35px 0 10px;
-            position: relative;
-            border-radius: 10px;
-        }
-
-        .moto-icon {
-            position: absolute;
-            top: -28px;
-            right: 0%;
-            font-size: 1.8rem;
-            color: var(--primary-dark);
-            transition: right 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 5;
-        }
-
-        .location-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.75rem;
-            color: #777;
-            font-weight: bold;
-        }
-
-        .delivery-result {
-            display: flex;
-            justify-content: space-between;
-            background: white;
-            padding: 12px;
-            border-radius: 12px;
-            margin-top: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        .search-item {
+.search-item {
     padding: 12px 15px;
     cursor: pointer;
     border-bottom: 1px solid #f0f0f0;
@@ -748,35 +687,124 @@
     text-align: right;
     transition: background 0.3s;
 }
+
 .search-item:hover {
     background: #fff5f7;
     color: var(--primary-dark);
 }
 
-        /* ستايل السلة المحدث */
-        .cart-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 15px; }
-        .cart-content { background: var(--white); width: 100%; max-width: 500px; padding: 25px; border-radius: 30px; max-height: 95vh; box-shadow: 0 25px 50px rgba(0,0,0,0.2); display: flex; flex-direction: column; position: relative; }
-        #cartItemsList { flex: 1; overflow-y: auto; margin: 15px 0; padding-left: 5px; }
-        .cart-item-card { display: flex; align-items: center; gap: 12px; padding: 10px; background: #fdfdfd; border-radius: 15px; margin-bottom: 10px; border: 1px solid #f0f0f0; }
-        .item-img-mini { width: 55px; height: 55px; border-radius: 10px; object-fit: cover; }
-        .qty-wrapper { display: flex; align-items: center; background: #eee; border-radius: 8px; padding: 2px; }
-        .qty-btn-small { width: 25px; height: 25px; border: none; background: white; border-radius: 5px; cursor: pointer; color: var(--primary); font-weight: bold; }
+.delivery-track {
+    height: 6px;
+    background: #e0e0e0;
+    width: 100%;
+    margin: 35px 0 10px;
+    position: relative;
+    border-radius: 10px;
+}
 
-        .cart-floating-btn {
-            position: fixed; bottom: 30px; left: 20px; background: var(--primary-dark); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5000; box-shadow: 0 15px 35px rgba(255, 71, 87, 0.4); border: 3px solid white;
-        }
-        .cart-count { position: absolute; top: -5px; right: -5px; background: #2ed573; color: white; font-size: 0.8rem; min-width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; font-weight: bold; }
+.moto-icon {
+    position: absolute;
+    top: -28px;
+    right: 0%;
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    transition: right 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 5;
+}
 
-        .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 16px; border-radius: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; transition: 0.3s; }
-        
-        /* لتغطية نتائج قوقل في الموبايل */
-        .pac-container { z-index: 10000 !important; font-family: 'Cairo' !important; border-radius: 10px; }
+.location-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #777;
+    font-weight: bold;
+}
 
-        @media (max-width: 768px) {
-            .cart-content { padding: 15px; }
-            .moto-icon { font-size: 1.4rem; top: -22px; }
-        }      
-      
+.delivery-result {
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* =========================================
+   5. الأزرار العائمة (سلة و واتساب)
+   ========================================= */
+.cart-floating-btn {
+    position: fixed; bottom: 30px; left: 20px;
+    background: var(--primary-dark); color: white;
+    width: 65px; height: 65px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 5000;
+    box-shadow: 0 15px 35px rgba(255, 71, 87, 0.4);
+    border: 3px solid white;
+}
+
+.cart-count {
+    position: absolute; top: -5px; right: -5px;
+    background: #2ed573; color: white;
+    font-size: 0.8rem; min-width: 25px; height: 25px;
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; border: 2px solid white; font-weight: bold;
+}
+
+.btn-send {
+    width: 100%; background: var(--success);
+    color: white; border: none; padding: 16px;
+    border-radius: 15px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center;
+    justify-content: center; gap: 10px;
+    font-size: 1.1rem; transition: 0.3s;
+}
+
+.btn-send:hover { filter: brightness(1.1); }
+
+/* =========================================
+   6. تحسينات التجاوب (Mobile Optimization)
+   ========================================= */
+@media (max-width: 768px) {
+    .cart-content {
+        padding: 15px;
+        width: 95%;
+        border-radius: 20px;
+    }
+
+    .add-to-cart-btn {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+
+    .cart-item-card {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .item-img-mini { width: 45px; height: 45px; }
+
+    .moto-icon { font-size: 1.4rem; top: -22px; }
+
+    .cart-floating-btn { width: 55px; height: 55px; bottom: 20px; left: 15px; }
+
+    /* تحسين النصوص في الهاتف لمنع التداخل */
+    .cart-item-card h4 {
+        font-size: 0.85rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* للهواتف الصغيرة جداً */
+@media (max-width: 360px) {
+    .item-img-mini { display: none; }
+    .delivery-result { font-size: 0.8rem; }
+}
+
+/* تعديل قائمة قوقل التلقائية */
+.pac-container { z-index: 10000 !important; font-family: 'Cairo' !important; border-radius: 10px; }
       
 /* التذييل المطور */
        /* --- تنسيق التذييل الجديد --- */
