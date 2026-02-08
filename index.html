@@ -1168,63 +1168,44 @@ const sweets = [
 ];
 
 let cart = [];
-let deliveryCost = 0;
-const origin = { lat: 36.1622, lng: 1.3417 }; // أولاد محمد
-const typingText = "مرحباً بكم في مدرسة أمير للحلويات، نضمن لكم الجودة والذوق الأصيل في كل حبة.";
-let charIdx = 0;
 
-// 1. عرض المنتجات
+// 2. دالة عرض المنتجات (تم تصحيحها لتعمل فوراً)
 function renderSweets() {
     const grid = document.getElementById('sweetsGrid');
-    if (!grid) return;
+    if (!grid) return; // التأكد من وجود العنصر في HTML
+    
     grid.innerHTML = sweets.map((s, index) => `
         <div class="sweet-card">
-            <img src="${s.img}" class="sweet-img" onerror="this.src='https://via.placeholder.com/150'">
+            <img src="${s.img}" class="sweet-img" onerror="this.src='https://via.placeholder.com/150?text=حلوى'">
             <div style="font-weight:bold; margin:8px 0; font-size:0.9rem;">${s.name}</div>
-            <div style="color:var(--primary-dark); font-weight:800;">${s.price} دج</div>
+            <div style="color:#ff4757; font-weight:800;">${s.price}</div>
             <button class="add-to-cart-btn" onclick="addToCart(${index})">أضف للطلب</button>
         </div>
     `).join('');
 }
 
-// 2. تأثير الكتابة
-function typeEffect() {
-    const desc = document.getElementById("schoolDesc");
-    if (desc && charIdx < typingText.length) {
-        desc.innerHTML += typingText.charAt(charIdx);
-        charIdx++;
-        setTimeout(typeEffect, 50);
-    }
-}
-
-// 3. منطق السلة (Cart Logic)
+// 3. إضافة للسلة
 function addToCart(index) {
     const item = sweets[index];
     const existing = cart.find(c => c.name === item.name);
     
     if (existing) {
-        existing.qty += 10; // زيادة الكمية بـ 10 إذا كان موجوداً
+        existing.qty += 10; 
     } else {
-        cart.push({ ...item, qty: 50 }); // البدء بـ 50 حبة كحد أدنى عند أول إضافة
+        cart.push({ ...item, qty: 50 }); // يبدأ بـ 50 حبة كما طلبت
     }
     
     updateCartUI();
     
-    // تأثير الزر عند الضغط
+    // تأثير الزر
     const btn = event.currentTarget;
-    const originalText = btn.innerHTML;
     btn.innerHTML = "تمت الإضافة ✓";
-    btn.style.background = "#28a745";
-    setTimeout(() => { 
-        btn.innerHTML = originalText;
-        btn.style.background = ""; 
-    }, 1000);
+    setTimeout(() => { btn.innerHTML = "أضف للطلب"; }, 1000);
 }
 
 function updateCartUI() {
-    const cartCount = document.getElementById("cartCount");
-    if (cartCount) cartCount.innerText = cart.length;
-    renderCartItems(); 
+    const count = document.getElementById('cartCount');
+    if (count) count.innerText = cart.length;
 }
 
 function renderCartItems() {
