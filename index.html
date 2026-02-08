@@ -7,7 +7,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <style>
         :root {
@@ -32,7 +31,6 @@
             background: var(--bg-gradient);
             min-height: 100vh;
             color: var(--text);
-            overflow-x: hidden;
         }
 
         /* شريط الأخبار */
@@ -45,19 +43,30 @@
             top: 0;
             z-index: 2000;
             font-size: 0.95rem;
+            font-weight: 600;
         }
         .ticker-content {
             display: inline-block;
             white-space: nowrap;
-            animation: ticker 40s linear infinite;
+            animation: ticker 40s linear infinite; 
         }
         @keyframes ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
-        /* الحاوية الرئيسية */
+        #backToTop {
+            position: fixed; bottom: 20px; left: 20px; background: var(--primary);
+            color: white; width: 50px; height: 50px; border-radius: 50%;
+            display: none; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 3000; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        #schoolDesc::after { content: "|"; animation: blink 0.7s infinite; color: var(--primary); }
+        @keyframes blink { 50% { opacity: 0; } }
+
         .main-wrapper { display: flex; justify-content: center; padding: 20px 10px; }
+
         .container {
             background: rgba(255, 255, 255, 0.98);
             width: 100%;
@@ -67,381 +76,1423 @@
             box-shadow: var(--shadow);
             text-align: center;
             position: relative;
+            padding-bottom: 40px;
         }
 
         .header-section { position: relative; margin-bottom: 70px; }
         .cover-photo {
-            width: 100%; height: 200px;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/cover.jpg') center/cover;
+            width: 100%; height: 180px;
+            background: url('images/cover.jpg') center/cover no-repeat;
             background-color: var(--primary);
         }
+
         .profile-img {
             width: 130px; height: 130px; border-radius: 50%;
             object-fit: cover; border: 5px solid #fff;
             position: absolute; bottom: -65px; left: 50%;
             transform: translateX(-50%);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        /* أزرار عائمة */
-        #backToTop {
-            position: fixed; bottom: 30px; right: 20px;
-            width: 50px; height: 50px; background: white; color: var(--primary-dark);
-            border: 2px solid var(--primary-dark); border-radius: 50%;
-            display: none; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 4000; transition: 0.3s;
+        .status-badge {
+            display: inline-flex; flex-direction: column; align-items: center;
+            padding: 10px 20px; border-radius: 15px; margin-top: 15px;
+            font-weight: 700; font-size: 0.9rem;
         }
-        .cart-floating-btn {
-            position: fixed; bottom: 30px; left: 20px;
-            background: linear-gradient(135deg, #ff6b81, #ff4757);
-            color: white; width: 65px; height: 65px; border-radius: 50%;
+        .status-open { background: #e7fbf2; color: var(--success); border: 1px solid #c1f2dc; }
+        .status-closed { background: #fff1f2; color: var(--danger); border: 1px solid #ffd1d6; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-left: 5px; }
+        .dot-open { background: var(--success); animation: pulse 1.5s infinite; }
+        .dot-closed { background: var(--danger); }
+
+        /* تعديلات وسائط التواصل الاجتماعي - تأثيرات الهوفر */
+        .links-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px; margin: 30px 20px;
+        }
+
+        .link-btn {
+            position: relative; padding: 15px; border-radius: 15px; background: #fff;
+            border: 1px solid #fce4ec; text-decoration: none; color: var(--text);
+            font-weight: 700; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 5000; box-shadow: 0 10px 25px rgba(255, 71, 87, 0.4);
-            border: 3px solid white;
-        }
-        .cart-count {
-            position: absolute; top: -5px; right: -5px;
-            background: var(--success); color: white;
-            font-size: 0.8rem; min-width: 25px; height: 25px;
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; border: 2px solid white;
         }
 
-        /* قسم التوصيل في السلة */
-        .delivery-section {
-            background: #fdf2f4; border-radius: 20px; padding: 15px;
-            margin: 15px 0; border: 1px solid #ffccd5; text-align: right;
+        .link-btn i { position: absolute; right: 15px; color: var(--primary); transition: 0.3s; }
+
+        .link-btn:hover {
+            transform: translateY(-5px);
+            background-color: var(--secondary-bg);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(255, 107, 129, 0.15);
+            color: var(--primary-dark);
         }
-        .delivery-input-group { position: relative; margin-bottom: 10px; }
-        .delivery-input-group input {
-            width: 100%; padding: 12px 40px 12px 15px;
-            border-radius: 12px; border: 1px solid #ddd; font-family: 'Cairo';
+
+        .link-btn:hover i {
+            transform: scale(1.25) rotate(-10deg);
+            color: var(--primary-dark);
         }
-        .delivery-input-group i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--primary); }
+
+        .section-title { margin: 40px 0 25px; color: var(--primary-dark); font-size: 1.4rem; }
+        .section-title::after { content: ''; width: 50px; height: 4px; background: var(--primary); display: block; margin: 8px auto; border-radius: 10px; }
+
+        /* تعديلات عدّاد المناسبات */
+        .countdown-container { 
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #ff8a9a 100%); 
+            color: white; margin: 20px; padding: 25px; border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.2);
+        }
+        .countdown-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 15px; }
         
-        .search-dropdown {
-            position: absolute; top: 100%; left: 0; width: 100%;
-            background: white; z-index: 1000; border-radius: 0 0 12px 12px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); display: none;
-            max-height: 150px; overflow-y: auto;
-        }
-        .search-item { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.85rem; }
-        .search-item:hover { background: var(--secondary-bg); }
-
-        .delivery-track {
-            height: 6px; background: #e0e0e0; width: 100%;
-            margin: 35px 0 10px; position: relative; border-radius: 10px;
-        }
-        .moto-icon {
-            position: absolute; top: -28px; right: 0%;
-            font-size: 1.8rem; color: var(--primary-dark);
-            transition: right 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        .countdown-item { 
+            background: rgba(255,255,255,0.2); 
+            backdrop-filter: blur(5px);
+            padding: 15px; border-radius: 15px; min-width: 140px; 
+            border: 1px solid rgba(255,255,255,0.3);
+            border-bottom: 4px solid white;
+            animation: cardFloat 3s ease-in-out infinite;
         }
 
-        /* نافذة السلة */
-        .cart-modal {
-            display: none; position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%; background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px); z-index: 9999;
-            align-items: center; justify-content: center;
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
-        .cart-content {
-            background: white; width: 95%; max-width: 450px;
-            padding: 25px; border-radius: 30px; max-height: 90vh;
-            display: flex; flex-direction: column; animation: slideUp 0.4s ease;
-        }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        #cartItemsList { flex: 1; overflow-y: auto; margin: 15px 0; }
-        .cart-item-card {
-            display: flex; align-items: center; gap: 10px; padding: 10px;
-            background: #fafafa; border-radius: 15px; margin-bottom: 8px;
-        }
-        .item-img-mini { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
+        .cd-days { font-size: 2rem; font-weight: 800; color: white; display: block; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .cd-label { font-size: 0.85rem; font-weight: 600; opacity: 0.95; }
+
+        /* --- قسم لماذا نحن --- */
+.features-grid { 
+    display: grid; 
+    /* للكمبيوتر: توزيع تلقائي، للهاتف: سيتم تعديله أدناه */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px; 
+    margin: 20px; 
+}
+
+.feature-card { 
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 20px; 
+    border: 1px solid #fce4ec; 
+    transition: 0.3s; 
+    text-align: center; /* توسيط المحتوى */
+}
+
+.feature-card:hover { 
+    border-color: var(--primary); 
+    background: var(--secondary-bg); 
+    transform: translateY(-5px);
+}
+
+.feature-card i { 
+    font-size: 2.2rem; 
+    color: var(--primary); 
+    margin-bottom: 12px; 
+    display: block; 
+}
+
+/* --- بانر التغليف --- */
+.packaging-banner { 
+    background: var(--secondary-bg); 
+    margin: 20px; 
+    border-radius: 20px; 
+    padding: 25px; 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+    border: 2px dashed var(--primary); 
+    text-align: right; 
+}
+
+.packaging-icon { font-size: 2.5rem; color: var(--primary); }
+
+/* =========================================
+   تنسيقات التجاوب (Mobile Responsiveness)
+   ========================================= */
+
+@media (max-width: 768px) {
+    /* 1. إجبار البطاقات الثلاث على البقاء في سطر واحد */
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 8px; /* تقليل الفجوة لتوفير مساحة */
+        margin: 15px 10px;
+    }
+
+    .feature-card {
+        padding: 15px 5px; /* تقليل الحشوة الداخلية */
+    }
+
+    .feature-card i {
+        font-size: 1.6rem; /* تصغير الأيقونة لتناسب العرض */
+        margin-bottom: 8px;
+    }
+
+    .feature-card h3 {
+        font-size: 0.8rem; /* تصغير الخط لضمان عدم انقسام الكلمات */
+        white-space: nowrap; /* منع النص من النزول لسطر جديد */
+    }
+
+    /* 2. تحويل بانر التغليف ليكون عمودياً (اختياري) أو تصغيره */
+    .packaging-banner {
+        flex-direction: row; /* الحفاظ عليه أفقياً */
+        padding: 15px;
+        gap: 12px;
+        margin: 15px 10px;
+    }
+
+    .packaging-icon {
+        font-size: 1.8rem;
+    }
+
+    .packaging-banner p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+}
+
+/* للهواتف الصغيرة جداً */
+@media (max-width: 380px) {
+    .feature-card h3 {
+        font-size: 0.7rem;
+    }
+    .packaging-banner {
+        flex-direction: column; /* تحويله لعمودي في الشاشات الضيقة جداً */
+        text-align: center;
+    }
+}
 
         /* الحلويات */
-        .sweets-grid { display: grid; gap: 15px; padding: 20px; grid-template-columns: repeat(2, 1fr); }
-        @media(min-width:700px){ .sweets-grid { grid-template-columns: repeat(3, 1fr); } }
-        .sweet-card { background: #fff; border-radius: 20px; padding: 10px; border: 1px solid #fce4ec; transition: 0.3s; }
-        .sweet-img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; }
-        .add-to-cart-btn {
-            width: 100%; padding: 10px; margin-top: 10px;
-            background: var(--primary); color: white; border: none;
-            border-radius: 10px; cursor: pointer; font-family: 'Cairo'; font-weight: bold;
-        }
+        .sweets-grid { display: grid; gap: 15px; padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
+        @media(min-width:650px){ .sweets-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media(min-width:900px){ .sweets-grid { grid-template-columns: repeat(4, 1fr); } }
+        .sweet-card { background: #fff; border-radius: 18px; padding: 10px; border: 1px solid #fce4ec; transition: 0.3s; }
+        .sweet-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--shadow); }
+        .sweet-img { width: 100%; height: 110px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; }
+        .sweet-name { font-weight: 700; font-size: 0.85rem; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        .sweet-price { font-size: 0.85rem; color: var(--primary-dark); background: #fff0f3; padding: 4px 10px; border-radius: 20px; font-weight: 700; }
 
-        /* أوقات العمل */
-        .hours-card { background: #fff5f7; margin: 20px; padding: 15px; border-radius: 20px; border: 1px solid #fce4ec; }
-        .hours-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
-        .hours-table tr { background: white; border-radius: 10px; }
-        .hours-table td { padding: 12px; font-weight: bold; font-size: 0.9rem; }
-        .time-cell { color: #666; direction: ltr; text-align: left; }
+        /* قسم الآراء */
+        .testimonials-wrapper { overflow: hidden; margin: 30px 20px; padding: 20px 0; background: #fffafb; border-radius: 20px; border: 1px solid #fce4ec; }
+        .testimonials-slider { display: flex; gap: 20px; width: max-content; animation: scroll 40s linear infinite; }
+        .testimonial-card { background: var(--white); padding: 20px; border-radius: 15px; width: 280px; text-align: right; border-right: 4px solid var(--primary); flex-shrink: 0; }
+        .testi-name { font-weight: 700; color: var(--primary); font-size: 0.95rem; margin-bottom: 5px; }
+        .stars { color: var(--star-color); font-size: 0.9rem; margin-bottom: 8px; }
+        .testi-text { font-size: 0.9rem; color: var(--text); line-height: 1.5; font-style: italic; }
+        /* هذه هي القاعدة التي تنقصك لتفعيل الحركة */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* سيتحرك الشريط جهة اليمين ليناسب اتجاه الصفحة العربي */
+        transform: translateX(calc(280px * 5 + 20px * 5)); 
+    }
+}
 
-        /* تذييل الصفحة */
-        .main-footer { background: #2d3436; color: white; padding: 30px 15px; border-radius: 40px 40px 0 0; margin-top: 40px; }
-        .footer-logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); margin-bottom: 10px; display: block; }
+/* اختياري: توقف الحركة عند وضع الفأرة فوق الرأي ليسهل قراءته */
+.testimonials-wrapper:hover .testimonials-slider {
+    animation-play-state: paused;
+}
+
+        /* الأسئلة الشائعة */
+        .faq-container { margin: 0 20px; text-align: start; }
+        .faq-item { background: #fff; border-radius: 15px; border: 1px solid #fce4ec; margin-bottom: 10px; overflow: hidden; }
+        .faq-question { width: 100%; border: none; background: none; padding: 18px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Cairo'; color: var(--text); }
+        .faq-question i { color: var(--primary); transition: 0.3s; }
+        .faq-answer { max-height: 0; overflow: hidden; padding: 0 18px; transition: 0.3s; background: var(--secondary-bg); color: var(--text); }
+        .faq-item.active .faq-answer { max-height: 200px; padding: 18px; border-top: 1px solid #fce4ec; }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+        
+/* أوقات العمل - نسخة رشيقة مع الحفاظ على اللون الوردي */
+.hours-card { 
+    background: #fff5f7; 
+    margin: 20px auto; 
+    padding: 20px; 
+    border-radius: 20px; 
+    /* اللون الوردي المفضل لديك */
+    border: 1px solid #fce4ec; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    
+    /* ضبط العرض ليكون أنيقاً على الكمبيوتر (ليس عريضاً جداً) */
+    max-width: 900px; 
+    width: 92%; 
+}
+
+.hours-table { 
+    width: 100%; 
+    border-collapse: separate; 
+    border-spacing: 0 10px; 
+}
+
+.hours-table tr { 
+    background: white; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: transform 0.2s ease;
+}
+
+/* تأثير عند تمرير الماوس في الكمبيوتر */
+.hours-table tr:hover {
+    transform: scale(1.02);
+}
+
+.hours-table td { 
+    padding: 15px 12px; 
+    font-weight: 700; 
+}
+
+/* عمود الأيام - البرتقالي الخاص بالموقع */
+.hours-table td:first-child { 
+    border-radius: 0 12px 12px 0; 
+    text-align: right; 
+    color: #ff6b81; 
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+}
+
+/* عمود الوقت - حل مشكلة الانقلاب */
+.time-cell { 
+    border-radius: 12px 0 0 12px; 
+    display: flex !important;
+    flex-direction: row-reverse; 
+    justify-content: flex-end;   
+    align-items: center;
+    color: #666;
+    font-family: 'Arial', sans-serif;
+    white-space: nowrap;
+}
+
+/* تنسيق مجموعة (الرقم + الكلمة) */
+.time-wrap {
+    display: flex;
+    flex-direction: row-reverse; 
+    gap: 4px;
+    direction: ltr; 
+}
+
+.dash {
+    margin: 0 8px;
+    color: #f54c03;
+    font-weight: bold;
+}
+
+.working-status {
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #444;
+    font-size: 0.9rem;
+}
+
+/* تأثير نبض للأيقونة الخضراء */
+.pulse-icon {
+    color: #2ecc71;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* التجاوب مع الهاتف الذكي */
+@media (max-width: 480px) {
+    .hours-card {
+        padding: 15px;
+        margin: 15px auto;
+    }
+    .hours-table td { 
+        padding: 12px 8px; 
+        font-size: 0.8rem; /* تصغير الخط ليناسب شاشة الهاتف */
+    }
+    .time-wrap { gap: 2px; }
+    .dash { margin: 0 4px; }
+}
+        /* نموذج الطلب */
+        .order-form { text-align: right; padding: 25px; background: #fff; border-radius: 20px; border: 1px solid #fce4ec; margin: 0 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 8px; color: var(--primary-dark); }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px; border: 1px solid #fce4ec; border-radius: 15px; font-family: 'Cairo'; outline: none; background: #fffafb; transition: 0.3s; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+        .btn-send { width: 100%; background: var(--success); color: white; border: none; padding: 18px; border-radius: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3); transition: 0.3s; }
+        .btn-send:hover { background: #26c167; transform: scale(1.02); }
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --primary-gradient: linear-gradient(135deg, #ff6b81, #ff4757);
+    --success-color: #2ed573;
+}
+
+/* 1. سهم الصعود للأعلى (الجهة اليمنى) */
+#backToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: white;
+    color: #ff4757;
+    border: 2px solid #ff4757;
+    border-radius: 50%;
+    display: none; /* يظهر بواسطة JS */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 4000; /* أقل من السلة */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+#backToTop:hover { transform: translateY(-5px); background: #ff4757; color: white; }
+
+/* 2. الزر العائم للسلة (الجهة اليسرى) */
+.cart-floating-btn {
+    position: fixed;
+    bottom: 30px;
+    left: 20px;
+    background: var(--primary-gradient);
+    color: white;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5000; /* أعلى من سهم الصعود */
+    box-shadow: 0 15px 35px rgba(255, 71, 87, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 3px solid white;
+}
+.cart-floating-btn:hover { transform: translateY(-5px) scale(1.1); }
+
+.cart-count {
+    position: absolute; top: -5px; right: -5px;
+    background: var(--success-color); color: white;
+    font-size: 0.8rem; min-width: 25px; height: 25px;
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; border: 2px solid white;
+    font-weight: bold;
+}
+
+/* 3. زر "أضف للطلب" المطور - تصميم نحيف وأنيق */
+.add-to-cart-btn {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    /* تقليل الارتفاع من 14px إلى 10px للحصول على مظهر أنحف */
+    padding: 10px 18px; 
+    border-radius: 12px; /* حواف ناعمة لكن أقل استدارة */
+    font-weight: 600; /* وزن خط متوسط لجمالية أكثر */
+    font-size: 0.9rem; /* حجم خط متناسق */
+    font-family: 'Cairo', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* ظل خفيف وغير مبالغ فيه */
+    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.15);
+    width: 100%;
+    margin-top: 12px;
+}
+
+/* تأثير التحويم - ارتفاع بسيط جداً */
+.add-to-cart-btn:hover {
+    transform: translateY(-1.5px); 
+    box-shadow: 0 6px 15px rgba(255, 71, 87, 0.25);
+    filter: brightness(1.05);
+}
+
+/* تأثير الضغط - انكماش خفيف */
+.add-to-cart-btn:active {
+    transform: scale(0.97);
+}
+
+/* التجاوب للهاتف */
+@media (max-width: 768px) {
+    .add-to-cart-btn {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+        border-radius: 10px;
+    }
+}
+
+/* 4. نافذة السلة (Modal) */
+.cart-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: 9999; /* فوق كل شيء */
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.cart-content {
+    background: var(--glass-bg);
+    width: 100%;
+    max-width: 480px;
+    padding: 30px;
+    border-radius: 30px;
+    max-height: 85vh;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.5s ease;
+}
+
+/* 4. نافذة السلة (Modal) - الخلفية الثابتة */
+.cart-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+/* محتوى السلة - الحاوية البيضاء */
+.cart-content {
+    background: var(--glass-bg);
+    width: 100%;
+    max-width: 480px;
+    padding: 25px;
+    border-radius: 30px;
+    max-height: 85vh; /* تحديد أقصى ارتفاع */
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column; /* ترتيب عمودي للرأس، القائمة، والمجموع */
+    position: relative;
+    animation: slideUp 0.5s ease;
+}
+
+/* الجزء السحري: حاوية المنتجات القابلة للتمرير */
+#cartItemsList {
+    flex: 1; /* تأخذ المساحة المتاحة وتدفع المجموع للأسفل */
+    overflow-y: auto; /* تفعيل التمرير العمودي */
+    overflow-x: hidden; /* منع أي اهتزاز أفقي */
+    padding-right: 5px; /* مساحة بسيطة لشريط التمرير */
+    margin: 15px 0;
+}
+
+/* تخصيص شكل السكرول (Scrollbar) ليكون ناعماً */
+#cartItemsList::-webkit-scrollbar { width: 5px; }
+#cartItemsList::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+#cartItemsList::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+/* بطاقة المنتج - تصميم السطر الواحد */
+.cart-item-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    background: #fdfdfd;
+    border-radius: 18px;
+    margin-bottom: 10px;
+    border: 1px solid #f0f0f0;
+}
+
+.item-img-mini {
+    width: 60px; height: 60px;
+    border-radius: 12px; object-fit: cover;
+}
+
+.qty-wrapper {
+    display: flex;
+    align-items: center;
+    background: #eee;
+    border-radius: 10px;
+    padding: 3px;
+    gap: 8px;
+}
+
+.qty-btn-small {
+    width: 28px; height: 28px;
+    border-radius: 8px; border: none;
+    background: white; cursor: pointer;
+    font-weight: bold; color: #ff4757;
+}
+
+/* =========================================
+   تنسيقات التجاوب للهواتف الذكية (Responsiveness)
+   ========================================= */
+
+@media (max-width: 768px) {
+    /* ضبط الأزرار العائمة */
+    .cart-floating-btn { width: 55px; height: 55px; bottom: 20px; left: 15px; }
+    #backToTop { width: 45px; height: 45px; bottom: 20px; right: 15px; }
+
+    /* نافذة السلة على الهاتف */
+    .cart-content {
+        padding: 20px;
+        width: 95%;
+        max-height: 90vh;
+    }
+
+    /* بطاقة المنتج - إجبار السطر الواحد */
+    .cart-item-card {
+        padding: 8px;
+        gap: 8px;
+        justify-content: space-between;
+    }
+
+    .item-img-mini { width: 45px; height: 45px; }
+
+    /* منطقة النص (الاسم والسعر) */
+    .cart-item-card > div:nth-child(2) {
+        flex: 1;
+        min-width: 0;
+        margin: 0 5px;
+    }
+
+    .cart-item-card h4 {
+        font-size: 0.85rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* أزرار الكمية في الهاتف */
+    .qty-wrapper { gap: 4px; }
+    .qty-btn-small { width: 25px; height: 25px; font-size: 0.8rem; }
+}
+
+/* للهواتف الصغيرة جداً */
+@media (max-width: 360px) {
+    .item-img-mini { display: none; } /* إخفاء الصورة لتوفير مساحة للتحكم */
+}       
+/* التذييل المطور */
+       /* --- تنسيق التذييل الجديد --- */
+.main-footer {
+    margin-top: 30px;
+    background: #2d3436;
+    color: white;
+    padding: 40px 15px 20px;
+    border-radius: 40px 40px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+.footer-logo {
+    font-family: 'Cairo', sans-serif;
+    font-size: 2.5rem; /* حجم كبير وبارز */
+    font-weight: 700;
+    text-align: center;
+    margin: 18px 0;
+    
+    /* تدرج لوني وردي احترافي */
+    background: linear-gradient(to right, #ff4757 20%, #ff6b81 40%, #ffffff 50%, #ff6b81 60%, #ff4757 80%);
+    background-size: 200% auto;
+    
+    /* جعل التدرج يظهر داخل النص فقط */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    /* أنيميشن التلألؤ */
+    animation: shine 3s linear infinite;
+    
+    /* ظل خفيف لإعطاء عمق */
+    filter: drop-shadow(0 5px 15px rgba(255, 71, 87, 0.2));
+}
+
+/* حركة التلألؤ */
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* التجاوب مع الهاتف */
+@media (max-width: 768px) {
+    .footer-logo {
+        font-size: 1.2rem; /* تصغير الحجم ليناسب الموبايل */
+        margin: 15px 0;
+    }
+}
+.footer-tagline {
+    opacity: 0.8;
+    margin-bottom: 18px;
+    transition: 0.3s;
+}
+
+.main-footer:hover .footer-tagline {
+    opacity: 1;
+    color: var(--primary);
+}
+
+/* حركة أيقونات التواصل */
+.footer-social a {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    margin: 0 8px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.footer-social a:hover {
+    background: var(--primary);
+    transform: translateY(-10px) rotate(360deg);
+    box-shadow: 0 10px 20px rgba(255, 107, 129, 0.3);
+}
+
+/* منطقة الحقوق السفلى */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 20px;
+    padding-top: 18px;
+}
+
+.school-name {
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.footer-bottom:hover .school-name {
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(255, 107, 129, 0.4);
+}
+
+.made-with {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+
+.footer-bottom:hover .made-with {
+    opacity: 1;
+    letter-spacing: 1px;
+}
+
+/* حركة القلب النابض */
+.heart-icon {
+    color: #ff4757;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+.footer-bottom:hover .heart-icon {
+    animation: pulseHeart 0.8s infinite;
+}
+
+@keyframes pulseHeart {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+/* Container link styling */
+.designed-by a {
+    text-decoration: none;
+    color: inherit; /* Takes the color of the parent text */
+    transition: 0.3s;
+}
+/* التنسيق الأساسي للجزء السفلي */
+.designed-by {
+    margin-top: 20px;       /* ينزل قليلاً عن العناصر التي فوقه */
+    font-size: 0.9rem;      /* حجم الخط الأساسي للحاسوب */
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.designed-by a {
+    text-decoration: none;  /* إزالة السطر */
+    display: inline-block;  /* للسماح بحركات التحويل (Transform) */
+    transition: transform 0.3s ease; /* نعومة الحركة */
+}
+
+/* التنسيق الخاص باسمك */
+.highlight-primary {
+    color: #f54c03;         /* اللون البرتقالي المطلوب */
+    font-weight: bold;
+}
+
+/* تأثير الهوفر (عند تمرير الماوس) */
+.designed-by a:hover {
+    transform: translateY(3px); /* ينزل قليلاً تحت عند الهوفر */
+    opacity: 0.8;               /* شفافية خفيفة تعطي جمالية */
+}
+
+/* التجاوب مع الهاتف (Media Query) */
+@media (max-width: 768px) {
+    .designed-by {
+        font-size: 0.75rem;    /* يصغر حجم الخط في الهاتف */
+        margin-top: 15px;      /* تقليل المسافة قليلاً لتناسب الشاشات الصغيرة */
+    }
+    
+    .highlight-primary {
+        font-size: 0.75rem;     /* تصغير الاسم أكثر ليتناسب مع الهاتف */
+    }
+}
+.search-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #eee;
+    z-index: 2000;
+    max-height: 250px;
+    overflow-y: auto;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    display: none;
+}
+.search-item {
+    padding: 12px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-bottom: 1px solid #f9f9f9;
+    text-align: right;
+}
+.search-item:hover {
+    background: #fff0f3;
+    color: var(--primary-dark);
+}
     </style>
 </head>
+
 <body>
 
 <div class="news-ticker">
     <div class="ticker-content">
-        📢 التسجيلات مفتوحة لدورة الحلويات التقليدية والعصرية.. سارعوا بحجز أماكنكم! | 🏆 شهادات معتمدة | 🍰 طلبيات الأعراس متوفرة
+        📢 التسجيلات مفتوحة لدورة الحلويات التقليدية و العصرية .. سارعوا بحجز أماكنكم! | 🏆 شهادات وطنية معتمدة تمكنكم من فتح مشاريعكم الخاصة | 🍰 طلبيات الأعراس والمناسبات متوفرة حالياً
     </div>
 </div>
 
-<div id="backToTop"><i class="fas fa-chevron-up"></i></div>
-
-<div class="cart-floating-btn" onclick="toggleCart()">
-    <i class="fas fa-shopping-basket fa-lg"></i>
-    <div class="cart-count" id="cartCount">0</div>
-</div>
+<div id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></div>
 
 <div class="main-wrapper">
     <div class="container">
         <div class="header-section">
             <div class="cover-photo"></div>
-            <img src="images/amir.jpg" class="profile-img" alt="Amir School">
+            <img src="images/amir.jpg" class="profile-img" alt="Amir School" onerror="this.src='https://via.placeholder.com/130'">
         </div>
 
         <div class="school-info">
             <h1>مدرسة أمير للتكوين المحترف</h1>
-            <p id="schoolDesc" style="color:var(--muted); font-weight: 600; margin: 10px 0;"></p>
+            <p id="schoolDesc" style="color:var(--muted); margin-top: 5px; font-weight: 600; min-height: 24px;"></p>
+            <div id="shopStatus" class="status-badge">
+                <div class="status-main">
+                    <span id="statusDot" class="dot"></span>
+                    <span id="statusText">جاري التحقق...</span>
+                </div>
+                <div id="statusTimer" class="status-timer"></div>
+            </div>
+        </div>
+<h3 class="section-title">
+    <i class="far fa-clock" style="color: #f54c03; margin-left: 8px;"></i> أوقات العمل
+</h3>
+
+<div class="hours-card">
+    <table class="hours-table">
+        <tr>
+            <td>
+                <i class="fas fa-calendar-day"></i> 
+                <span>السبت – الخميس</span>
+            </td>
+            <td class="time-cell">
+                <div class="time-wrap"><span>17:00</span> <span>مساءً</span></div>
+                <span class="dash">&ndash;</span>
+                <div class="time-wrap"><span>09:00</span> <span>صباحاً</span></div>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <i class="fas fa-heart"></i> 
+                <span>الجمعة</span>
+            </td>
+            <td class="time-cell">
+                <div class="time-wrap"><span>17:00</span> <span>مساءً</span></div>
+                <span class="dash">&ndash;</span>
+                <div class="time-wrap"><span>14:00</span> <span>مساءً</span></div>
+            </td>
+        </tr>
+    </table>
+    
+    <p class="working-status">
+        <i class="fas fa-check-circle pulse-icon" style="color: #2ecc71; margin-left: 5px;"></i> 
+        نحن جاهزون لاستقبال طلبياتكم
+    </p>
+</div>
+        <div class="links-container">
+            <a href="tel:+213699748196" class="link-btn"><i class="fa fa-phone"></i> 96 81 74 0699</a>
+            <a href="tel:+213660508949" class="link-btn"><i class="fa fa-phone"></i> 49 89 50 0660</a>
+            <a href="https://wa.me/213699748196" class="link-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
+            <a href="https://www.facebook.com/amirformation" class="link-btn"><i class="fab fa-facebook"></i> فايسبوك</a>
+            <a href="https://www.tiktok.com/@chefsamahbradai" class="link-btn"><i class="fab fa-tiktok"></i> تيك توك</a>
+            <a href="#" target="_blank" class="link-btn"><i class="fa fa-location-dot"></i> أولاد محمد – الشلف</a>
         </div>
 
-        <h3 style="color: var(--primary-dark); margin-top: 30px;">🍰 قائمة الحلويات والطلبيات</h3>
-        <div class="sweets-grid" id="sweetsGrid">
+        <h3 class="section-title">عدّاد المناسبات القادمة</h3>
+        <div class="countdown-container">
+            <p style="font-weight: 700; margin-bottom: 15px;">⏳ لا تؤجلي للحظة الأخيرة… احجزي طلبيتك الآن!</p>
+            <div class="countdown-grid">
+                <div class="countdown-item">
+                    <span id="ramadan-days" class="cd-days">--</span>
+                    <span class="cd-label">لشهر رمضان المبارك</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="eid-days" class="cd-days">--</span>
+                    <span class="cd-label">لعيد الفطر السعيد</span>
+                </div>
             </div>
-
-        <h3 style="color: var(--primary-dark); margin-top: 30px;"><i class="far fa-clock"></i> أوقات العمل</h3>
-        <div class="hours-card">
-            <table class="hours-table">
-                <tr>
-                    <td><i class="fas fa-calendar-day" style="color:var(--primary)"></i> السبت – الخميس</td>
-                    <td class="time-cell">09:00 AM - 05:00 PM</td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-heart" style="color:var(--primary)"></i> الجمعة</td>
-                    <td class="time-cell">02:00 PM - 05:00 PM</td>
-                </tr>
-            </table>
         </div>
 
-        <footer class="main-footer">
-            <span class="footer-logo">AMIR SCHOOL</span>
-            <p>مدرسة الرائدين في صناعة الحلويات والتكوين المحترف</p>
-            <div style="margin-top: 20px;">
-                <a href="#" style="color:white; margin: 0 10px;"><i class="fab fa-facebook fa-xl"></i></a>
-                <a href="#" style="color:white; margin: 0 10px;"><i class="fab fa-instagram fa-xl"></i></a>
-                <a href="#" style="color:white; margin: 0 10px;"><i class="fab fa-whatsapp fa-xl"></i></a>
+    
+        <section class="quote-section">
+    <h3 class="section-title">✨ طلب تسعيرة دقيق بموقعك</h3>
+    <div class="order-form">
+        <div class="form-group">
+            <label><i class="fas fa-user"></i> الاسم الكامل:</label>
+            <input type="text" id="custName" placeholder="أدخل اسمك الكريم">
+        </div>
+        
+        <div class="form-group">
+            <label><i class="fas fa-calendar-check"></i> نوع المناسبة:</label>
+            <select id="eventType">
+                <option value="عرس">💍 عرس</option>
+                <option value="خطوبة / فاتحة">💎 خطوبة / فاتحة</option>
+                <option value="ختان">🕯️ ختان</option>
+                <option value="حفلة نجاح / تخرج">🎓 حفلة نجاح / تخرج</option>
+                <option value="أخرى">✨ أخرى</option>
+            </select>
+        </div>
+
+        <div class="form-group" style="position: relative;">
+            <label><i class="fas fa-search-location"></i> اكتب موقعك أو بلديتك (مثلاً: وادي سلي، الشلف):</label>
+            <input type="text" id="deliveryDest" placeholder="ابحث عن أي مكان..." oninput="autoSearch(this.value)">
+            <div id="searchResults" class="search-dropdown"></div>
+            <small style="color: #888; display: block; margin-top: 5px;">* سيتم حساب المسافة تلقائياً من مقرنا في أولاد محمد.</small>
+        </div>
+
+        <div class="delivery-track-wrapper" style="margin: 40px 0 20px;">
+            <div id="motoTrack" style="height: 6px; background: #eee; border-radius: 10px; position: relative; width: 100%;">
+                <div id="progressLine" style="position: absolute; right: 0; top: 0; height: 100%; background: var(--primary); width: 0%; transition: 1s;"></div>
+                <i class="fas fa-motorcycle" id="motoIcon" style="position: absolute; top: -25px; right: -5px; color: var(--primary-dark); font-size: 1.6rem; transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);"></i>
             </div>
-            <div style="margin-top: 20px; font-size: 0.8rem; opacity: 0.6;">
-                تم التصميم بكل ❤️ لمدرسة أمير
+            <div id="priceInfo" style="display: none; justify-content: space-between; margin-top: 20px; background: #fff; padding: 15px; border-radius: 12px; border: 1px dashed var(--primary);">
+                <span id="distVal" style="font-weight: bold; color: #555;">المسافة: 0 كم</span>
+                <span id="deliveryPrice" style="font-weight: 800; color: var(--primary-dark);">التوصيل: 0 دج</span>
             </div>
-        </footer>
+        </div>
+        
+        <div class="form-group">
+            <label><i class="fas fa-pen"></i> تفاصيل المناسبة:</label>
+            <textarea id="orderNotes" rows="2" placeholder="عدد الحبات، نوع التزيين، ملاحظات إضافية..."></textarea>
+        </div>
+
+        <button class="btn-send" onclick="sendToWhatsApp()" style="background: var(--success); width: 100%; color: white; border: none; padding: 18px; border-radius: 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem;">
+            <i class="fab fa-whatsapp"></i> إرسال الطلب والتسعيرة
+        </button>
     </div>
+</section>
+
+        <h3 class="section-title">لماذا مدرسة أمير؟</h3>
+        <div class="features-grid">
+            <div class="feature-card"><i class="fas fa-hands"></i><h4>صنع يدوي إحترافي</h4></div>
+            <div class="feature-card"><i class="fas fa-cookie-bite"></i><h4>مكونات طبيعية</h4></div>
+            <div class="feature-card"><i class="fas fa-calendar-check"></i><h4>احترام المواعيد</h4></div>
+        </div>
+
+        <div class="packaging-banner">
+            <div class="packaging-icon"><i class="fas fa-gift"></i></div>
+            <div class="packaging-text">
+                <h4>🎁 تغليف أنيق وفاخر</h4>
+                <p>حلوياتنا تُقدم في علب راقية تليق بمستوى مناسباتكم وتجعل منها ذكرى لا تُنسى.</p>
+            </div>
+        </div>
+
+        <h3 class="section-title">قائمة الحلويات التقليدية</h3>
+        <div class="sweets-grid" id="sweetsContainer"></div>
+
+        <h3 class="section-title">آراء تلميذاتنا وزبوناتنا</h3>
+        <div class="testimonials-wrapper">
+            <div class="testimonials-slider" id="testimonialsList"></div>
+        </div>
+
+        <h3 class="section-title">الأسئلة الشائعة</h3>
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">هل توجد طلبيات للمناسبات؟ <i class="fa fa-chevron-down"></i></button>
+                <div class="faq-answer">نعم، نوفر طلبيات لجميع المناسبات بجودة عالية وتزيين عصري حسب الطلب.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">هل الشهادات معتمدة؟ <i class="fa fa-chevron-down"></i></button>
+                <div class="faq-answer">نعم، جميع تكويناتنا تتوج بشهادات معتمدة تمكنكم من دخول سوق العمل.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">هل تتوفر أسعار الجملة؟ <i class="fa fa-chevron-down"></i></button>
+                <div class="faq-answer">بالتأكيد، نوفر أسعاراً خاصة ومخفضة للطلبيات الكبيرة والمحلات التجارية.</div>
+            </div>
+        </div>
+
+<footer class="main-footer">
+    <div class="footer-logo">مدرسة أمير للتكوين المحترف</div>
+    <p class="footer-tagline">فن صناعة الحلويات والمملحات والتكوينات الإحترافية</p>
+    
+    <div class="footer-social">
+        <a href="https://www.facebook.com/amirformation" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.tiktok.com/@chefsamahbradai" title="تيك توك"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/213699748196" title="واتساب"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <div class="footer-bottom">
+        <p class="copyright">© <span id="year"></span> <span class="school-name">مدرسة أمير للتكوين المحترف</span> - جميع الحقوق محفوظة</p>
+        <p class="made-with">
+        صُنع بكل <i class="fas fa-heart heart-icon"></i> من الشلف إلى كل ربوع الجزائر
+        </p>
+    </div>
+</footer>
+        <div class="footer-bottom-info">
+    <p class="designed-by">
+        <span data-lang-key="footer_designed_by">صُمم وطُوِّر بواسطة</span> 
+        <a href="https://fennecvisionary.vercel.app/DevProfile.html" target="_blank" rel="noopener noreferrer">
+            <span class="highlight-primary" data-lang-key="developer_name">🦊 برادعي عبد الرحمن</span>
+        </a>
+    </p>
+</div>
+
+<div class="cart-floating-btn" onclick="toggleCart()">
+    <i class="fas fa-shopping-basket"></i>
+    <span class="cart-count" id="cartCount">0</span>
 </div>
 
 <div id="cartModal" class="cart-modal">
     <div class="cart-content">
-        <h3 style="text-align:right; color:var(--primary-dark);">🛒 سلة الطلبيات</h3>
-        
+        <h3 style="margin-bottom:20px; color:var(--primary-dark)">سلة الطلبيات</h3>
         <div id="cartItemsList"></div>
-
-        <div class="delivery-section">
-            <h4 style="font-size: 0.85rem; margin-bottom: 10px;"><i class="fas fa-truck"></i> حساب التوصيل (ولاية الشلف)</h4>
-            <div class="delivery-input-group">
-                <i class="fas fa-map-marker-alt"></i>
-                <input type="text" id="destinationInput" placeholder="اكتب وجهتك (مثلاً: سنجاس، الشلف)" oninput="searchLocation(this.value)">
-                <div id="searchSuggestions" class="search-dropdown"></div>
-            </div>
-
-            <div class="delivery-track">
-                <i class="fas fa-motorcycle moto-icon" id="motoIcon"></i>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: bold;">
-                <span>أولاد محمد</span>
-                <span id="targetLabel">الوجهة</span>
-            </div>
-
-            <div style="display:flex; justify-content: space-between; margin-top:10px; background:white; padding:8px; border-radius:10px;">
-                <span style="font-size:0.8rem;">المسافة: <b id="distVal">0 كم</b></span>
-                <span style="font-size:0.8rem;">التوصيل: <b id="deliveryCostText">0 دج</b></span>
-            </div>
+        <div style="margin-top:20px; padding-top:10px; border-top:2px solid #eee">
+            <strong>المجموع التقديري: </strong>
+            <span id="totalPrice" style="font-size:1.2rem; color:var(--success)">0 دج</span>
         </div>
-
-        <div style="border-top: 2px solid #eee; padding-top: 10px;">
-            <div style="display: flex; justify-content: space-between; font-weight: bold;">
-                <span>الإجمالي النهائي:</span>
-                <span id="totalWithDelivery" style="color:var(--success); font-size: 1.2rem;">0 دج</span>
-            </div>
-        </div>
-
-        <button class="add-to-cart-btn" style="background:var(--success); padding: 15px; margin-top: 15px;" onclick="finalizeOrder()">
-            <i class="fab fa-whatsapp"></i> تأكيد وإرسال عبر واتساب
+        <p style="font-size: 0.8rem; color: var(--muted); margin: 10px 0;">* الأسعار قد تتغير حسب الحشو أو التزيين.</p>
+        <button class="btn-send" onclick="finalizeOrder()" style="margin-top:15px">
+            <i class="fab fa-whatsapp"></i> تأكيد الطلب وإرسال
         </button>
-        <button onclick="toggleCart()" style="background:#eee; color:#333; border:none; padding:10px; border-radius:10px; margin-top:8px; cursor:pointer; width:100%;">إغلاق</button>
+        <button onclick="toggleCart()" style="margin-top:10px; background:#eee; border:none; width:100%; padding:10px; border-radius:10px; cursor:pointer">إغلاق</button>
     </div>
 </div>
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    // بيانات المنتجات
-    const sweets = [
-        { id: 1, name: "بقلاوة تقليدية", price: 120, img: "images/sweet1.jpg" },
-        { id: 2, name: "مقروط اللوز", price: 150, img: "images/sweet2.jpg" },
-        { id: 3, name: "عرايش ملكي", price: 130, img: "images/sweet3.jpg" },
-        { id: 4, name: "تشاراك مسكر", price: 110, img: "images/sweet4.jpg" }
-    ];
+// 1. البيانات الأساسية
+const sweets = [
+    { name: "تشارك مسكّر", price: "70 دج", img: "images/tcharakmsakar.jpg" },
+    { name: "تشارك العريان", price: "70 دج", img: "images/tcharakarian.jpg" },
+    { name: "عرايش", price: "90 دج", img: "images/araiech.jpg" },
+    { name: "كعيكعات", price: "80 دج", img: "images/kaikat.jpg" },
+    { name: "مقروض زمان", price: "70 دج", img: "images/maqrout.jpg" },
+    { name: "مقروض اللوز", price: "100 دج", img: "images/maqroutlouz.jpg" },
+    { name: "كفتة", price: "200 دج", img: "images/kefta.jpg" },
+    { name: "دزيريات", price: "100 دج", img: "images/dziriyat.jpg" },
+    { name: "بقلاوة", price: "80 دج", img: "images/baklawa.jpg" },
+    { name: "بقلاوة تركية", price: "80 دج", img: "images/turkish.jpg" },
+    { name: "قنيدلات", price: "80 دج", img: "images/qnidlet.jpg" },
+    { name: "مشوك الباي", price: "200 دج", img: "images/mcheweklouz.jpg" },
+    { name: "الفاكهة", price: "200 دج", img: "images/fruits.jpg" },
+    { name: "صابلي المعجون", price: "40 دج", img: "images/sabli.jpg" },
+    { name: "مشوك", price: "60 دج", img: "images/mchewek.jpg" },
+    { name: "جلجلانية", price: "70 دج", img: "images/djeljlania.jpg" },
+    { name: "مخبز", price: "120 دج", img: "images/mkhabez.jpg" },
+    { name: "كعك النقاش", price: "70 دج", img: "images/naqach.jpg" },
+    { name: "سنيكرز", price: "80 دج", img: "images/snickers.jpg" },
+    { name: "قلوب الشكولاطة", price: "80 دج", img: "images/chikoula.jpg" },
+    { name: "بنيون", price: "80 دج", img: "images/bniwen.jpg" },
+    { name: "طابع زمان", price: "30 دج", img: "images/tabaa.jpg" },
+    { name: "طابع الطلية", price: "40 دج", img: "images/tabaatalia.jpg" },
+    { name: "غريبية", price: "50 دج", img: "images/ghriba.jpg" }
+];
 
-    let cart = [];
-    let deliveryCost = 0;
-    const origin = { lat: 36.1622, lng: 1.3417 }; // أولاد محمد
+let cart = [];
+let charIdx = 0;
+const typingText = "فن صناعة الحلويات والمملحات وتكوينات احترافية";
 
-    // 1. عرض المنتجات
-    function renderSweets() {
-        const grid = document.getElementById('sweetsGrid');
-        grid.innerHTML = sweets.map(s => `
-            <div class="sweet-card">
-                <img src="${s.img}" class="sweet-img" onerror="this.src='https://via.placeholder.com/150'">
-                <div style="font-weight:bold; margin:8px 0; font-size:0.9rem;">${s.name}</div>
-                <div style="color:var(--primary-dark); font-weight:800;">${s.price} دج</div>
-                <button class="add-to-cart-btn" onclick="addToCart(${s.id})">أضف للطلب</button>
-            </div>
-        `).join('');
+// 2. وظائف العرض (UI Rendering)
+function renderSweets() {
+    const container = document.getElementById("sweetsContainer");
+    if (!container) return;
+    container.innerHTML = sweets.map((s, index) => `
+        <div class="sweet-card">
+            <img src="${s.img}" class="sweet-img" onerror="this.src='https://via.placeholder.com/200x150?text=Amir+School'">
+            <div class="sweet-name">${s.name}</div>
+            <div class="sweet-price">${s.price}</div>
+            <button class="add-to-cart-btn" onclick="addToCart(${index})">
+                <i class="fas fa-cart-plus"></i> أضف للطلب
+            </button>
+        </div>
+    `).join('');
+}
+
+function typeEffect() {
+    const desc = document.getElementById("schoolDesc");
+    if (desc && charIdx < typingText.length) {
+        desc.innerHTML += typingText.charAt(charIdx);
+        charIdx++;
+        setTimeout(typeEffect, 80);
+    }
+}
+
+// 3. منطق السلة (Cart Logic)
+function addToCart(index) {
+    const item = sweets[index];
+    const existing = cart.find(c => c.name === item.name);
+    
+    // عند الإضافة لأول مرة نبدأ بـ 50، وعند التكرار نزيد بـ 10 أو 1 كما تفضل
+    if (existing) {
+        existing.qty += 10; 
+    } else {
+        cart.push({ ...item, qty: 50 }); // الحد الأدنى عند أول إضافة
+    }
+    updateCartUI();
+    
+    const btn = event.currentTarget;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = "تمت الإضافة ✓";
+    btn.style.background = "#28a745";
+    setTimeout(() => { 
+        btn.innerHTML = originalText;
+        btn.style.background = ""; 
+    }, 1000);
+}
+
+function updateCartUI() {
+    const cartCount = document.getElementById("cartCount");
+    if (cartCount) cartCount.innerText = cart.length;
+}
+
+function toggleCart() {
+    const modal = document.getElementById("cartModal");
+    const isOpen = modal.style.display === "flex";
+    
+    if (isOpen) {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto"; // إعادة التمرير للصفحة
+    } else {
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden"; // منع تمرير الصفحة خلف السلة
+        renderCartItems();
+    }
+}
+
+function renderCartItems() {
+    const container = document.getElementById("cartItemsList");
+    const totalEl = document.getElementById("totalPrice");
+    let total = 0;
+    
+    if (cart.length === 0) {
+        container.innerHTML = `
+            <div style="text-align:center; padding:50px 20px;">
+                <i class="fas fa-shopping-basket" style="font-size:4rem; color:#eee; margin-bottom:15px;"></i>
+                <p style="color:#888; font-weight:bold">سلة التسوق فارغة حالياً</p>
+            </div>`;
+        if (totalEl) totalEl.innerText = "0 دج";
+        return;
     }
 
-    // 2. إدارة السلة
-    function addToCart(id) {
-        const item = sweets.find(s => s.id === id);
-        const inCart = cart.find(c => c.id === id);
-        if (inCart) inCart.qty++;
-        else cart.push({ ...item, qty: 1 });
-        updateCartUI();
-    }
+    container.innerHTML = cart.map((item, index) => {
+        const priceNum = parseInt(item.price.toString().replace(/\D/g, '')) || 0;
+        total += priceNum * item.qty;
 
-    function updateCartUI() {
-        document.getElementById('cartCount').innerText = cart.reduce((a, b) => a + b.qty, 0);
-        const list = document.getElementById('cartItemsList');
-        if (cart.length === 0) {
-            list.innerHTML = "<p style='text-align:center; padding:20px;'>السلة فارغة</p>";
-        } else {
-            list.innerHTML = cart.map(c => `
-                <div class="cart-item-card">
-                    <img src="${c.img}" class="item-img-mini">
-                    <div style="flex:1; text-align:right;">
-                        <div style="font-weight:bold; font-size:0.85rem;">${c.name}</div>
-                        <div style="color:var(--primary); font-size:0.8rem;">${c.price} دج</div>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:5px; background:#eee; padding:5px; border-radius:10px;">
-                        <button onclick="changeQty(${c.id}, 1)" style="border:none; background:white; width:20px; border-radius:5px;">+</button>
-                        <span>${c.qty}</span>
-                        <button onclick="changeQty(${c.id}, -1)" style="border:none; background:white; width:20px; border-radius:5px;">-</button>
-                    </div>
+        return `
+            <div class="cart-item-card">
+                <img src="${item.img}" class="item-img-mini" onerror="this.src='https://via.placeholder.com/60'">
+                <div style="flex-grow:1; margin-right: 10px;">
+                    <h4 style="margin:0; font-size:0.95rem; color:#333">${item.name}</h4>
+                    <span style="color:#27ae60; font-weight:bold; font-size:0.85rem">${item.price}</span>
                 </div>
-            `).join('');
+                <div class="qty-wrapper">
+                    <button class="qty-btn-small" onclick="changeQty(${index}, -1)">-</button>
+                    <span style="font-weight:bold; font-size:0.9rem; min-width: 25px; text-align: center;">${item.qty}</span>
+                    <button class="qty-btn-small" onclick="changeQty(${index}, 1)">+</button>
+                </div>
+                <button onclick="removeFromCart(${index})" style="background:none; border:none; color:#ff4757; cursor:pointer; padding:5px; margin-right: 5px;">
+                    <i class="far fa-trash-alt"></i>
+                </button>
+            </div>`;
+    }).join('');
+    
+    if (totalEl) totalEl.innerText = total.toLocaleString() + " دج";
+}
+
+/**
+ * دالة تغيير الكمية بالزيادة أو النقصان
+ * @param {number} index - ترتيب المنتج في السلة
+ * @param {number} delta - القيمة المراد إضافتها (1 أو -1 مثلاً)
+ */
+function changeQty(index, delta) {
+    // نضمن أن الكمية لا تقل عن 1 (أو 10 حسب رغبتك في الحد الأدنى)
+    cart[index].qty = Math.max(1, cart[index].qty + delta);
+    renderCartItems();
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    renderCartItems();
+    updateCartUI();
+}
+
+// 4. أدوات المساعدة (Status, Countdowns, WhatsApp)
+function updateShopStatus() {
+    const now = new Date();
+    const day = now.getDay();
+    const currentTime = now.getHours() + now.getMinutes() / 60;
+    let isOpen = false;
+    let nextAction = "";
+
+    if (day === 5) { // الجمعة
+        if (currentTime >= 14 && currentTime < 17) { isOpen = true; nextAction = "نغلق الساعة 17:00"; }
+        else if (currentTime < 14) nextAction = "نفتح اليوم الساعة 14:00";
+        else nextAction = "نفتح غداً الساعة 09:00";
+    } else {
+        if (currentTime >= 9 && currentTime < 17) { isOpen = true; nextAction = "نغلق الساعة 17:00"; }
+        else if (currentTime < 9) nextAction = "نفتح اليوم الساعة 09:00";
+        else nextAction = (day === 4) ? "نفتح غداً الساعة 14:00" : "نفتح غداً الساعة 09:00";
+    }
+
+    const statusBadge = document.getElementById('shopStatus');
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+    const statusTimer = document.getElementById('statusTimer');
+
+    if(statusBadge) {
+        statusBadge.className = isOpen ? "status-badge status-open" : "status-badge status-closed";
+        statusDot.className = isOpen ? "dot dot-open" : "dot dot-closed";
+        statusText.innerText = isOpen ? "مرحباً! محلنا مفتوح حالياً ✅" : "نعتذر، المحل مغلق الآن ❌";
+        statusTimer.innerText = nextAction;
+    }
+}
+
+function updateCountdowns() {
+    const ramadanDate = new Date("February 18, 2026 00:00:00").getTime();
+    const eidDate = new Date("March 20, 2026 00:00:00").getTime();
+    const now = new Date().getTime();
+
+    const setDays = (id, target) => {
+        const el = document.getElementById(id);
+        if (el) {
+            const diff = target - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            el.innerText = days > 0 ? days : "0";
         }
-        calculateTotal();
+    };
+
+    setDays("ramadan-days", ramadanDate);
+    setDays("eid-days", eidDate);
+}
+
+function finalizeOrder() {
+    if (cart.length === 0) { 
+        alert("السلة فارغة!"); 
+        return; 
     }
 
-    function changeQty(id, delta) {
-        const item = cart.find(c => c.id === id);
-        item.qty += delta;
-        if (item.qty < 1) cart = cart.filter(c => c.id !== id);
-        updateCartUI();
+    // رأس الرسالة بشكل أنيق
+    let message = `*🌟 طلب جديد - Amir Délices 🌟*%0A`;
+    message += `-----------------------------------%0A`;
+    message += `📦 *تفاصيل الطلبية:*%0A%0A`;
+
+    // قائمة المنتجات مع تنسيق الرموز
+    cart.forEach(item => {
+        message += `🔸 *${item.name}* %0A   🔹 الكمية: ${item.qty} حبة%0A`;
+    });
+
+    // المجموع التقديري
+    const total = document.getElementById("totalPrice").innerText;
+    message += `%0A-----------------------------------%0A`;
+    message += `💰 *المجموع التقديري:* ${total}%0A`;
+    message += `-----------------------------------%0A`;
+
+    // تذييل الرسالة
+    message += `✨ *شكراً لاختياركم حلوياتنا!*%0A`;
+    message += `📍 تم الطلب عبر الموقع الرسمي.`;
+
+    // فتح واتساب
+    window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
+}
+
+// موقع المدرسة الثابت (أولاد محمد، الشلف)
+const schoolCoords = L.latLng(36.1622, 1.3417);
+let searchTimeout;
+let selectedLocationName = "";
+let calculatedKM = 0;
+let calculatedPrice = 0;
+
+// 1. دالة البحث التلقائي عن المواقع (Geocoding)
+function autoSearch(query) {
+    clearTimeout(searchTimeout);
+    const resultsDiv = document.getElementById('searchResults');
+    
+    if (query.length < 3) { 
+        resultsDiv.style.display = 'none';
+        return; 
     }
 
-    function calculateTotal() {
-        const subtotal = cart.reduce((a, b) => a + (b.price * b.qty), 0);
-        document.getElementById('totalWithDelivery').innerText = (subtotal + deliveryCost) + " دج";
-    }
+    // الانتظار قليلاً قبل البحث لتقليل طلبات الـ API (Debouncing)
+    searchTimeout = setTimeout(() => {
+        // البحث مع تحديد النطاق في الجزائر لزيادة الدقة
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${query}, Chlef, Algeria&limit=5`;
 
-    function toggleCart() {
-        const modal = document.getElementById('cartModal');
-        modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
-    }
-
-    // 3. نظام البحث والتوصيل
-    async function searchLocation(query) {
-        const dropdown = document.getElementById('searchSuggestions');
-        if (query.length < 3) { dropdown.style.display = 'none'; return; }
-        
-        try {
-            const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}, Chlef, Algeria&limit=5`);
-            const data = await res.json();
-            dropdown.innerHTML = data.map(d => `
-                <div class="search-item" onclick="selectLoc(${d.lat}, ${d.lon}, '${d.display_name}')">${d.display_name}</div>
-            `).join('');
-            dropdown.style.display = 'block';
-        } catch (e) {}
-    }
-
-    function selectLoc(lat, lon, name) {
-        document.getElementById('destinationInput').value = name;
-        document.getElementById('searchSuggestions').style.display = 'none';
-        document.getElementById('targetLabel').innerText = name.split(',')[0];
-
-        // حساب المسافة الحقيقية
-        fetch(`https://router.project-osrm.org/route/v1/driving/${origin.lng},${origin.lat};${lon},${lat}?overview=false`)
-            .then(r => r.json())
+        fetch(url)
+            .then(response => response.json())
             .then(data => {
-                const dist = data.routes[0].distance / 1000;
-                document.getElementById('distVal').innerText = dist.toFixed(1) + " كم";
-                
-                // منطق التسعير
-                let cost = 150;
-                if (dist > 5) cost = 200 + Math.ceil((dist - 5) / 3) * 50;
-                deliveryCost = cost;
-                document.getElementById('deliveryCostText').innerText = cost + " دج";
-                
-                // تحريك الموتو
-                const move = Math.min((dist / 20) * 100, 92);
-                document.getElementById('motoIcon').style.right = move + "%";
-                calculateTotal();
+                if (data.length > 0) {
+                    resultsDiv.innerHTML = data.map(item => `
+                        <div class="search-item" onclick="confirmLocation('${item.display_name}', ${item.lat}, ${item.lon})">
+                            <i class="fas fa-map-marker-alt"></i> ${item.display_name}
+                        </div>
+                    `).join('');
+                    resultsDiv.style.display = 'block';
+                }
             });
+    }, 500);
+}
+
+// 2. تأكيد الموقع وحساب المسافة بـ Leaflet
+function confirmLocation(fullName, lat, lon) {
+    selectedLocationName = fullName;
+    document.getElementById('deliveryDest').value = fullName.split(',')[0]; // عرض أول جزء من الاسم فقط
+    document.getElementById('searchResults').style.display = 'none';
+    
+    const targetCoords = L.latLng(lat, lon);
+    
+    // حساب المسافة الدقيقة باستخدام Leaflet
+    const distanceMeters = schoolCoords.distanceTo(targetCoords);
+    calculatedKM = distanceMeters / 1000;
+
+    // تسعيرة التوصيل: (30 دج لكل 1 كم + 150 دج سعر قاعدي)
+    calculatedPrice = Math.round(calculatedKM * 30 + 150);
+
+    // تحديث الواجهة
+    document.getElementById('priceInfo').style.display = 'flex';
+    document.getElementById('distVal').innerText = `المسافة: ${calculatedKM.toFixed(1)} كم`;
+    document.getElementById('deliveryPrice').innerText = `التوصيل: ${calculatedPrice} دج`;
+
+    // تحريك الموتو (بناءً على مسافة أقصاها 50كم للشريط)
+    let moveRatio = Math.min((calculatedKM / 50) * 100, 95);
+    document.getElementById('motoIcon').style.right = `calc(${moveRatio}% - 10px)`;
+    document.getElementById('progressLine').style.width = moveRatio + "%";
+}
+
+// 3. إرسال البيانات النهائية
+function sendToWhatsApp() {
+    const name = document.getElementById('custName').value.trim();
+    if (!name || !selectedLocationName) {
+        alert("⚠️ يرجى إدخال اسمك واختيار موقع التوصيل من القائمة.");
+        return;
     }
 
-    // 4. إرسال الطلب
-    function finalizeOrder() {
-        if (cart.length === 0) return alert("السلة فارغة!");
-        let msg = `طلبية جديدة من مدرسة أمير:%0A`;
-        cart.forEach(c => msg += `- ${c.name} (${c.qty} قطعة)%0A`);
-        msg += `%0Aالوجهة: ${document.getElementById('destinationInput').value}`;
-        msg += `%0Aتوصيل: ${deliveryCost} دج`;
-        msg += `%0Aالإجمالي: ${document.getElementById('totalWithDelivery').innerText}`;
-        
-        window.open(`https://wa.me/213000000000?text=${msg}`); // ضع رقمك هنا
+    let msg = `*📋 طلب تسعيرة حلويات (موقع دقيق)*%0A`;
+    msg += `👤 *المرسل:* ${name}%0A`;
+    msg += `🎉 *المناسبة:* ${document.getElementById('eventType').value}%0A`;
+    msg += `📍 *الموقع المختار:* ${selectedLocationName}%0A`;
+    msg += `🛣️ *المسافة:* ${calculatedKM.toFixed(1)} كم%0A`;
+    msg += `🚚 *تكلفة التوصيل:* ${calculatedPrice} دج%0A`;
+    msg += `📝 *ملاحظات:* ${document.getElementById('orderNotes').value || 'لا يوجد'}%0A`;
+
+    window.open(`https://wa.me/213699748196?text=${msg}`, '_blank');
+}
+
+    // 2. دمج محتويات السلة (إذا كانت موجودة)
+    if (typeof cart !== 'undefined' && cart.length > 0) {
+        message += `📦 *الحلويات المختارة من السلة:*%0A`;
+        cart.forEach(item => {
+            message += `• ${item.name} (${item.qty} حبة)%0A`;
+        });
+        message += `%0A`;
     }
 
-    // 5. تأثيرات إضافية
-    function typeEffect() {
-        const texts = ["نتعلم لنبدع.. نصنع لنتميز", "دورات احترافية في الحلويات", "طلبياتكم تصلكم أينما كنتم"];
-        let i = 0, j = 0, current = "", isDeleting = false;
-        const el = document.getElementById('schoolDesc');
+    // 3. إضافة الملاحظات الإضافية
+    if (notes) {
+        message += `📝 *ملاحظات إضافية:*%0A${notes}%0A`;
+    }
 
-        function loop() {
-            current = texts[i];
-            if (isDeleting) el.innerText = current.substring(0, j--);
-            else el.innerText = current.substring(0, j++);
+    message += `-----------------------------------%0A`;
+    message += `✨ *تم الإرسال من الموقع الرسمي لـ Amir Délices*`;
 
-            if (!isDeleting && j === current.length + 1) { isDeleting = true; setTimeout(loop, 2000); }
-            else if (isDeleting && j === 0) { isDeleting = false; i = (i + 1) % texts.length; setTimeout(loop, 500); }
-            else setTimeout(loop, 100);
+    const phoneNumber = "213699748196";
+    const url = `https://wa.me/${phoneNumber}?text=${message}`;
+    
+    window.open(url, '_blank');
+}
+const testimonials = [
+    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، تذوب في الفم يعطيك الصحة شاف.", stars: 5 },
+    { name: "كريمة ب.", text: "درت فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش.", stars: 5 },
+    { name: "سمية مهداوي", text: "أحسن مدرسة في الشلف، المعاملة روعة والتعليم بضمير.", stars: 5 },
+    { name: "فاطمة الزهراء", text: "المقروض جاني مرمل ومعسل للقلب، ربي يبارك في رزقكم.", stars: 5 },
+    { name: "فايزة أم أنس", text: "حمرتولي وجهي في عرس خويا، الضياف قاع سألو على الحلويات.", stars: 5 }
+];
+
+const testiList = document.getElementById("testimonialsList");
+[...testimonials, ...testimonials].forEach(t => {
+    let starHtml = "";
+    for(let i=0; i<t.stars; i++) starHtml += `<i class="fas fa-star"></i>`;
+    testiList.innerHTML += `<div class="testimonial-card">
+        <div class="testi-name">${t.name}</div>
+        <div class="stars">${starHtml}</div>
+        <p class="testi-text">"${t.text}"</p>
+    </div>`;
+});
+// 1. دالة الصعود للأعلى (يجب أن تكون خارج onload لتكون عامة)
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// 2. التحكم في ظهور الزر عند التمرير
+window.onscroll = function() {
+    const btn = document.getElementById("backToTop");
+    if (btn) {
+        // سيظهر الزر بعد تجاوز 500 بكسل من الأعلى
+        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+            btn.style.display = "flex";
+        } else {
+            btn.style.display = "none";
         }
-        loop();
+    }
+};
+
+// 3. تهيئة الأحداث عند تحميل الصفحة
+window.onload = () => {
+    if (typeof renderSweets === "function") renderSweets();
+    if (typeof typeEffect === "function") typeEffect();
+    if (typeof updateShopStatus === "function") updateShopStatus();
+    if (typeof updateCountdowns === "function") updateCountdowns();
+
+    // ربط زر الصعود بالدالة برمجياً لضمان العمل
+    const btnTop = document.getElementById("backToTop");
+    if (btnTop) {
+        btnTop.onclick = scrollToTop;
     }
 
-    window.onload = () => {
-        renderSweets();
-        typeEffect();
-    };
+    // تفعيل الأسئلة الشائعة
+    document.querySelectorAll(".faq-question").forEach(q => {
+        q.onclick = () => q.parentElement.classList.toggle("active");
+    });
 
-    window.onscroll = () => {
-        document.getElementById('backToTop').style.display = (window.scrollY > 400) ? 'flex' : 'none';
-    };
-    document.getElementById('backToTop').onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.innerText = new Date().getFullYear();
+};
 </script>
-
-</body>
+    </body>
+</div>
     
 </html>
