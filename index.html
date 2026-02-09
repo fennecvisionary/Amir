@@ -839,31 +839,7 @@
         font-size: 0.75rem;     /* تصغير الاسم أكثر ليتناسب مع الهاتف */
     }
 }
-.search-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 100%;
-    background: white;
-    border: 1px solid #eee;
-    z-index: 2000;
-    max-height: 250px;
-    overflow-y: auto;
-    border-radius: 0 0 15px 15px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    display: none;
-}
-.search-item {
-    padding: 12px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    border-bottom: 1px solid #f9f9f9;
-    text-align: right;
-}
-.search-item:hover {
-    background: #fff0f3;
-    color: var(--primary-dark);
-}
+
     </style>
 </head>
 
@@ -957,7 +933,7 @@
 
     
         <section class="quote-section">
-    <h3 class="section-title">✨ طلب تسعيرة دقيق بموقعك</h3>
+    <h3 class="section-title">✨ طلب تسعيرة لمناسبة</h3>
     <div class="order-form">
         <div class="form-group">
             <label><i class="fas fa-user"></i> الاسم الكامل:</label>
@@ -975,31 +951,22 @@
             </select>
         </div>
 
-        <div class="form-group" style="position: relative;">
-            <label><i class="fas fa-search-location"></i> اكتب موقعك أو بلديتك (مثلاً: وادي سلي، الشلف):</label>
-            <input type="text" id="deliveryDest" placeholder="ابحث عن أي مكان..." oninput="autoSearch(this.value)">
-            <div id="searchResults" class="search-dropdown"></div>
-            <small style="color: #888; display: block; margin-top: 5px;">* سيتم حساب المسافة تلقائياً من مقرنا في أولاد محمد.</small>
-        </div>
-
-        <div class="delivery-track-wrapper" style="margin: 40px 0 20px;">
-            <div id="motoTrack" style="height: 6px; background: #eee; border-radius: 10px; position: relative; width: 100%;">
-                <div id="progressLine" style="position: absolute; right: 0; top: 0; height: 100%; background: var(--primary); width: 0%; transition: 1s;"></div>
-                <i class="fas fa-motorcycle" id="motoIcon" style="position: absolute; top: -25px; right: -5px; color: var(--primary-dark); font-size: 1.6rem; transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);"></i>
-            </div>
-            <div id="priceInfo" style="display: none; justify-content: space-between; margin-top: 20px; background: #fff; padding: 15px; border-radius: 12px; border: 1px dashed var(--primary);">
-                <span id="distVal" style="font-weight: bold; color: #555;">المسافة: 0 كم</span>
-                <span id="deliveryPrice" style="font-weight: 800; color: var(--primary-dark);">التوصيل: 0 دج</span>
-            </div>
+        <div class="form-group">
+            <label><i class="fas fa-clock"></i> تاريخ المناسبة التقريبي:</label>
+            <input type="date" id="eventDate">
         </div>
         
         <div class="form-group">
-            <label><i class="fas fa-pen"></i> تفاصيل المناسبة:</label>
-            <textarea id="orderNotes" rows="2" placeholder="عدد الحبات، نوع التزيين، ملاحظات إضافية..."></textarea>
+            <label><i class="fas fa-pen"></i> تفاصيل إضافية:</label>
+            <textarea id="orderNotes" rows="3" placeholder="مثال: أريد إضافة تزيين خاص، أو استفسار عن السعر..."></textarea>
         </div>
 
-        <button class="btn-send" onclick="sendToWhatsApp()" style="background: var(--success); width: 100%; color: white; border: none; padding: 18px; border-radius: 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem;">
-            <i class="fab fa-whatsapp"></i> إرسال الطلب والتسعيرة
+        <div id="cartStatusNote" style="font-size: 0.8rem; color: #666; margin-bottom: 15px; background: #fff8f0; padding: 10px; border-right: 3px solid #f54c03;">
+            💡 سيتم إرفاق قائمة الحلويات الموجودة في سلتك تلقائياً مع هذا الطلب.
+        </div>
+        
+        <button class="btn-send" onclick="sendToWhatsApp()">
+            <i class="fab fa-whatsapp"></i> إرسال تفاصيل المناسبة
         </button>
     </div>
 </section>
@@ -1089,6 +1056,7 @@
         <button onclick="toggleCart()" style="margin-top:10px; background:#eee; border:none; width:100%; padding:10px; border-radius:10px; cursor:pointer">إغلاق</button>
     </div>
 </div>
+
 <script>
 // 1. البيانات الأساسية
 const sweets = [
@@ -1325,87 +1293,25 @@ function finalizeOrder() {
     window.open(`https://wa.me/213699748196?text=${message}`, '_blank');
 }
 
-// موقع المدرسة الثابت (أولاد محمد، الشلف)
-const schoolCoords = L.latLng(36.1622, 1.3417);
-let searchTimeout;
-let selectedLocationName = "";
-let calculatedKM = 0;
-let calculatedPrice = 0;
-
-// 1. دالة البحث التلقائي عن المواقع (Geocoding)
-function autoSearch(query) {
-    clearTimeout(searchTimeout);
-    const resultsDiv = document.getElementById('searchResults');
-    
-    if (query.length < 3) { 
-        resultsDiv.style.display = 'none';
-        return; 
-    }
-
-    // الانتظار قليلاً قبل البحث لتقليل طلبات الـ API (Debouncing)
-    searchTimeout = setTimeout(() => {
-        // البحث مع تحديد النطاق في الجزائر لزيادة الدقة
-        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${query}, Chlef, Algeria&limit=5`;
-
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                if (data.length > 0) {
-                    resultsDiv.innerHTML = data.map(item => `
-                        <div class="search-item" onclick="confirmLocation('${item.display_name}', ${item.lat}, ${item.lon})">
-                            <i class="fas fa-map-marker-alt"></i> ${item.display_name}
-                        </div>
-                    `).join('');
-                    resultsDiv.style.display = 'block';
-                }
-            });
-    }, 500);
-}
-
-// 2. تأكيد الموقع وحساب المسافة بـ Leaflet
-function confirmLocation(fullName, lat, lon) {
-    selectedLocationName = fullName;
-    document.getElementById('deliveryDest').value = fullName.split(',')[0]; // عرض أول جزء من الاسم فقط
-    document.getElementById('searchResults').style.display = 'none';
-    
-    const targetCoords = L.latLng(lat, lon);
-    
-    // حساب المسافة الدقيقة باستخدام Leaflet
-    const distanceMeters = schoolCoords.distanceTo(targetCoords);
-    calculatedKM = distanceMeters / 1000;
-
-    // تسعيرة التوصيل: (30 دج لكل 1 كم + 150 دج سعر قاعدي)
-    calculatedPrice = Math.round(calculatedKM * 30 + 150);
-
-    // تحديث الواجهة
-    document.getElementById('priceInfo').style.display = 'flex';
-    document.getElementById('distVal').innerText = `المسافة: ${calculatedKM.toFixed(1)} كم`;
-    document.getElementById('deliveryPrice').innerText = `التوصيل: ${calculatedPrice} دج`;
-
-    // تحريك الموتو (بناءً على مسافة أقصاها 50كم للشريط)
-    let moveRatio = Math.min((calculatedKM / 50) * 100, 95);
-    document.getElementById('motoIcon').style.right = `calc(${moveRatio}% - 10px)`;
-    document.getElementById('progressLine').style.width = moveRatio + "%";
-}
-
-// 3. إرسال البيانات النهائية
 function sendToWhatsApp() {
     const name = document.getElementById('custName').value.trim();
-    if (!name || !selectedLocationName) {
-        alert("⚠️ يرجى إدخال اسمك واختيار موقع التوصيل من القائمة.");
+    const type = document.getElementById('eventType').value;
+    const date = document.getElementById('eventDate').value;
+    const notes = document.getElementById('orderNotes').value.trim();
+
+    // التحقق من الاسم
+    if (!name) {
+        alert("⚠️ من فضلك، املأ اسمك الكريم.");
         return;
     }
 
-    let msg = `*📋 طلب تسعيرة حلويات (موقع دقيق)*%0A`;
-    msg += `👤 *المرسل:* ${name}%0A`;
-    msg += `🎉 *المناسبة:* ${document.getElementById('eventType').value}%0A`;
-    msg += `📍 *الموقع المختار:* ${selectedLocationName}%0A`;
-    msg += `🛣️ *المسافة:* ${calculatedKM.toFixed(1)} كم%0A`;
-    msg += `🚚 *تكلفة التوصيل:* ${calculatedPrice} دج%0A`;
-    msg += `📝 *ملاحظات:* ${document.getElementById('orderNotes').value || 'لا يوجد'}%0A`;
-
-    window.open(`https://wa.me/213699748196?text=${msg}`, '_blank');
-}
+    // 1. رأس الرسالة
+    let message = `*📋 طلب تسعيرة لمناسبة خاصة*%0A`;
+    message += `-----------------------------------%0A`;
+    message += `👤 *المرسل:* ${name}%0A`;
+    message += `🎉 *نوع المناسبة:* ${type}%0A`;
+    message += `📅 *التاريخ:* ${date ? date : 'غير محدد بعد'}%0A`;
+    message += `-----------------------------------%0A%0A`;
 
     // 2. دمج محتويات السلة (إذا كانت موجودة)
     if (typeof cart !== 'undefined' && cart.length > 0) {
@@ -1489,8 +1395,6 @@ window.onload = () => {
     const yearEl = document.getElementById("year");
     if (yearEl) yearEl.innerText = new Date().getFullYear();
 };
- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />   
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </script>
     </body>
 </div>
