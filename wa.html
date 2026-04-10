@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>وتين | منصة التبرع بالدم</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C41E3A;
+    --red-dark: #9B1528;
+    --red-light: #F9E8EB;
+    --red-mid: #E8536A;
+    --cream: #FDF8F5;
+    --white: #FFFFFF;
+    --gray-50: #F8F6F3;
+    --gray-100: #EDE9E3;
+    --gray-200: #D4CFC6;
+    --gray-400: #9A9589;
+    --gray-600: #5C574F;
+    --gray-800: #2C2820;
+    --green: #1A7A4A;
+    --green-light: #E8F5EE;
+    --orange: #C4620E;
+    --orange-light: #FEF3E8;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.13);
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--cream);
+    color: var(--gray-800);
+    direction: rtl;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+ 
+  /* NAV */
+  nav {
+    position: fixed; top: 0; right: 0; left: 0; z-index: 100;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-100);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-size: 1.6rem; font-weight: 900;
+    color: var(--red);
+    letter-spacing: -0.5px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo span { font-size: 0.75rem; color: var(--gray-400); font-weight: 400; margin-top: 2px; }
+  .nav-links { display: flex; gap: 0.25rem; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--gray-600);
+    font-size: 0.9rem; padding: 6px 14px;
+    border-radius: 8px; transition: all 0.2s;
+    font-weight: 500;
+  }
+  .nav-links a:hover { background: var(--gray-50); color: var(--gray-800); }
+  .nav-cta {
+    background: var(--red) !important; color: white !important;
+    font-weight: 600 !important;
+    padding: 8px 18px !important;
+  }
+  .nav-cta:hover { background: var(--red-dark) !important; }
+ 
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(160deg, #fff 0%, #FDF2F4 40%, #FEE8EC 100%);
+    padding: 80px 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -100px; left: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(196,30,58,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(196,30,58,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 800px; text-align: center; position: relative; z-index: 1;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--red-light); color: var(--red-dark);
+    font-size: 0.8rem; font-weight: 600; padding: 6px 14px;
+    border-radius: 100px; margin-bottom: 1.5rem;
+    border: 1px solid rgba(196,30,58,0.15);
+  }
+  .hero-badge::before { content: '●'; font-size: 8px; color: var(--red); }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900; line-height: 1.15;
+    color: var(--gray-800);
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+  }
+  .hero h1 .accent { color: var(--red); }
+  .hero-aya {
+    font-size: 1.05rem; color: var(--gray-600);
+    font-style: italic; font-family: 'Tajawal', sans-serif;
+    margin: 1rem 0 1.5rem;
+    padding: 1rem 1.5rem;
+    background: white; border-radius: 12px;
+    border-right: 3px solid var(--red);
+    box-shadow: var(--shadow-sm);
+    display: inline-block;
+    text-align: right; width: 100%;
+  }
+  .hero p {
+    color: var(--gray-600); font-size: 1.05rem;
+    max-width: 560px; margin: 0 auto 2rem;
+    line-height: 1.8;
+  }
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--red); color: white;
+    padding: 14px 28px; border-radius: 12px;
+    border: none; font-family: 'Cairo', sans-serif;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    transition: all 0.2s; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 12px rgba(196,30,58,0.3);
+  }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(196,30,58,0.35); }
+  .btn-secondary {
+    background: white; color: var(--red);
+    padding: 14px 28px; border-radius: 12px;
+    border: 2px solid var(--red); font-family: 'Cairo', sans-serif;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    transition: all 0.2s; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-secondary:hover { background: var(--red-light); transform: translateY(-2px); }
+ 
+  /* STATS */
+  .stats {
+    background: white;
+    padding: 3rem 2rem;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .stats-inner { max-width: 960px; margin: 0 auto; }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--gray-100); border-radius: var(--radius); overflow: hidden; }
+  .stat-card {
+    background: white; padding: 2rem 1.5rem; text-align: center;
+  }
+  .stat-number {
+    font-size: 2.5rem; font-weight: 900; color: var(--red);
+    line-height: 1; margin-bottom: 0.25rem;
+    font-family: 'Cairo', sans-serif;
+  }
+  .stat-label { font-size: 0.85rem; color: var(--gray-400); font-weight: 500; }
+ 
+  /* SECTION GENERIC */
+  section { padding: 5rem 2rem; }
+  .section-inner { max-width: 960px; margin: 0 auto; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--red-light); color: var(--red-dark);
+    font-size: 0.75rem; font-weight: 700; padding: 4px 12px;
+    border-radius: 100px; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .section-title { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; line-height: 1.3; color: var(--gray-800); margin-bottom: 0.75rem; }
+  .section-sub { color: var(--gray-400); font-size: 1rem; max-width: 560px; line-height: 1.8; }
+ 
+  /* SEARCH */
+  #search { background: var(--gray-50); }
+  .search-box {
+    background: white; border-radius: var(--radius-lg);
+    padding: 2rem; box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-100); margin-bottom: 2rem;
+  }
+  .search-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label { font-size: 0.8rem; font-weight: 600; color: var(--gray-600); }
+  .form-control {
+    padding: 10px 14px; border: 1.5px solid var(--gray-100); border-radius: 10px;
+    font-family: 'Cairo', sans-serif; font-size: 0.9rem; color: var(--gray-800);
+    background: var(--gray-50); transition: all 0.2s; outline: none;
+    direction: rtl;
+  }
+  .form-control:focus { border-color: var(--red); background: white; box-shadow: 0 0 0 3px rgba(196,30,58,0.08); }
+  .results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .donor-card {
+    background: white; border-radius: var(--radius); padding: 1.25rem;
+    border: 1px solid var(--gray-100); transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+  }
+  .donor-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .donor-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .blood-badge {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--red); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; font-weight: 900; flex-shrink: 0;
+  }
+  .donor-info h4 { font-size: 0.95rem; font-weight: 700; color: var(--gray-800); margin-bottom: 2px; }
+  .donor-info p { font-size: 0.8rem; color: var(--gray-400); }
+  .donor-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .meta-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--gray-50); border: 1px solid var(--gray-100);
+    padding: 4px 10px; border-radius: 100px;
+    font-size: 0.75rem; color: var(--gray-600); font-weight: 500;
+  }
+  .status-available {
+    background: var(--green-light); color: var(--green);
+    border-color: rgba(26,122,74,0.2) !important;
+    font-weight: 600;
+  }
+  .status-unavailable {
+    background: var(--orange-light); color: var(--orange);
+    border-color: rgba(196,98,14,0.2) !important;
+    font-weight: 600;
+  }
+  .call-btn {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    background: var(--red); color: white;
+    padding: 9px; border-radius: 9px; text-decoration: none;
+    font-size: 0.85rem; font-weight: 700; font-family: 'Cairo', sans-serif;
+    transition: all 0.2s; width: 100%;
+  }
+  .call-btn:hover { background: var(--red-dark); }
+  .no-results {
+    text-align: center; padding: 3rem 1rem; color: var(--gray-400);
+    grid-column: 1 / -1;
+  }
+  .no-results .big-icon { font-size: 3rem; margin-bottom: 1rem; }
+ 
+  /* REGISTER */
+  #register { background: white; }
+  .register-wrap {
+    background: var(--gray-50); border-radius: var(--radius-lg);
+    padding: 2.5rem; border: 1px solid var(--gray-100);
+    max-width: 720px; margin: 0 auto;
+  }
+  .reg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .reg-grid .full { grid-column: 1 / -1; }
+  .reg-section-title {
+    font-size: 0.75rem; font-weight: 700; color: var(--red);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin: 1.5rem 0 0.75rem; grid-column: 1 / -1;
+    padding-bottom: 6px; border-bottom: 1px solid var(--gray-100);
+  }
+  .checkbox-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: var(--red-light); padding: 12px 14px; border-radius: 10px;
+    border: 1px solid rgba(196,30,58,0.15); cursor: pointer;
+    grid-column: 1 / -1;
+  }
+  .checkbox-row input[type=checkbox] { accent-color: var(--red); width: 16px; height: 16px; margin-top: 2px; flex-shrink: 0; }
+  .checkbox-row label { font-size: 0.85rem; color: var(--red-dark); cursor: pointer; line-height: 1.6; }
+  .radio-group { display: flex; gap: 10px; flex-wrap: wrap; }
+  .radio-opt {
+    flex: 1; min-width: 120px;
+    display: flex; align-items: center; gap: 8px;
+    background: white; border: 2px solid var(--gray-100);
+    padding: 10px 14px; border-radius: 10px; cursor: pointer;
+    transition: all 0.2s; font-size: 0.9rem;
+  }
+  .radio-opt:has(input:checked) { border-color: var(--red); background: var(--red-light); }
+  .radio-opt input { accent-color: var(--red); }
+  .btn-submit {
+    background: var(--red); color: white;
+    padding: 14px; border-radius: 12px; border: none;
+    font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; width: 100%;
+    box-shadow: 0 4px 12px rgba(196,30,58,0.3);
+    margin-top: 0.5rem;
+  }
+  .btn-submit:hover { background: var(--red-dark); transform: translateY(-1px); }
+ 
+  /* WHY */
+  #why { background: var(--cream); }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 2rem; }
+  .why-card {
+    background: white; border-radius: var(--radius); padding: 1.5rem;
+    border: 1px solid var(--gray-100); box-shadow: var(--shadow-sm);
+  }
+  .why-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--red-light); color: var(--red);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 1rem;
+  }
+  .why-card h3 { font-size: 1rem; font-weight: 700; color: var(--gray-800); margin-bottom: 0.5rem; }
+  .why-card p { font-size: 0.875rem; color: var(--gray-400); line-height: 1.8; }
+ 
+  /* CONDITIONS */
+  .conditions-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-top: 1.5rem; }
+  .condition-card {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: white; border-radius: var(--radius); padding: 1rem 1.25rem;
+    border: 1px solid var(--gray-100);
+  }
+  .cond-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+  .condition-card h4 { font-size: 0.875rem; font-weight: 700; color: var(--gray-800); margin-bottom: 2px; }
+  .condition-card p { font-size: 0.8rem; color: var(--gray-400); }
+  .cond-ok .cond-icon::after { content: '✓'; color: var(--green); font-size: 1rem; font-weight: 900; }
+  .cond-no .cond-icon::after { content: '✕'; color: var(--red); font-size: 1rem; font-weight: 900; }
+ 
+  /* FAQ */
+  #faq { background: white; }
+  .faq-list { max-width: 680px; margin: 2rem auto 0; }
+  .faq-item { border-bottom: 1px solid var(--gray-100); }
+  .faq-q {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 0; cursor: pointer;
+    font-size: 0.95rem; font-weight: 600; color: var(--gray-800);
+    transition: color 0.2s;
+    user-select: none; list-style: none;
+  }
+  .faq-q:hover { color: var(--red); }
+  .faq-q .chevron { font-size: 0.75rem; transition: transform 0.3s; color: var(--gray-400); flex-shrink: 0; margin-right: auto; margin-left: 12px; }
+  .faq-item.open .chevron { transform: rotate(180deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    font-size: 0.875rem; color: var(--gray-600); line-height: 1.9;
+  }
+  .faq-item.open .faq-a { max-height: 300px; padding-bottom: 1rem; }
+ 
+  /* FOOTER */
+  footer {
+    background: var(--gray-800); color: white;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  footer .footer-logo { font-size: 1.8rem; font-weight: 900; color: var(--red-mid); margin-bottom: 0.5rem; }
+  footer p { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 1.5rem; }
+ 
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px);
+    background: var(--green); color: white;
+    padding: 12px 24px; border-radius: 100px;
+    font-size: 0.9rem; font-weight: 600;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    transition: transform 0.4s ease; z-index: 1000;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+ 
+  /* MOBILE */
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .hero { padding: 80px 1rem 3rem; }
+    .reg-grid { grid-template-columns: 1fr; }
+    .reg-grid .full { grid-column: 1; }
+    section { padding: 3.5rem 1rem; }
+    .register-wrap { padding: 1.5rem 1rem; }
+  }
+ 
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-inner > * { animation: fadeUp 0.6s ease both; }
+  .hero-inner > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-inner > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero-inner > *:nth-child(3) { animation-delay: 0.3s; }
+  .hero-inner > *:nth-child(4) { animation-delay: 0.4s; }
+  .hero-inner > *:nth-child(5) { animation-delay: 0.5s; }
+ 
+  /* COUNTER */
+  .counter { font-variant-numeric: tabular-nums; }
+ 
+  /* REQUIRED MARKER */
+  .required { color: var(--red); margin-right: 2px; }
+ 
+  /* SUCCESS STATE */
+  .form-success {
+    text-align: center; padding: 2.5rem 1rem;
+    display: none;
+  }
+  .form-success .big { font-size: 3rem; }
+  .form-success h3 { font-size: 1.3rem; font-weight: 800; color: var(--gray-800); margin: 1rem 0 0.5rem; }
+  .form-success p { color: var(--gray-400); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+ 
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 2C14 2 4 10.5 4 17a10 10 0 0020 0C24 10.5 14 2 14 2z" fill="#C41E3A"/><ellipse cx="14" cy="17" rx="4" ry="5" fill="rgba(255,255,255,0.25)"/></svg>
+    وتين
+    <span>منصة التبرع بالدم</span>
+  </div>
+  <div class="nav-links">
+    <a href="#search">بحث عن متبرع</a>
+    <a href="#why">لماذا أتبرع؟</a>
+    <a href="#faq">أسئلة</a>
+    <a href="#register" class="nav-cta">سجل كمتبرع</a>
+  </div>
+</nav>
+ 
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-badge">منصة وطنية للتبرع بالدم · الجزائر</div>
+    <h1>أنقذ حياة<br>بدمك <span class="accent">العطاء</span></h1>
+    <div class="hero-aya">
+      ﴿ وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا ﴾
+      <div style="font-size:0.75rem; color: var(--gray-400); margin-top:4px; font-style:normal;">سورة المائدة — الآية 32</div>
+    </div>
+    <p>ابحث عن متبرعين بالدم في ولايتك، أو سجل نفسك كمتبرع ليتواصل معك من يحتاج مساعدتك في أي وقت.</p>
+    <div class="hero-btns">
+      <a href="#search" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        ابحث عن متبرع
+      </a>
+      <a href="#register" class="btn-secondary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        سجل كمتبرع
+      </a>
+    </div>
+  </div>
+</section>
+ 
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number counter" id="cnt-donors">0</div>
+        <div class="stat-label">متبرع مسجل</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number counter" id="cnt-wilayas">0</div>
+        <div class="stat-label">ولاية مغطاة</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number counter" id="cnt-donations">0</div>
+        <div class="stat-label">عملية تبرع ناجحة</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number counter" id="cnt-lives">0</div>
+        <div class="stat-label">حياة أُنقذت</div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- SEARCH -->
+<section id="search">
+  <div class="section-inner">
+    <div class="section-tag">ابحث الآن</div>
+    <h2 class="section-title">ابحث عن متبرع في ولايتك</h2>
+    <p class="section-sub">اعثر على متبرعين متاحين في منطقتك وتواصل معهم مباشرة.</p>
+ 
+    <div class="search-box" style="margin-top:1.5rem;">
+      <div class="search-grid">
+        <div class="form-group">
+          <label class="form-label">الولاية</label>
+          <select class="form-control" id="s-wilaya" onchange="filterDonors()">
+            <option value="">كل الولايات</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">فصيلة الدم</label>
+          <select class="form-control" id="s-blood" onchange="filterDonors()">
+            <option value="">كل الفصائل</option>
+            <option>O+</option><option>O-</option>
+            <option>A+</option><option>A-</option>
+            <option>B+</option><option>B-</option>
+            <option>AB+</option><option>AB-</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">نوع التبرع</label>
+          <select class="form-control" id="s-type" onchange="filterDonors()">
+            <option value="">الكل</option>
+            <option value="blood">دم فقط</option>
+            <option value="both">دم وصفائح</option>
+          </select>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="results-grid" id="results-grid">
+      <!-- Cards injected here -->
+    </div>
+  </div>
+</section>
+ 
+<!-- WHY -->
+<section id="why">
+  <div class="section-inner">
+    <div class="section-tag">التوعية</div>
+    <h2 class="section-title">لماذا تتبرع بدمك؟</h2>
+    <p class="section-sub">التبرع بالدم لا يُنقذ الآخرين فحسب، بل يُفيدك أنت أيضاً.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">❤️</div>
+        <h3>إنقاذ الأرواح</h3>
+        <p>كل وحدة دم قد تُنقذ حتى 3 أرواح. مريض واحد قد يحتاج إلى عشرات الوحدات خلال علاجه.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔬</div>
+        <h3>تجديد الخلايا</h3>
+        <p>جسمك يجدد خلايا الدم المفقودة خلال 24 ساعة فقط، مما يُحفز إنتاج خلايا دموية أحدث وأكثر فاعلية.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🫀</div>
+        <h3>صحة القلب</h3>
+        <p>دراسات أثبتت أن التبرع المنتظم يُقلل من خطر الإصابة بأمراض القلب والسكتة الدماغية.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🩺</div>
+        <h3>فحص صحي مجاني</h3>
+        <p>عند كل تبرع يتم فحص دمك للتأكد من سلامتك من الأمراض المُعدية، وهو فحص دوري مجاني.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">⚖️</div>
+        <h3>تنظيم الحديد</h3>
+        <p>التبرع يُساعد في تنظيم مستوى الحديد في الدم وتفادي ارتفاعه الضار.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🌟</div>
+        <h3>شعور بالرضا</h3>
+        <p>منح الحياة لشخص آخر يُولّد شعوراً عميقاً بالرضا والسعادة يصعب تعويضه.</p>
+      </div>
+    </div>
+ 
+    <div style="margin-top:3rem;">
+      <h3 style="font-size:1.2rem; font-weight:800; color:var(--gray-800); margin-bottom:1.25rem;">شروط وموانع التبرع</h3>
+      <div class="conditions-grid">
+        <div class="condition-card cond-ok">
+          <span class="cond-icon"></span>
+          <div>
+            <h4>السن بين 18 و65 سنة</h4>
+            <p>والوزن لا يقل عن 50 كيلوغرام</p>
+          </div>
+        </div>
+        <div class="condition-card cond-ok">
+          <span class="cond-icon"></span>
+          <div>
+            <h4>الفترة بين التبرعين</h4>
+            <p>3 أشهر على الأقل بين كل تبرع وآخر</p>
+          </div>
+        </div>
+        <div class="condition-card cond-ok">
+          <span class="cond-icon"></span>
+          <div>
+            <h4>صحة جيدة</h4>
+            <p>لا تعاني من أي مرض مزمن أو حاد وقت التبرع</p>
+          </div>
+        </div>
+        <div class="condition-card cond-no">
+          <span class="cond-icon"></span>
+          <div>
+            <h4>موانع مؤقتة</h4>
+            <p>الحمل — الرضاعة — الجراحة الحديثة — نزلة البرد</p>
+          </div>
+        </div>
+        <div class="condition-card cond-no">
+          <span class="cond-icon"></span>
+          <div>
+            <h4>موانع دائمة</h4>
+            <p>أمراض القلب — السكري المزمن — ارتفاع ضغط الدم غير المُعالج</p>
+          </div>
+        </div>
+        <div class="condition-card cond-no">
+          <span class="cond-icon"></span>
+          <div>
+            <h4>الوشم والثقب</h4>
+            <p>يُمنع التبرع لمدة 12 شهراً من تاريخ الوشم أو الثقب</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- REGISTER -->
+<section id="register">
+  <div class="section-inner">
+    <div style="text-align:center; margin-bottom:2rem;">
+      <div class="section-tag">التسجيل</div>
+      <h2 class="section-title">سجل كمتبرع بالدم</h2>
+      <p class="section-sub" style="margin:0 auto;">انضم إلى آلاف المتبرعين في الجزائر وكن حاضراً عندما يحتاجك أحدهم.</p>
+    </div>
+ 
+    <div class="register-wrap">
+      <form id="reg-form" onsubmit="submitForm(event)">
+        <div class="reg-grid">
+          <!-- Terms -->
+          <div class="checkbox-row full">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">أقرّ بأنني قرأت <strong>شروط وموانع التبرع بالدم</strong> وأؤكد أنني مؤهل للتبرع، وأوافق على نشر بيانات التواصل الخاصة بي لأغراض التبرع فقط.</label>
+          </div>
+ 
+          <div class="reg-section-title">البيانات الشخصية</div>
+ 
+          <div class="form-group full">
+            <label class="form-label">الاسم الكامل <span class="required">*</span></label>
+            <input type="text" class="form-control" id="r-name" placeholder="مثال: أحمد بوعلام" required>
+          </div>
+ 
+          <div class="form-group">
+            <label class="form-label">رقم الهاتف <span class="required">*</span></label>
+            <input type="tel" class="form-control" id="r-phone" placeholder="0550 00 00 00" required>
+          </div>
+ 
+          <div class="form-group">
+            <label class="form-label">البريد الإلكتروني</label>
+            <input type="email" class="form-control" id="r-email" placeholder="example@email.com">
+          </div>
+ 
+          <div class="form-group">
+            <label class="form-label">تاريخ الميلاد</label>
+            <input type="date" class="form-control" id="r-dob">
+          </div>
+ 
+          <div class="form-group">
+            <label class="form-label">تاريخ آخر تبرع</label>
+            <input type="date" class="form-control" id="r-lastdon">
+          </div>
+ 
+          <div class="reg-section-title">بيانات التبرع</div>
+ 
+          <div class="form-group">
+            <label class="form-label">فصيلة الدم <span class="required">*</span></label>
+            <select class="form-control" id="r-blood" required>
+              <option value="">اختر الفصيلة</option>
+              <option>O+</option><option>O-</option>
+              <option>A+</option><option>A-</option>
+              <option>B+</option><option>B-</option>
+              <option>AB+</option><option>AB-</option>
+            </select>
+          </div>
+ 
+          <div class="form-group">
+            <label class="form-label">الولاية <span class="required">*</span></label>
+            <select class="form-control" id="r-wilaya" required onchange="loadCommunes()">
+              <option value="">اختر الولاية</option>
+            </select>
+          </div>
+ 
+          <div class="form-group">
+            <label class="form-label">البلدية <span class="required">*</span></label>
+            <select class="form-control" id="r-commune" required>
+              <option value="">اختر البلدية أولاً</option>
+            </select>
+          </div>
+ 
+          <div class="form-group full">
+            <label class="form-label">نوع التبرع <span class="required">*</span></label>
+            <div class="radio-group">
+              <label class="radio-opt">
+                <input type="radio" name="donation-type" value="blood" required>
+                دم فقط
+              </label>
+              <label class="radio-opt">
+                <input type="radio" name="donation-type" value="both">
+                دم وصفائح دموية
+              </label>
+            </div>
+          </div>
+ 
+          <div class="form-group full">
+            <label class="form-label">العنوان التفصيلي</label>
+            <input type="text" class="form-control" id="r-address" placeholder="الحي أو الشارع (اختياري)">
+          </div>
+ 
+          <div class="form-group full">
+            <button type="submit" class="btn-submit">
+              ✦ سجّل الآن كمتبرع
+            </button>
+          </div>
+        </div>
+      </form>
+ 
+      <div class="form-success" id="form-success">
+        <div class="big">✦</div>
+        <h3>شكراً لك، بطل!</h3>
+        <p>تم تسجيلك بنجاح كمتبرع بالدم.<br>ستظهر بياناتك للمحتاجين في ولايتك قريباً.</p>
+        <a href="#search" class="btn-secondary" style="margin-top:1rem; display:inline-flex;">مشاهدة المتبرعين</a>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-inner">
+    <div style="text-align:center; margin-bottom:2rem;">
+      <div class="section-tag">الأسئلة الشائعة</div>
+      <h2 class="section-title">كل ما تريد معرفته</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          كم مرة يمكنني التبرع بالدم في السنة؟
+          <span class="chevron">▼</span>
+        </div>
+        <div class="faq-a">يمكن التبرع بالدم الكامل كل 3 أشهر (4 مرات في السنة للرجال، و3 مرات للنساء). أما التبرع بالصفائح الدموية فيمكن كل أسبوعين إلى ثلاثة أسابيع.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          هل التبرع بالدم مؤلم؟
+          <span class="chevron">▼</span>
+        </div>
+        <div class="faq-a">الإحساس يشبه وخز بسيط عند إدخال الإبرة، ولا يستغرق التبرع الكامل عادةً أكثر من 10-15 دقيقة. معظم المتبرعين يصفون التجربة بأنها سهلة ومريحة.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          هل يمكن لمريض السكر التبرع بالدم؟
+          <span class="chevron">▼</span>
+        </div>
+        <div class="faq-a">يعتمد الأمر على نوع العلاج. مرضى السكر المعالجون بالنظام الغذائي أو الحبوب فقط قد يتبرعون إن كانت حالتهم مستقرة. أما الذين يستخدمون الأنسولين فقد لا يُقبلون. استشر الطبيب أو مركز نقل الدم في ولايتك.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ماذا أفعل قبل التبرع لضمان التجربة الأفضل؟
+          <span class="chevron">▼</span>
+        </div>
+        <div class="faq-a">تناول وجبة خفيفة صحية واشرب كميات كافية من الماء قبل التبرع. تجنب الأطعمة الدسمة. ارتدِ ملابس مريحة بأكمام قصيرة أو قابلة للطي. احصل على نوم كافٍ ليلة التبرع.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          هل بياناتي محمية على منصة وتين؟
+          <span class="chevron">▼</span>
+        </div>
+        <div class="faq-a">نعم. تُخزّن بياناتك بشكل آمن باستخدام تشفير عالي المستوى. لا يظهر للمحتاجين إلا اسمك الأول، فصيلة دمك، ورقم هاتفك. يمكنك طلب حذف بياناتك في أي وقت.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          كيف أعرف متى يمكنني التبرع مجدداً؟
+          <span class="chevron">▼</span>
+        </div>
+        <div class="faq-a">عند تسجيلك، أدخل تاريخ آخر تبرع لك. المنصة تحسب تلقائياً متى تصبح مؤهلاً مجدداً (بعد 3 أشهر) وتعرض حالتك لل​باحثين بألوان دلالية: أخضر (متاح) وبرتقالي (غير جاهز بعد).</div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">وتين</div>
+  <div style="color:rgba(255,255,255,0.5); font-size:0.85rem; max-width:400px; margin:0.75rem auto; line-height:1.8;">
+    ﴿ وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا ﴾
+  </div>
+  <div style="display:flex; gap:16px; justify-content:center; margin-top:1.25rem; flex-wrap:wrap;">
+    <a href="#search" style="color:rgba(255,255,255,0.5); text-decoration:none; font-size:0.8rem;">البحث عن متبرع</a>
+    <a href="#register" style="color:rgba(255,255,255,0.5); text-decoration:none; font-size:0.8rem;">سجل كمتبرع</a>
+    <a href="#why" style="color:rgba(255,255,255,0.5); text-decoration:none; font-size:0.8rem;">لماذا أتبرع</a>
+    <a href="#faq" style="color:rgba(255,255,255,0.5); text-decoration:none; font-size:0.8rem;">الأسئلة الشائعة</a>
+  </div>
+  <p>© 2025 منصة وتين — صُنع بـ ❤️ في الجزائر</p>
+</footer>
+ 
+<!-- TOAST -->
+<div class="toast" id="toast">✓ تم التسجيل بنجاح!</div>
+ 
+<script>
+// ============== DATA ==============
+const WILAYAS = [
+  "أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار","البليدة","البويرة",
+  "تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر","الجلفة","جيجل","سطيف","سعيدة",
+  "سكيكدة","سيدي بلعباس","عنابة","قالمة","قسنطينة","المدية","مستغانم","المسيلة","معسكر","ورقلة",
+  "وهران","البيض","إليزي","برج بوعريريج","بومرداس","الطارف","تندوف","تيسمسيلت","الوادي","خنشلة",
+  "سوق أهراس","تيبازة","ميلة","عين الدفلى","النعامة","عين تموشنت","غرداية","غليزان","تيميمون","برج باجي مختار",
+  "أولاد جلال","بني عباس","عين صالح","عين قزام","تقرت","جانت","المغير","المنيعة"
+];
+ 
+const COMMUNES_MAP = {
+  0: ["أدرار","تيمياوين","أولف","بودة","تامست"],
+  1: ["الشلف","أم الدروع","بني حواء","تغليمت","العطاف"],
+  2: ["الأغواط","آفلو","برج خليل","سبقاق","قصر الحيران"],
+  3: ["أم البواقي","عين البيضاء","سيقوس","عين مليلة","بلال"],
+  4: ["باتنة","آريس","بريكة","مروانة","نقاوس"],
+  5: ["بجاية","تيشي","أقبو","سيدي عيش","خراطة"],
+  6: ["بسكرة","طولقة","سيدي عقبة","أورلال","زريبة الوادي"],
+  7: ["بشار","عين الصفراء","كنادسة","تاغيت","أبادلة"],
+  8: ["البليدة","الأربعاء","بوفاريك","شريعة","موزاية"],
+  9: ["البويرة","بويرة","عين بسام","سور الغزلان","أقبو"],
+};
+ 
+// Mock donors data
+const MOCK_DONORS = [
+  { name:"أحمد بوعلام", blood:"O+", type:"both", wilaya:"الجزائر", commune:"برج البحري", phone:"0550123456", lastDon: daysAgo(120) },
+  { name:"فاطمة زهراء", blood:"A+", type:"blood", wilaya:"وهران", commune:"سيدي الشحمي", phone:"0661234567", lastDon: daysAgo(45) },
+  { name:"محمد العربي", blood:"B-", type:"blood", wilaya:"قسنطينة", commune:"ابن زياد", phone:"0770987654", lastDon: daysAgo(200) },
+  { name:"نور الدين", blood:"O-", type:"both", wilaya:"تلمسان", commune:"تلمسان", phone:"0555321654", lastDon: daysAgo(95) },
+  { name:"سارة بن علي", blood:"AB+", type:"blood", wilaya:"باتنة", commune:"باتنة", phone:"0660111222", lastDon: daysAgo(30) },
+  { name:"يوسف بلحاج", blood:"A-", type:"both", wilaya:"بجاية", commune:"بجاية", phone:"0771445566", lastDon: daysAgo(100) },
+  { name:"أمينة حمداني", blood:"B+", type:"blood", wilaya:"الجزائر", commune:"باب الزوار", phone:"0550778899", lastDon: daysAgo(15) },
+  { name:"خالد مسعود", blood:"O+", type:"both", wilaya:"وهران", commune:"وهران", phone:"0662334455", lastDon: daysAgo(150) },
+  { name:"إيمان بنسعد", blood:"AB-", type:"blood", wilaya:"سطيف", commune:"سطيف", phone:"0553667788", lastDon: daysAgo(60) },
+  { name:"عمر بلقاسم", blood:"A+", type:"both", wilaya:"تلمسان", commune:"وجدة", phone:"0772990011", lastDon: daysAgo(200) },
+  { name:"حسيبة عيسى", blood:"O-", type:"blood", wilaya:"باتنة", commune:"مروانة", phone:"0551223344", lastDon: daysAgo(80) },
+  { name:"رضا قاسمي", blood:"B+", type:"both", wilaya:"قسنطينة", commune:"قسنطينة", phone:"0663445566", lastDon: daysAgo(130) },
+];
+ 
+function daysAgo(n) {
+  const d = new Date();
+  d.setDate(d.getDate() - n);
+  return d;
+}
+ 
+function isAvailable(lastDon) {
+  if (!lastDon) return true;
+  const diff = (new Date() - new Date(lastDon)) / (1000*60*60*24);
+  return diff >= 90;
+}
+ 
+function nextDate(lastDon) {
+  const d = new Date(lastDon);
+  d.setDate(d.getDate() + 90);
+  return d.toLocaleDateString('ar-DZ');
+}
+ 
+// ============== INIT ==============
+function init() {
+  // Populate wilayas
+  const sw = document.getElementById('s-wilaya');
+  const rw = document.getElementById('r-wilaya');
+  WILAYAS.forEach((w, i) => {
+    sw.innerHTML += `<option value="${w}">${w}</option>`;
+    rw.innerHTML += `<option value="${i}">${w}</option>`;
+  });
+ 
+  filterDonors();
+  animateCounters();
+}
+ 
+function loadCommunes() {
+  const wi = parseInt(document.getElementById('r-wilaya').value);
+  const rc = document.getElementById('r-commune');
+  rc.innerHTML = '<option value="">اختر البلدية</option>';
+  const list = COMMUNES_MAP[wi] || ["بلدية 1","بلدية 2","بلدية 3"];
+  list.forEach(c => rc.innerHTML += `<option value="${c}">${c}</option>`);
+}
+ 
+function filterDonors() {
+  const wilaya = document.getElementById('s-wilaya').value;
+  const blood = document.getElementById('s-blood').value;
+  const type = document.getElementById('s-type').value;
+ 
+  let filtered = MOCK_DONORS.filter(d => {
+    if (wilaya && d.wilaya !== wilaya) return false;
+    if (blood && d.blood !== blood) return false;
+    if (type && d.type !== type) return false;
+    return true;
+  });
+ 
+  const grid = document.getElementById('results-grid');
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="no-results"><div class="big-icon">🔍</div><p>لا يوجد متبرعون بهذه المعايير حالياً.<br>غيّر فلاتر البحث أو حاول لاحقاً.</p></div>`;
+    return;
+  }
+ 
+  grid.innerHTML = filtered.map(d => {
+    const avail = isAvailable(d.lastDon);
+    return `
+    <div class="donor-card">
+      <div class="donor-top">
+        <div class="blood-badge">${d.blood}</div>
+        <div class="donor-info">
+          <h4>${d.name}</h4>
+          <p>${d.wilaya} — ${d.commune}</p>
+        </div>
+      </div>
+      <div class="donor-meta">
+        <span class="meta-chip">${d.type === 'both' ? 'دم وصفائح' : 'دم فقط'}</span>
+        <span class="meta-chip ${avail ? 'status-available' : 'status-unavailable'}">
+          ${avail ? '● متاح للتبرع' : '⏱ متاح بعد ' + nextDate(d.lastDon)}
+        </span>
+      </div>
+      <a href="tel:${d.phone}" class="call-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.63a16 16 0 006.29 6.29l1.95-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        ${d.phone}
+      </a>
+    </div>`;
+  }).join('');
+}
+ 
+function submitForm(e) {
+  e.preventDefault();
+  const form = document.getElementById('reg-form');
+  const success = document.getElementById('form-success');
+  const toast = document.getElementById('toast');
+ 
+  // Add to mock data
+  const newDonor = {
+    name: document.getElementById('r-name').value,
+    blood: document.getElementById('r-blood').value,
+    type: document.querySelector('input[name="donation-type"]:checked')?.value || 'blood',
+    wilaya: WILAYAS[parseInt(document.getElementById('r-wilaya').value)] || 'الجزائر',
+    commune: document.getElementById('r-commune').value || 'مركز',
+    phone: document.getElementById('r-phone').value,
+    lastDon: document.getElementById('r-lastdon').value ? new Date(document.getElementById('r-lastdon').value) : daysAgo(200),
+  };
+  MOCK_DONORS.unshift(newDonor);
+ 
+  form.style.display = 'none';
+  success.style.display = 'block';
+ 
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3500);
+}
+ 
+function toggleFaq(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+ 
+function animateCounters() {
+  const targets = { 'cnt-donors': 3847, 'cnt-wilayas': 58, 'cnt-donations': 12490, 'cnt-lives': 8230 };
+  Object.entries(targets).forEach(([id, target]) => {
+    const el = document.getElementById(id);
+    let current = 0;
+    const step = Math.ceil(target / 80);
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = current.toLocaleString('ar-DZ');
+      if (current >= target) clearInterval(timer);
+    }, 20);
+  });
+}
+ 
+init();
+</script>
+</body>
+</html>
