@@ -1,468 +1,588 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مدرسة أمير للتكوين المحترف | Amir School</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="مدرسة أمير للتكوين المحترف - الشلف">
+<meta name="theme-color" content="#ff4757">
+<title>Amir School | مدرسة أمير للتكوين المحترف</title>
+<!-- الخطوط والأيقونات -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ===== المتغيرات الأساسية ===== */
+:root{--primary:#ff6b81;--primary-dark:#ff4757;--secondary-bg:#fff5f7;--bg-gradient:linear-gradient(135deg,#ffe0e9,#fff0f6);--white:#fff;--text:#333;--muted:#666;--radius:25px;--shadow:0 15px 35px rgba(255,107,129,.12);--success:#2ed573;--danger:#ff4757;--star-color:#FFD700;--glass-bg:rgba(255,255,255,.95);--primary-gradient:linear-gradient(135deg,#ff6b81,#ff4757);--success-color:#2ed573;--ts:all .4s cubic-bezier(.175,.885,.32,1.275)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Cairo',sans-serif;background:var(--bg-gradient);min-height:100vh;color:var(--text);overflow-x:hidden}
 
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+/* ===== شاشة التحميل ===== */
+.preloader{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#fff0f6,#ffe0e9);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;transition:opacity .5s}.preloader.hidden{opacity:0;pointer-events:none}.preloader-spinner{width:50px;height:50px;border:4px solid #fce4ec;border-top:4px solid var(--primary-dark);border-radius:50%;animation:spin .8s linear infinite}.preloader-text{margin-top:15px;font-size:1rem;font-weight:700;color:var(--primary-dark)}@keyframes spin{to{transform:rotate(360deg)}}
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--primary-gradient);z-index:99998;transition:width .15s}
 
-    <style>
-        :root {
-            --primary: #ff6b81;
-            --primary-dark: #ff4757;
-            --bg-gradient: linear-gradient(135deg, #ffe0e9 0%, #fff0f6 100%);
-            --white: #ffffff;
-            --text: #333;
-            --muted: #666;
-            --radius: 25px;
-            --shadow: 0 15px 35px rgba(255, 107, 129, 0.12);
-            --success: #2ed573;
-            --warning: #ffa502;
-            --danger: #ff4757;
-        }
+/* ===== شريط التنقل ===== */
+.navbar{background:rgba(255,255,255,.95);backdrop-filter:blur(15px);padding:10px 20px;position:sticky;top:0;z-index:2001;box-shadow:0 2px 15px rgba(255,107,129,.08);display:flex;align-items:center;justify-content:space-between;transition:.3s}.navbar.scrolled{padding:6px 20px;box-shadow:0 4px 20px rgba(255,107,129,.12)}.navbar-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--primary-dark);font-weight:800;font-size:1rem}.navbar-brand img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--primary)}.navbar-links{display:flex;gap:6px;align-items:center}.nav-link{padding:7px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:600;font-size:.82rem;transition:.3s}.nav-link:hover{background:var(--secondary-bg);color:var(--primary-dark)}.nav-link i{margin-left:4px;color:var(--primary);font-size:.75rem}.nav-cta{background:var(--primary-gradient);color:#fff!important;padding:7px 16px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.82rem;transition:.3s;display:flex;align-items:center;gap:5px}.nav-cta:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(255,71,87,.25)}.mobile-menu-btn{display:none;background:none;border:none;font-size:1.3rem;color:var(--primary-dark);cursor:pointer}
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+/* ===== شريط الأخبار ===== */
+.news-ticker{background:var(--primary-dark);color:#fff;padding:10px 0;overflow:hidden;font-size:.9rem;font-weight:600}.ticker-content{display:inline-block;white-space:nowrap;animation:ticker 40s linear infinite}.ticker-content:hover{animation-play-state:paused}@keyframes ticker{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 
-        body {
-            font-family: 'Cairo', sans-serif;
-            background: var(--bg-gradient);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            padding: 20px 10px;
-            color: var(--text);
-        }
+/* ===== أزرار و Toast ===== */
+#backToTop{position:fixed;bottom:30px;right:20px;width:48px;height:48px;background:#fff;color:var(--primary-dark);border:2px solid var(--primary-dark);border-radius:50%;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:4000;box-shadow:0 4px 12px rgba(0,0,0,.1);transition:.3s}#backToTop:hover{transform:translateY(-4px);background:var(--primary-dark);color:#fff}
+.toast-notification{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--primary-gradient);color:#fff;padding:10px 22px;border-radius:12px;font-weight:700;font-size:.85rem;box-shadow:0 8px 25px rgba(255,71,87,.3);z-index:10000;opacity:0;transition:all .4s cubic-bezier(.68,-.55,.265,1.55);pointer-events:none}.toast-notification.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-        .container {
-            background: rgba(255, 255, 255, 0.98);
-            width: 100%;
-            max-width: 900px;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            text-align: center;
-            position: relative;
-            padding-bottom: 40px;
-        }
+/* ===== الهيدر والبروفايل ===== */
+.main-wrapper{display:flex;justify-content:center;padding:20px 10px}.container{background:rgba(255,255,255,.98);width:100%;max-width:900px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);text-align:center;padding-bottom:40px}
+.header-section{position:relative;margin-bottom:70px}.cover-photo{width:100%;height:200px;background:url('images/cover.jpg') center/cover no-repeat;background-color:var(--primary)}.cover-photo::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to top,rgba(255,255,255,.98),transparent)}
+.profile-img-wrap{position:absolute;bottom:-65px;left:50%;transform:translateX(-50%);z-index:10;border-radius:50%}
+.profile-img{width:130px;height:130px;border-radius:50%;object-fit:cover;border:5px solid #fff;box-shadow:0 8px 25px rgba(0,0,0,.1);transition:.3s}
+.profile-img:hover{transform:scale(1.05)}
+.profile-img.open{border-color:var(--success);animation:pulse-green 2s infinite}
+.profile-img.closed{border-color:var(--danger);animation:pulse-red 2s infinite}
+@keyframes pulse-green{0%{box-shadow:0 0 0 0 rgba(46,213,115,.7)}70%{box-shadow:0 0 0 15px rgba(0,0,0,0)}100%{box-shadow:0 0 0 0 rgba(0,0,0,0)}}
+@keyframes pulse-red{0%{box-shadow:0 0 0 0 rgba(255,71,87,.7)}70%{box-shadow:0 0 0 15px rgba(0,0,0,0)}100%{box-shadow:0 0 0 0 rgba(0,0,0,0)}}
+.school-info h1{font-size:1.5rem;font-weight:800;margin-top:10px}
+#schoolDesc::after{content:"|";animation:blink .7s infinite;color:var(--primary)}@keyframes blink{50%{opacity:0}}
 
-        .header-section {
-            position: relative;
-            margin-bottom: 70px;
-        }
+/* ===== حالة المتجر الاحترافية ===== */
+.status-badge{display:inline-flex;flex-direction:column;align-items:center;padding:10px 20px;border-radius:15px;margin-top:15px;font-weight:700;font-size:.9rem;line-height:1.4}.status-open{background:#e7fbf2;color:var(--success);border:1px solid #c1f2dc}.status-closed{background:#fff1f2;color:var(--danger);border:1px solid #ffd1d6}.dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-left:5px}.dot-open{background:var(--success);animation:pulse 1.5s infinite}.dot-closed{background:var(--danger)}
+#statusTimer{font-size:0.78rem; font-weight:600; opacity:0.8; margin-top:2px;}
 
-        .cover-photo {
-            width: 100%;
-            height: 180px;
-            background: url('images/cover.jpg') center/cover no-repeat;
-            background-color: var(--primary);
-            filter: brightness(0.9);
-        }
+/* ===== الإحصائيات (سطر واحد دائماً) ===== */
+.stats-bar{display:flex;justify-content:center;gap:25px;margin:25px 20px;padding:18px;background:var(--secondary-bg);border-radius:20px;border:1px solid #fce4ec;flex-wrap:nowrap}.stat-item{text-align:center;min-width:0;flex:1}.stat-icon{font-size:1.3rem;color:var(--primary);margin-bottom:5px;display:block}.stat-number{font-size:1.6rem;font-weight:800;color:var(--primary-dark);display:block}.stat-label{font-size:.75rem;font-weight:600;color:var(--muted);margin-top:2px;white-space:nowrap}
 
-        .profile-img {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid #fff;
-            position: absolute;
-            bottom: -65px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
+/* ===== الروابط والعناوين ===== */
+.links-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:30px 20px}.link-btn{position:relative;padding:15px;border-radius:15px;background:#fff;border:1px solid #fce4ec;text-decoration:none;color:var(--text);font-weight:700;transition:.3s;display:flex;align-items:center;justify-content:center}.link-btn i{position:absolute;right:15px;color:var(--primary);transition:.3s}.link-btn:hover{transform:translateY(-5px);background-color:var(--secondary-bg);border-color:var(--primary);box-shadow:0 10px 20px rgba(255,107,129,.15);color:var(--primary-dark)}.link-btn:hover i{transform:scale(1.25) rotate(-10deg);color:var(--primary-dark)}
+.section-title{margin:40px 0 25px;color:var(--primary-dark);font-size:1.4rem;font-weight:800}.section-title i{margin-left:8px;color:var(--primary-dark)}.section-title::after{content:'';width:50px;height:4px;background:var(--primary);display:block;margin:8px auto;border-radius:10px}
 
-        .school-info { padding: 0 20px; }
+/* ===== العد التنازلي ===== */
+.countdown-container{background:linear-gradient(135deg,var(--primary-dark) 0%,#ff8a9a 50%,#ff6b81 100%);color:#fff;margin:20px;padding:30px 25px;border-radius:20px;box-shadow:0 10px 25px rgba(255,71,87,.2);position:relative;overflow:hidden}.countdown-container::before{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;background:rgba(255,255,255,.08);border-radius:50%}.countdown-container::after{content:'';position:absolute;bottom:-40%;left:-20%;width:150px;height:150px;background:rgba(255,255,255,.05);border-radius:50%}.countdown-header{font-weight:800;margin-bottom:8px;font-size:1.05rem;position:relative;z-index:1}.countdown-subtext{font-size:.82rem;opacity:.9;margin-bottom:15px;font-weight:600;position:relative;z-index:1}.countdown-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:15px;margin-top:15px;position:relative;z-index:1}.countdown-item{background:rgba(255,255,255,.2);backdrop-filter:blur(5px);padding:15px;border-radius:15px;min-width:140px;border:1px solid rgba(255,255,255,.3);border-bottom:4px solid #fff;animation:cardFloat 3s ease-in-out infinite}@keyframes cardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}.cd-days{font-size:2rem;font-weight:800;color:#fff;display:block}.cd-label{font-size:.85rem;font-weight:600;opacity:.95}.cd-label i{margin-left:4px}
 
-        /* تسيق حالة المحل الذكية */
-        .status-badge {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px 20px;
-            border-radius: 15px;
-            margin-top: 15px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: 0.3s;
-        }
-        .status-open { background: #e7fbf2; color: var(--success); border: 1px solid #c1f2dc; }
-        .status-closed { background: #fff1f2; color: var(--danger); border: 1px solid #ffd1d6; }
-        
-        .status-main { display: flex; align-items: center; gap: 8px; }
-        .status-timer { font-size: 0.8rem; opacity: 0.8; margin-top: 2px; }
-        
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot-open { background: var(--success); box-shadow: 0 0 8px var(--success); animation: pulse 1.5s infinite; }
-        .dot-closed { background: var(--danger); }
+/* ===== المميزات والشهادات والتغليف ===== */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:20px}.feature-card{background:#fff;padding:20px;border-radius:20px;border:1px solid #fce4ec;transition:.3s;text-align:center}.feature-card:hover{border-color:var(--primary);background:var(--secondary-bg);transform:translateY(-5px)}.feature-card i{font-size:2.2rem;color:var(--primary);margin-bottom:12px;display:block}
+.packaging-banner{background:var(--secondary-bg);margin:20px;border-radius:20px;padding:25px;display:flex;align-items:center;gap:20px;border:2px dashed var(--primary);text-align:right}.packaging-icon{font-size:2.5rem;color:var(--primary)}
+.cert-section{margin:20px;padding:20px;background:#fff;border-radius:20px;border:1px solid #fce4ec}.cert-badges{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:15px}.cert-badge{display:flex;flex-direction:column;align-items:center;gap:8px;padding:15px;background:var(--secondary-bg);border-radius:15px;border:1px solid #fce4ec;transition:.3s}.cert-badge:hover{transform:translateY(-3px);border-color:var(--primary)}.cert-badge i{font-size:1.8rem;color:var(--primary)}.cert-badge span{font-size:.75rem;font-weight:700;color:var(--text);text-align:center}
 
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 213, 115, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 213, 115, 0); }
-        }
+/* ===== البحث والحلويات ===== */
+.search-box{margin:15px 20px;position:relative}.search-box input{width:100%;padding:12px 20px 12px 42px;border:2px solid #fce4ec;border-radius:15px;font-family:'Cairo';font-size:.9rem;outline:none;background:var(--white);transition:.3s}.search-box input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,107,129,.1)}.search-box>i{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--primary)}
+.sweets-grid{display:grid;gap:15px;padding:0 20px;grid-template-columns:repeat(2,1fr)}@media(min-width:650px){.sweets-grid{grid-template-columns:repeat(3,1fr)}}@media(min-width:900px){.sweets-grid{grid-template-columns:repeat(4,1fr)}}.sweet-card{background:#fff;border-radius:18px;padding:10px;border:1px solid #fce4ec;transition:.3s}.sweet-card:hover{transform:translateY(-5px);border-color:var(--primary);box-shadow:var(--shadow)}.sweet-img{width:100%;height:110px;object-fit:cover;border-radius:12px;margin-bottom:10px}.sweet-name{font-weight:700;font-size:.85rem;min-height:40px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.3}.sweet-price{font-size:.85rem;color:var(--primary-dark);background:#fff0f3;padding:4px 10px;border-radius:20px;font-weight:700;margin-bottom:8px}
+.add-to-cart-btn{background:var(--primary-gradient);color:#fff;border:none;padding:10px 18px;border-radius:12px;font-weight:600;font-size:.9rem;font-family:'Cairo';display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:.3s;box-shadow:0 4px 12px rgba(255,71,87,.15);width:100%;margin-top:12px}.add-to-cart-btn:hover{transform:translateY(-1.5px);box-shadow:0 6px 15px rgba(255,71,87,.25)}.add-to-cart-btn.added{background:var(--success)!important;box-shadow:0 4px 15px rgba(46,213,115,.3)!important;pointer-events:none}
 
-        .links-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 12px;
-            margin: 30px 20px;
-        }
+/* ===== الآراء (دوران من اليسار لليمين بدون انقطاع) ===== */
+.testimonials-wrapper {
+    overflow: hidden;
+    margin: 30px 20px;
+    padding: 20px 0;
+    background: #fffafb; /* اللون الأصلي */
+    border-radius: 20px;
+    border: 1px solid #fce4ec; /* اللون الأصلي */
+    position: relative;
+    direction: ltr; /* لضمان حساب الحركة من اليسار لليمين */
+}
 
-        .link-btn {
-            position: relative;
-            padding: 15px;
-            border-radius: 15px;
-            background: #fff;
-            border: 1px solid #fce4ec;
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 700;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+/* تأثير التلاشي على الجوانب */
+.testimonials-wrapper::before, .testimonials-wrapper::after {
+    content: ''; position: absolute; top: 0; width: 40px; height: 100%; z-index: 2; pointer-events: none;
+}
+.testimonials-wrapper::before { 
+    right: 0; 
+    background: linear-gradient(to left, #fffafb, transparent); 
+}
+.testimonials-wrapper::after { 
+    left: 0; 
+    background: linear-gradient(to right, #fffafb, transparent); 
+}
 
-        .link-btn:hover {
-            background: #fff9fa;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
+.testimonials-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    padding-right: 20px; /* موازنة الفراغ الأخير لضمان سلاسة الدوران */
+    animation: scrollLeftToRight 30s linear infinite; 
+    will-change: transform;
+}
 
-        .link-btn i {
-            position: absolute;
-            right: 15px;
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
+.testimonials-track:hover {
+    animation-play-state: paused;
+}
 
-        .section-title {
-            margin: 40px 0 25px;
-            color: var(--primary-dark);
-            font-size: 1.4rem;
-            position: relative;
-        }
+.testimonial-card {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 15px;
+    width: 280px;
+    direction: rtl; /* إعادة النص للجهة العربية */
+    text-align: right;
+    border-right: 4px solid var(--primary); /* اللون الأساسي الأصلي */
+    flex-shrink: 0;
+    transition: 0.3s;
+}
 
-        .section-title::after {
-            content: '';
-            width: 50px;
-            height: 4px;
-            background: var(--primary);
-            display: block;
-            margin: 8px auto;
-            border-radius: 10px;
-        }
+.testimonial-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
 
-        .hours-card {
-            background: #fff5f7;
-            margin: 0 20px;
-            padding: 20px;
-            border-radius: 15px;
-        }
+.testi-name { font-weight: 700; color: var(--primary); font-size: .95rem; margin-bottom: 5px; }
+.testi-name i { margin-left: 5px; }
+.stars { color: var(--star-color); font-size: .9rem; margin-bottom: 8px; }
+.testi-text { font-size: .9rem; color: var(--text); line-height: 1.5; font-style: italic; }
 
-        .hours-table {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            border-collapse: collapse;
-        }
+@keyframes scrollLeftToRight {
+    0% { 
+        transform: translateX(-50%); 
+    }
+    100% { 
+        transform: translateX(0); 
+    }
+}
 
-        .hours-table td {
-            padding: 12px 10px;
-            border-bottom: 1px dashed rgba(255, 107, 129, 0.2);
-            font-weight: 600;
-        }
+/* ===== الأسئلة الشائعة ===== */
+.faq-container{margin:0 20px;text-align:start}.faq-item{background:#fff;border-radius:15px;border:1px solid #fce4ec;margin-bottom:10px;overflow:hidden}.faq-question{width:100%;border:none;background:none;padding:18px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Cairo';color:var(--text);font-size:.95rem}.faq-question>i{color:var(--primary);transition:.3s}.faq-answer{max-height:0;overflow:hidden;padding:0 18px;transition:.4s ease;background:var(--secondary-bg);color:var(--text);line-height:1.7}.faq-item.active .faq-answer{max-height:200px;padding:18px;border-top:1px solid #fce4ec}.faq-item.active .faq-question>i{transform:rotate(180deg)}
+.hours-card{background:#fff5f7;margin:20px auto;padding:20px;border-radius:20px;border:1px solid #fce4ec;box-shadow:0 10px 30px rgba(0,0,0,.05);max-width:900px;width:92%}.hours-table{width:100%;border-collapse:separate;border-spacing:0 10px}.hours-table tr{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:.2s}.hours-table tr:hover{transform:scale(1.02)}.hours-table td{padding:15px 12px;font-weight:700}.hours-table td:first-child{border-radius:0 12px 12px 0;text-align:right;color:#ff6b81;display:flex;align-items:center;gap:8px;font-size:.95rem}.time-cell{border-radius:12px 0 0 12px;display:flex!important;flex-direction:row-reverse;justify-content:flex-end;align-items:center;color:#666;font-family:'Arial',sans-serif;white-space:nowrap}.time-wrap{display:flex;flex-direction:row-reverse;gap:4px;direction:ltr}.dash{margin:0 8px;color:#f54c03;font-weight:bold}.working-status{text-align:center;margin-top:15px;font-weight:bold;color:#444;font-size:.9rem}.pulse-icon{color:#2ecc71;animation:pulse 2s infinite}@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
 
-        .time-cell { text-align: end; color: var(--primary-dark); direction: ltr; }
+/* ===== النموذج المزدوج والحقول الأصغر ===== */
+.order-form{text-align:right;padding:25px;background:#fff;border-radius:20px;border:1px solid #fce4ec;margin:0 20px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-group{margin-bottom:0}
+.form-group.full-width{grid-column:1 / -1}
+.form-group label{display:block;font-weight:700;margin-bottom:6px;color:var(--primary-dark);font-size:.88rem}
+.form-group label i{margin-left:5px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:1px solid #fce4ec;border-radius:12px;font-family:'Cairo';outline:none;background:#fffafb;transition:.3s;font-size:.88rem}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,107,129,.1)}
+.form-group textarea{padding:10px 14px}
+.btn-send{width:100%;background:var(--success);color:#fff;border:none;padding:16px;border-radius:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-size:1.05rem;font-family:'Cairo';box-shadow:0 4px 15px rgba(46,213,115,.3);transition:.3s;margin-top:15px}.btn-send:hover{background:#26c167;transform:scale(1.02)}
 
-        .sweets-grid {
-            display: grid;
-            gap: 15px;
-            padding: 0 20px;
-            grid-template-columns: repeat(2, 1fr);
-        }
-        @media(min-width:650px){ .sweets-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media(min-width:900px){ .sweets-grid { grid-template-columns: repeat(4, 1fr); } }
+/* ===== السلة ===== */
+.cart-floating-btn{position:fixed;bottom:30px;left:20px;background:var(--primary-gradient);color:#fff;width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5000;box-shadow:0 15px 35px rgba(255,71,87,.4);transition:.3s;border:3px solid #fff;font-size:1.2rem}.cart-floating-btn:hover{transform:translateY(-5px) scale(1.1)}.cart-count{position:absolute;top:-5px;right:-5px;background:var(--success-color);color:#fff;font-size:.8rem;min-width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #fff;font-weight:bold}
+.cart-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);backdrop-filter:blur(8px);z-index:9999;align-items:center;justify-content:center;padding:15px}.cart-content{background:var(--glass-bg);width:100%;max-width:500px;padding:22px;border-radius:25px;max-height:92vh;box-shadow:0 25px 50px rgba(0,0,0,.2);display:flex;flex-direction:column;animation:slideUp .4s ease;overflow:hidden}@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}.cart-header{margin-bottom:12px;color:var(--primary-dark);font-size:1.1rem;font-weight:800}.cart-header i{margin-left:8px}.cart-scrollable{flex:1;overflow-y:auto;overflow-x:hidden;padding-right:5px}.cart-scrollable::-webkit-scrollbar{width:5px}.cart-scrollable::-webkit-scrollbar-track{background:#f1f1f1;border-radius:10px}.cart-scrollable::-webkit-scrollbar-thumb{background:var(--primary);border-radius:10px}.cart-item-card{display:flex;align-items:center;gap:10px;padding:10px;background:#fdfdfd;border-radius:14px;margin-bottom:8px;border:1px solid #f0f0f0}.item-img-mini{width:50px;height:50px;border-radius:10px;object-fit:cover}.qty-wrapper{display:flex;align-items:center;background:#eee;border-radius:8px;padding:2px;gap:5px}.qty-btn-small{width:24px;height:24px;border-radius:6px;border:none;background:#fff;cursor:pointer;font-weight:bold;color:#ff4757;font-size:.85rem}.delete-item-btn{background:none;border:none;color:#ff4757;cursor:pointer;padding:4px;transition:.3s}.delete-item-btn:hover{transform:scale(1.2)}
 
-        .sweet-card {
-            background: #fff;
-            border-radius: 18px;
-            padding: 10px;
-            border: 1px solid #fce4ec;
-            transition: 0.3s;
-        }
+/* ===== التوصيل GPS داخل السلة ===== */
+.cart-delivery-section{margin-top:12px;padding:15px;background:var(--secondary-bg);border-radius:15px;border:1px solid #fce4ec}.cart-delivery-section h4{font-size:.88rem;color:var(--primary-dark);margin-bottom:10px;font-weight:700}.cart-delivery-section h4 i{margin-left:5px}
+.cart-delivery-input-wrap{position:relative;margin-bottom:8px;display:none}
+.cart-delivery-input{width:100%;padding:11px 11px 11px 35px;border:1.5px solid #fce4ec;border-radius:12px;font-family:'Cairo';font-size:.85rem;outline:none;transition:.3s;background:#fff;color:var(--text);font-weight:600}
+.cart-delivery-input[readonly]{background:#f9f9f9;cursor:not-allowed}
+.cart-delivery-input-wrap>i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--primary);font-size:.85rem}
+.gps-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;margin-top:8px;border:1.5px dashed var(--primary);border-radius:12px;background:#fff;color:var(--primary-dark);font-family:'Cairo';font-weight:700;font-size:.82rem;cursor:pointer;transition:.3s}.gps-btn:hover{background:var(--secondary-bg);border-style:solid}.gps-btn.loading{opacity:.6;pointer-events:none}
+.cart-delivery-loading{display:none;text-align:center;padding:10px;font-size:.8rem;color:var(--muted)}.cart-delivery-loading.show{display:flex;align-items:center;justify-content:center;gap:8px}.cart-delivery-loading i{animation:spin 1s linear infinite;color:var(--primary)}
+.cart-delivery-result{display:none;margin-top:10px;padding:12px;background:linear-gradient(135deg,#e7fbf2,#f0fdf7);border-radius:12px;border:1px solid #c1f2dc}.cart-delivery-result.show{display:block;animation:slideUpSm .4s ease}.delivery-result-grid{display:flex;justify-content:space-around;align-items:center;gap:10px;margin:8px 0}.delivery-result-item{text-align:center}.delivery-result-item .dr-icon{font-size:1.2rem;margin-bottom:4px;display:block}.delivery-result-item .dr-value{font-size:1.1rem;font-weight:800;display:block}.delivery-result-item .dr-label{font-size:.7rem;color:var(--muted);font-weight:600}.delivery-result-name{font-size:.85rem;font-weight:700;color:var(--text);text-align:center;margin-bottom:5px}.delivery-result-name i{color:var(--success);margin-left:5px}.delivery-result-divider{width:1px;height:40px;background:#c1f2dc}.cart-delivery-remove{display:block;margin:8px auto 0;background:none;border:1px solid #ffd1d6;color:var(--danger);cursor:pointer;font-size:.78rem;font-weight:700;font-family:'Cairo';padding:5px 15px;border-radius:8px;transition:.3s}.cart-delivery-remove:hover{background:#fff1f2}@keyframes slideUpSm{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.cart-total{margin-top:10px;padding-top:8px;border-top:2px solid #eee}.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-weight:700;font-size:.85rem}.cart-total-row i{margin-left:4px}.cart-total-main{display:flex;justify-content:space-between;align-items:center;padding-top:6px;border-top:2px dashed #eee;margin-top:4px}.close-cart-btn{margin-top:6px;background:#eee;border:none;width:100%;padding:9px;border-radius:10px;cursor:pointer;font-family:'Cairo';font-weight:600;transition:.3s;font-size:.9rem}.close-cart-btn:hover{background:#ddd}
+.animate-on-scroll{opacity:0;transform:translateY(25px);transition:opacity .5s ease,transform .5s ease}.animate-on-scroll.visible{opacity:1;transform:translateY(0)}
 
-        .sweet-img {
-            width: 100%;
-            height: 110px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            background: #fdf2f4;
-        }
+/* ===== التذييل ===== */
+.main-footer{margin-top:30px;background:#2d3436;color:#fff;padding:40px 15px 20px;border-radius:00px 00px 0 0;position:relative}.main-footer::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--primary-gradient)}.footer-logo{font-family:'Cairo';font-size:2.5rem;font-weight:700;text-align:center;margin:18px 0;background:linear-gradient(to right,#ff4757 20%,#ff6b81 40%,#fff 50%,#ff6b81 60%,#ff4757 80%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3s linear infinite}@keyframes shine{to{background-position:200% center}}.footer-tagline{opacity:.8;margin-bottom:18px;transition:.3s;text-align:center}.footer-social{text-align:center;margin:15px 0}.footer-social a{width:45px;height:45px;background:rgba(255,255,255,.08);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;margin:0 8px;transition:var(--ts)}.footer-social a:hover{background:var(--primary);transform:translateY(-10px) rotate(360deg)}.footer-bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:20px;padding-top:18px;text-align:center}.school-name{transition:.3s}.footer-bottom:hover .school-name{color:var(--primary)}.made-with{margin-top:10px;font-size:.75rem;opacity:.7}.heart-icon{color:#ff4757;display:inline-block}.footer-bottom:hover .heart-icon{animation:pulseHeart .8s infinite}@keyframes pulseHeart{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}.footer-bottom-info{text-align:center;padding:10px;background:#222}.designed-by{font-size:.85rem;color:#999}.designed-by a{text-decoration:none;color:inherit}.highlight-primary{color:#f54c03;font-weight:bold}
 
-        .sweet-name { font-weight: 700; font-size: 0.9rem; min-height: 40px; display: flex; align-items: center; justify-content: center; }
-        .sweet-price { font-size: 0.85rem; color: var(--primary-dark); background: #fff0f3; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 8px; font-weight: 700; }
-
-        /* قسم الآراء مع النجوم */
-        .testimonials-wrapper {
-            overflow: hidden;
-            margin: 30px 20px;
-            padding: 20px 0;
-            background: #fffafb;
-            border-radius: 20px;
-            border: 1px solid #fce4ec;
-        }
-
-        .testimonials-slider {
-            display: flex;
-            gap: 20px;
-            animation: scroll 25s linear infinite;
-            width: max-content;
-        }
-
-        .testimonial-card {
-            background: var(--white);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            width: 280px;
-            text-align: right;
-            border-right: 4px solid var(--primary);
-        }
-
-        .testi-user { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
-        .user-meta { display: flex; align-items: center; gap: 8px; }
-        .user-meta i { color: var(--primary); font-size: 1.1rem; }
-        .testi-name { font-weight: 700; color: var(--primary-dark); font-size: 0.9rem; }
-        .stars { color: #ffbc00; font-size: 0.8rem; display: flex; gap: 2px; }
-        .testi-text { font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
-
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-280px * 8 - 20px * 8)); }
-        }
-
-        .testimonials-slider:hover { animation-play-state: paused; }
-
-        .faq-container { margin: 0 20px; text-align: start; }
-        .faq-item { background: #fff; border-radius: 15px; border: 1px solid #fce4ec; margin-bottom: 10px; overflow: hidden; }
-        .faq-question { width: 100%; border: none; background: none; padding: 18px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--text); font-family: 'Cairo'; }
-        .faq-answer { max-height: 0; overflow: hidden; padding: 0 18px; font-size: 0.95rem; color: var(--muted); transition: 0.3s; line-height: 1.6; }
-        .faq-item.active .faq-answer { max-height: 200px; padding: 0 18px 18px; }
-        .faq-item.active .faq-question { color: var(--primary-dark); }
-
-        footer { margin-top: 50px; font-size: 0.85rem; color: #aaa; }
-    </style>
+/* ===== التجاوب (Mobile) ===== */
+@media(max-width:768px){
+.navbar-links{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:15px;box-shadow:0 10px 30px rgba(0,0,0,.1);border-radius:0 0 20px 20px;gap:5px}.navbar-links.open{display:flex}.mobile-menu-btn{display:block}
+.features-grid{grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 10px}.feature-card{padding:15px 5px}.feature-card i{font-size:1.6rem}.feature-card h4{font-size:.8rem;white-space:nowrap}
+.cart-floating-btn{width:55px;height:55px;bottom:20px;left:15px}#backToTop{width:45px;height:45px;bottom:20px;right:15px}.cart-content{padding:18px;width:96%}.cart-item-card{padding:8px;gap:6px}.item-img-mini{width:42px;height:42px}.qty-btn-small{width:22px;height:22px;font-size:.75rem}
+.footer-logo{font-size:1.2rem}
+.stats-bar{gap:8px;padding:12px 8px}.stat-number{font-size:1.1rem}.stat-label{font-size:.6rem}.stat-icon{font-size:1rem;margin-bottom:3px}
+.cert-badges{grid-template-columns:repeat(2,1fr);gap:10px}
+.form-grid{grid-template-columns:1fr}
+}
+@media(max-width:480px){.hours-card{padding:15px;margin:15px auto}.hours-table td{padding:12px 8px;font-size:.8rem}}
+@media(max-width:380px){.feature-card h4{font-size:.7rem}.stat-number{font-size:.95rem}.stat-label{font-size:.55rem}.stat-icon{font-size:.85rem}}
+@media(max-width:360px){.item-img-mini{display:none}}
+</style>
 </head>
-
 <body>
-<div class="container">
 
-    <div class="header-section">
-        <div class="cover-photo"></div>
-        <img src="images/amir.jpg" class="profile-img" alt="Amir School" onerror="this.src='https://via.placeholder.com/130'">
+<div class="preloader" id="preloader"><div class="preloader-spinner"></div><p class="preloader-text"><i class="fas fa-cookie-bite" style="margin-left:8px"></i>جاري تحميل مدرسة أمير...</p></div>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="toast-notification" id="toastNotification"></div>
+
+<nav class="navbar" id="mainNavbar">
+    <a href="#" class="navbar-brand" onclick="scrollToTop();return false"><img src="images/amir.jpg" alt="Logo" onerror="this.src='https://via.placeholder.com/40'"><span>مدرسة أمير للتكوين المحترف</span></a>
+    <div class="navbar-links" id="navLinks">
+        <a href="#sweetsSection" class="nav-link"><i class="fas fa-cookie"></i> الحلويات</a>
+        <a href="#quoteSection" class="nav-link"><i class="fas fa-file-invoice"></i> تسعيرة</a>
+        <a href="#faqSection" class="nav-link"><i class="fas fa-circle-question"></i> أسئلة</a>
+        <a href="https://wa.me/213699748196" class="nav-cta" target="_blank"><i class="fab fa-whatsapp"></i> تواصل</a>
     </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars" id="menuIcon"></i></button>
+</nav>
 
-    <div class="school-info">
-        <h1 id="schoolName">مدرسة أمير للتكوين المحترف</h1>
-        <p id="schoolDesc" style="color:var(--muted); margin-top: 5px;"></p>
-        
-        <div id="shopStatus" class="status-badge">
-            <div class="status-main">
-                <span id="statusDot" class="dot"></span>
-                <span id="statusText">جاري التحقق...</span>
+<div class="news-ticker"><div class="ticker-content">
+📢 التسجيلات مفتوحة لدورة الحلويات التقليدية و العصرية .. سارعوا بحجز أماكنكم! | 🏆 شهادات وطنية معتمدة تمكنكم من فتح مشاريعكم الخاصة | 🍰 طلبيات الأعراس والمناسبات متوفرة حالياً مع التوصيل داخل ولاية الشلف
+</div></div>
+
+<div id="backToTop"><i class="fas fa-chevron-up"></i></div>
+
+<div class="main-wrapper"><div class="container">
+
+<div class="header-section">
+    <div class="cover-photo"></div>
+    <div class="profile-img-wrap"><img src="images/amir.jpg" id="profileImage" class="profile-img" alt="Amir" onerror="this.src='https://via.placeholder.com/130'"></div>
+</div>
+
+<div class="school-info" style="margin-top:25px">
+    <h1>مدرسة أمير للتكوين المحترف</h1>
+    <p id="schoolDesc" style="color:var(--muted);margin-top:5px;font-weight:600;min-height:24px"></p>
+    <div id="shopStatus" class="status-badge"><div class="status-main"><span id="statusDot" class="dot"></span><span id="statusText">جاري التحقق...</span></div><div id="statusTimer"></div></div>
+</div>
+
+<div class="stats-bar animate-on-scroll">
+    <div class="stat-item"><i class="fas fa-cookie-bite stat-icon"></i><span class="stat-number" data-count="23">0</span><span class="stat-label">نوع حلوى</span></div>
+    <div class="stat-item"><i class="fas fa-box-open stat-icon"></i><span class="stat-number" data-count="500">0</span><span class="stat-label">طلبية</span></div>
+    <div class="stat-item"><i class="fas fa-award stat-icon"></i><span class="stat-number" data-count="10">0</span><span class="stat-label">سنوات خبرة</span></div>
+    <div class="stat-item"><i class="fas fa-smile-beam stat-icon"></i><span class="stat-number" data-count="100">0</span><span class="stat-label">%100 رضا</span></div>
+</div>
+
+<h3 class="section-title animate-on-scroll"><i class="far fa-clock"></i> أوقات العمل</h3>
+<div class="hours-card animate-on-scroll"><table class="hours-table"><tr><td><i class="fas fa-calendar-day"></i><span>السبت – الخميس</span></td><td class="time-cell"><div class="time-wrap"><span>17:00</span><span>مساءً</span></div><span class="dash">–</span><div class="time-wrap"><span>09:00</span><span>صباحاً</span></div></td></tr><tr><td><i class="fas fa-heart"></i><span>الجمعة</span></td><td class="time-cell"><div class="time-wrap"><span>17:00</span><span>مساءً</span></div><span class="dash">–</span><div class="time-wrap"><span>14:00</span><span>مساءً</span></div></td></tr></table><p class="working-status"><i class="fas fa-check-circle pulse-icon" style="margin-left:5px"></i> نحن جاهزون لاستقبال طلبياتكم</p></div>
+
+<div class="links-container animate-on-scroll">
+    <a href="tel:+213699748196" class="link-btn">
+        <i class="fa fa-phone"></i> <span dir="ltr">0699 74 81 96</span>
+    </a>
+    <a href="tel:+213660508949" class="link-btn">
+        <i class="fa fa-phone"></i> <span dir="ltr">0660 50 89 49</span>
+    </a>
+    <a href="https://wa.me/213699748196" class="link-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
+    <a href="https://www.facebook.com/amirformation" class="link-btn"><i class="fab fa-facebook"></i> فايسبوك</a>
+    <a href="https://www.tiktok.com/@chefsamahbradai" class="link-btn"><i class="fab fa-tiktok"></i> تيك توك</a>
+    <a href="#" class="link-btn"><i class="fa fa-location-dot"></i> أولاد محمد – الشلف</a>
+</div>
+
+<h3 class="section-title animate-on-scroll"><i class="fas fa-hourglass-half"></i> عدّاد المناسبات</h3>
+<div class="countdown-container animate-on-scroll">
+    <p class="countdown-header"><i class="fas fa-bell" style="margin-left:6px;animation:pulse 1.5s infinite"></i> لا تفوّتي الفرصة!</p>
+    <p class="countdown-subtext"><i class="fas fa-arrow-left" style="margin-left:4px;font-size:.7rem"></i> احجزي طلبيتك من الآن وتجنبي ضغط اللحظات الأخيرة</p>
+    <div class="countdown-grid"><div class="countdown-item"><span id="eid-fitr-days" class="cd-days">--</span><span class="cd-label"><i class="fas fa-moon"></i> عيد الفطر</span></div><div class="countdown-item"><span id="eid-adha-days" class="cd-days">--</span><span class="cd-label"><i class="fas fa-mosque"></i> عيد الأضحى</span></div></div>
+</div>
+
+<section id="quoteSection">
+    <h3 class="section-title animate-on-scroll"><i class="fas fa-wand-magic-sparkles"></i> طلب تسعيرة</h3>
+    <div class="order-form animate-on-scroll">
+        <div class="form-grid">
+            <div class="form-group"><label><i class="fas fa-user"></i> الاسم:</label><input type="text" id="custName" placeholder="اسمك الكريم"></div>
+            <div class="form-group"><label><i class="fas fa-phone"></i> الهاتف:</label><input type="tel" id="custPhone" placeholder="0XXX XX XX XX" maxlength="13" oninput="formatPhone(this)" inputmode="numeric"></div>
+            <div class="form-group"><label><i class="fas fa-calendar-check"></i> المناسبة:</label><select id="eventType"><option value="عرس">عرس</option><option value="خطوبة">خطوبة</option><option value="ختان">ختان</option><option value="تخرج">تخرج</option><option value="عقيقة">عقيقة</option><option value="أخرى">أخرى</option></select></div>
+            <div class="form-group"><label><i class="fas fa-clock"></i> التاريخ:</label><input type="date" id="eventDate"></div>
+            <div class="form-group full-width"><label><i class="fas fa-users"></i> المدعوين:</label><select id="guestCount"><option>أقل من 50</option><option>50-100</option><option>100-200</option><option>200-500</option><option>أكثر من 500</option></select></div>
+            <div class="form-group full-width"><label><i class="fas fa-pen"></i> ملاحظات:</label><textarea id="orderNotes" rows="3" placeholder="تفاصيل إضافية..."></textarea></div>
+        </div>
+        <div style="font-size:.78rem;color:#666;margin:12px 0;background:#fff8f0;padding:8px;border-right:3px solid #f54c03;border-radius:8px"><i class="fas fa-clipboard-list" style="margin-left:4px;color:#f54c03"></i> محتوى السلة يُرفق تلقائياً.</div>
+        <button class="btn-send" onclick="sendToWhatsApp()"><i class="fab fa-whatsapp"></i> إرسال</button>
+    </div>
+</section>
+
+<h3 class="section-title animate-on-scroll"><i class="fas fa-star"></i> لماذا مدرسة أمير؟</h3>
+<div class="features-grid animate-on-scroll"><div class="feature-card"><i class="fas fa-hands"></i><h4>صنع يدوي</h4></div><div class="feature-card"><i class="fas fa-cookie-bite"></i><h4>مكونات طبيعية</h4></div><div class="feature-card"><i class="fas fa-calendar-check"></i><h4>احترام المواعيد</h4></div></div>
+
+<div class="packaging-banner animate-on-scroll">
+    <div class="packaging-icon"><i class="fas fa-gift"></i></div>
+    <div><h4>تغليف فاخر</h4><p>علب راقية تليق بمناسباتكم.</p></div>
+</div>
+
+<div class="cert-section animate-on-scroll"><h3 class="section-title" style="margin-top:10px"><i class="fas fa-trophy"></i> ما يميزنا</h3><div class="cert-badges"><div class="cert-badge"><i class="fas fa-certificate"></i><span>شهادات معتمدة</span></div><div class="cert-badge"><i class="fas fa-truck"></i><span>توصيل متوفر</span></div><div class="cert-badge"><i class="fas fa-medal"></i><span>جودة عالية</span></div><div class="cert-badge"><i class="fas fa-leaf"></i><span>مكونات طبيعية</span></div></div></div>
+
+<h3 class="section-title animate-on-scroll" id="sweetsSection"><i class="fas fa-cake-candles"></i> الحلويات التقليدية</h3>
+<div class="search-box animate-on-scroll"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="ابحث عن حلوى..." oninput="filterSweets()"></div>
+<div class="sweets-grid" id="sweetsContainer"></div>
+
+<h3 class="section-title animate-on-scroll"><i class="fas fa-comments"></i> آراء زبوناتنا</h3>
+<div class="testimonials-wrapper animate-on-scroll"><div class="testimonials-track" id="testimonialsList"></div></div>
+
+<h3 class="section-title animate-on-scroll" id="faqSection"><i class="fas fa-circle-question"></i> الأسئلة الشائعة</h3>
+<div class="faq-container animate-on-scroll">
+    <div class="faq-item"><button class="faq-question"><span><i class="fas fa-concierge-bell" style="color:var(--primary-dark);margin-left:8px"></i>هل توفرون طلبيات للمناسبات ؟</span><i class="fa fa-chevron-down"></i></button><div class="faq-answer">بالتأكيد! نوفر طلبيات مخصصة للأعراس والمناسبات بلمسة راقية والتزام تام بالمواعيد.</div></div>
+    <div class="faq-item"><button class="faq-question"><span><i class="fas fa-user-graduate" style="color:var(--primary-dark);margin-left:8px"></i>هل الشهادات معتمدة ؟</span><i class="fa fa-chevron-down"></i></button><div class="faq-answer">نمنح شهادة وطنية معتمدة تؤهلكِ لفتح مشروعك أو العمل كشيف حلويات محترفة.</div></div>
+    <div class="faq-item"><button class="faq-question"><span><i class="fas fa-tags" style="color:var(--primary-dark);margin-left:8px"></i>كيف تحسب أسعار الطلبيات ؟</span><i class="fa fa-chevron-down"></i></button><div class="faq-answer">الأسعار تقريبية وتختلف حسب الحشو والتزيين، مع أسعار جملة خاصة للمحلات والمقاهي..</div></div>
+    <div class="faq-item"><button class="faq-question"><span><i class="fas fa-truck-fast" style="color:var(--primary-dark);margin-left:8px"></i>كيف تعمل خدمة التوصيل ؟</span><i class="fa fa-chevron-down"></i></button><div class="faq-answer">توصيل سريع داخل الشلف بأسعار رمزية، مع تحديد الموقع عبر GPS لمعرفة التكلفة.</div></div>
+    <div class="faq-item"><button class="faq-question"><span><i class="fas fa-stopwatch" style="color:var(--primary-dark);margin-left:8px"></i>متى يتم تأكيد الطلبيات ؟</span><i class="fa fa-chevron-down"></i></button><div class="faq-answer">يُرجى الحجز قبل 3–5 أيام، وللأعراس قبل أسبوعين..</div></div>
+</div>
+
+</div></div>
+
+<footer class="main-footer">
+    <div class="footer-logo">مدرسة أمير للتكوين المحترف</div>
+    <p class="footer-tagline">فن صناعة الحلويات والمملحات والتكوينات الإحترافية</p>
+    <div class="footer-social">
+        <a href="https://www.facebook.com/amirformation"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.tiktok.com/@chefsamahbradai"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/213699748196"><i class="fab fa-whatsapp"></i></a>
+        <a href="tel:+213699748196"><i class="fas fa-phone"></i></a>
+    </div>
+    <div class="footer-bottom">
+        <p><i class="far fa-copyright" style="margin-left:4px"></i> <span id="year"></span> <span class="school-name">مدرسة أمير للتكوين المحترف</span> - جميع الحقوق محفوظة</p>
+        <p class="made-with">صُنع بكل <i class="fas fa-heart heart-icon"></i> من الشلف إلى كل ربوع الجزائر</p>
+    </div>
+</footer>
+<div class="footer-bottom-info">
+    <p class="designed-by"><i class="fas fa-code" style="margin-left:4px"></i> صُمم بواسطة <a href="https://fennecvisionary.vercel.app/DevProfile.html" target="_blank"><span class="highlight-primary"><i class="fas fa-bullhorn" style="margin-left:3px"></i> برادعي عبد الرحمن</span></a></p>
+</div>
+
+<div class="cart-floating-btn" onclick="toggleCart()"><i class="fas fa-shopping-basket"></i><span class="cart-count" id="cartCount">0</span></div>
+
+<div id="cartModal" class="cart-modal">
+<div class="cart-content">
+    <h3 class="cart-header"><i class="fas fa-shopping-cart"></i> سلة الطلبيات</h3>
+    <div class="cart-scrollable">
+        <div id="cartItemsList"></div>
+        <div class="cart-delivery-section">
+            <h4><i class="fas fa-motorcycle"></i> إضافة توصيل؟ <span style="font-size:.68rem;color:var(--muted);font-weight:400">(ولاية الشلف)</span></h4>
+            <button class="gps-btn" id="gpsBtn" onclick="useGPS()"><i class="fas fa-crosshairs"></i> تحديد بلديتي تلقائياً (GPS)</button>
+            <div class="cart-delivery-input-wrap" id="cartDeliveryInputWrap">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" class="cart-delivery-input" id="cartDeliveryInput" readonly placeholder="سيظهر اسم المنطقة هنا...">
             </div>
-            <div id="statusTimer" class="status-timer"></div>
+            <div class="cart-delivery-loading" id="cartDeliveryLoading"><i class="fas fa-spinner"></i><span>جاري تحديد موقعك بدقة...</span></div>
+            <div class="cart-delivery-result" id="cartDeliveryResult"></div>
         </div>
     </div>
-
-    <div class="links-container">
-        <a href="tel:+213699748196" class="link-btn"><i class="fa fa-phone"></i>0699 74 81 96</a>
-        <a href="tel:+213660508949" class="link-btn"><i class="fa fa-phone"></i>0660 50 89 49</a>
-        <a href="https://wa.me/213699748196" class="link-btn"><i class="fab fa-whatsapp"></i>واتساب</a>
-        <a href="https://www.facebook.com/amirformation" class="link-btn"><i class="fab fa-facebook"></i>فايسبوك</a>
-        <a href="https://www.tiktok.com/@chefsamahbradai" class="link-btn"><i class="fab fa-tiktok"></i>تيك توك</a>
-        <a href="#" class="link-btn"><i class="fa fa-location-dot"></i>أولاد محمد – الشلف</a>
+    <div class="cart-total">
+        <div class="cart-total-row"><span><i class="fas fa-cookie" style="color:var(--primary)"></i> الحلويات:</span><span id="sweetsTotal">0 دج</span></div>
+        <div class="cart-total-row" id="deliveryTotalRow" style="display:none"><span><i class="fas fa-motorcycle" style="color:var(--primary)"></i> التوصيل:</span><span id="deliveryTotal" style="color:var(--primary-dark)">0 دج</span></div>
+        <div class="cart-total-main"><strong><i class="fas fa-calculator" style="margin-left:4px;color:var(--success)"></i> المجموع:</strong><span id="totalPrice" style="font-size:1.15rem;color:var(--success);font-weight:800">0 دج</span></div>
     </div>
-
-    <h3 class="section-title">أوقات العمل</h3>
-    <div class="hours-card">
-        <table class="hours-table">
-            <tr><td>السبت – الخميس</td><td class="time-cell">09:00 - 17:00</td></tr>
-            <tr><td>الجمعة</td><td class="time-cell">14:00 - 17:00</td></tr>
-        </table>
-    </div>
-
-    <h3 class="section-title">قائمة الحلويات التقليدية</h3>
-    <div class="sweets-grid" id="sweetsContainer"></div>
-
-    <h3 class="section-title">آراء تلميذاتنا وزبوناتنا</h3>
-    <div class="testimonials-wrapper">
-        <div class="testimonials-slider" id="testimonialsList"></div>
-    </div>
-
-    <h3 class="section-title">الأسئلة الشائعة</h3>
-    <div class="faq-container">
-        <div class="faq-item">
-            <button class="faq-question">هل توجد طلبيات للمناسبات؟ <i class="fa fa-chevron-down"></i></button>
-            <div class="faq-answer">نعم، نوفر طلبيات لجميع المناسبات والأفراح بجودة عالية وتزيين عصري حسب الطلب.</div>
-        </div>
-        <div class="faq-item">
-            <button class="faq-question">هل الشهادات معتمدة؟ <i class="fa fa-chevron-down"></i></button>
-            <div class="faq-answer">نعم، جميع تكويناتنا تتوج بشهادات معتمدة تمكنكم من دخول سوق العمل أو فتح مشاريعكم الخاصة.</div>
-        </div>
-        <div class="faq-item">
-            <button class="faq-question">هل تتوفر أسعار الجملة؟ <i class="fa fa-chevron-down"></i></button>
-            <div class="faq-answer">بالتأكيد، نوفر أسعاراً خاصة ومخفضة للطلبيات الكبيرة والمحلات.</div>
-        </div>
-    </div>
-
-    <footer>
-        صنع بكل ❤️ بواسطة مدرسة أمير © <span id="year"></span>
-    </footer>
+    <p style="font-size:.75rem;color:var(--muted);margin:8px 0"><i class="fas fa-info-circle" style="margin-left:3px;color:var(--primary)"></i> الأسعار قد تتغير حسب الحشو أو التزيين</p>
+    <button class="btn-send" onclick="finalizeOrder()" style="margin-top:6px;padding:14px;font-size:1rem"><i class="fab fa-whatsapp"></i> تأكيد وإرسال</button>
+    <button class="close-cart-btn" onclick="toggleCart()"><i class="fas fa-times" style="margin-left:4px"></i> إغلاق</button>
+</div>
 </div>
 
 <script>
-// دالة تحديث حالة المحل المتقدمة
-function updateShopStatus() {
-    const now = new Date();
-    const day = now.getDay(); // 0: Sunday, 5: Friday, 6: Saturday
-    const hour = now.getHours();
-    const minutes = now.getMinutes();
-    const currentTime = hour + minutes / 60;
+// إحداثيات مقر المدرسة (أولاد محمد - 5968+4V9)
+var ORIGIN_LAT=36.1950, ORIGIN_LNG=1.3050, deliveryData=null;
 
-    let isOpen = false;
-    let nextAction = "";
-
-    const statusBadge = document.getElementById('shopStatus');
-    const statusDot = document.getElementById('statusDot');
-    const statusText = document.getElementById('statusText');
-    const statusTimer = document.getElementById('statusTimer');
-
-    // تحديد أوقات العمل
-    const regularOpen = 9;
-    const regularClose = 17;
-    const fridayOpen = 14;
-    const fridayClose = 17;
-
-    if (day === 5) { // الجمعة
-        if (currentTime >= fridayOpen && currentTime < fridayClose) {
-            isOpen = true;
-            nextAction = `نغلق عند الساعة 17:00`;
-        } else if (currentTime < fridayOpen) {
-            nextAction = `سنفتح اليوم عند الساعة 14:00`;
-        } else {
-            nextAction = `سنفتح غداً الساعة 09:00`;
-        }
-    } else { // باقي الأيام (السبت - الخميس)
-        if (currentTime >= regularOpen && currentTime < regularClose) {
-            isOpen = true;
-            nextAction = `نغلق عند الساعة 17:00`;
-        } else if (currentTime < regularOpen) {
-            nextAction = `سنفتح اليوم عند الساعة 09:00`;
-        } else {
-            if (day === 4) nextAction = `سنفتح غداً الساعة 14:00`;
-            else nextAction = `سنفتح غداً الساعة 09:00`;
-        }
-    }
-
-    if (isOpen) {
-        statusBadge.className = "status-badge status-open";
-        statusDot.className = "dot dot-open";
-        statusText.innerHTML = "مرحباً! محلنا مفتوح حالياً ✅";
-        statusTimer.innerHTML = nextAction;
-    } else {
-        statusBadge.className = "status-badge status-closed";
-        statusDot.className = "dot dot-closed";
-        statusText.innerHTML = "نعتذر، المحل مغلق الآن ❌";
-        statusTimer.innerHTML = nextAction;
-    }
+// دالة حساب مسافة دقيقة مع مسار الطريق الفعلي تقريبياً بزيادة 30%
+function haversine(la1,lo1,la2,lo2){
+    var R=6371, x=(la2-la1)*Math.PI/180, y=(lo2-lo1)*Math.PI/180, 
+    z=Math.sin(x/2)*Math.sin(x/2)+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(y/2)*Math.sin(y/2);
+    var dist = R*2*Math.atan2(Math.sqrt(z),Math.sqrt(1-z));
+    return parseFloat((dist * 1.3).toFixed(1));
 }
 
-const sweets = [
-    { name: "تشارك مسكّر", price: "70 دج", img: "images/tcharakmsakar.jpg" },
-    { name: "تشارك العريان", price: "70 دج", img: "images/tcharakarian.jpg" },
-    { name: "عرايش", price: "90 دج", img: "images/araiech.jpg" },
-    { name: "كعيكعات", price: "80 دج", img: "images/kaikat.jpg" },
-    { name: "مقروض", price: "70 دج", img: "images/maqroutlous.jpg" },
-    { name: " مقروض زمان", price: "70 دج", img: "images/maqrout.jpg" },
-    { name: " مقروض اللوز", price: "100 دج", img: "images/maqroutlouz.jpg" },
-    { name: " كفتة", price: "200 دج - 250دج", img: "images/kefta.jpg" },
-    { name: "دزيريات مقروصين", price: "100 دج", img: "images/dziriyat.jpg" },
-    { name: "بقلاوة ", price: "80 دج", img: "images/baklawa.jpg" },
-    { name: "بقلاوة تركية", price: "80 دج", img: "images/turkish.jpg" },
-    { name: "قنيدلات", price: "80 دج", img: "images/qnidlet.jpg" },
-    { name: " مشوك الباي", price: "200 دج - 250دج", img: "images/mcheweklouz.jpg" },
-    { name: " الفاكهة", price: "200 دج - 250دج", img: "images/fruits.jpg" },
-    { name: "صابلي المعجون", price: "40 دج", img: "images/sabli.jpg" },
-    { name: "مشوك", price: "60 دج", img: "images/mchewek.jpg" },
-    { name: "جلجلانية", price: "70 دج", img: "images/djeljlania.jpg" },
-    { name: "مخبز", price: "120 دج", img: "images/mkhabez.jpg" },
-    { name: "كعك النقاش", price: "70 دج", img: "images/naqach.jpg" },
-    { name: "سنيكرز", price: "80 دج", img: "images/snickers.jpg" },
-    { name: "قلوب الشكولاطة", price: "80 دج", img: "images/chikoula.jpg" },
-    { name: "بنيون", price: "80 دج", img: "images/bniwen.jpg" },
-    { name: "طابع زمان", price: "30 دج", img: "images/tabaa.jpg" },
-    { name: "طابع الطلية", price: "40 دج", img: "images/tabaatalia.jpg" },
-    { name: "غريبية", price: "50 دج", img: "images/ghriba.jpg" }
-];
+// حساب السعر
+function calcPrice(km){if(km<=0)return 0;if(km<=3)return 150;return 150+Math.ceil((km-3)/2)*50;}
 
-const testimonials = [
-    { name: "أم ريتاج", text: "البقلاوة تعكم شابة بزاف، يعطيك الصحة شاف، الحشو طري والمعسلة لداخل.", stars: 5 },
-    { name: "كريمة ب.", text: "درت عندكم فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش.", stars: 5 },
-    { name: "سمية العاصمية", text: "أحسن مدرسة في الشلف، المعاملة روعة والحلويات همة وشان.", stars: 4 },
-    { name: "سارة.", text: "المقروض يذوب في الفم، جربت بزاف بلايص بصح كيفكم ماكانش.", stars: 5 },
-    { name: "أم أنس", text: "شكراً شاف على النصائح، تعلمت أسرار الطلية والحلوى جاتني تبرق.", stars: 5 },
-    { name: "نادية.", text: "دزيريات مقروصين فن، والحلويات التقليدية تعكم تشرف في العراس.", stars: 4 },
-    { name: "ليلى", text: "خدمة متقونة ونظافة الله يبارك، البنة ما تتوصفش.", stars: 5 },
-    { name: "أم جيهان", text: "ربي يوفقكم، مدرسة في القمة، البقلاوة التركية تعكم هبلت قاع العايلة.", stars: 5 }
-];
-
-// دالة توليد النجوم
-function generateStars(count) {
-    let starsHtml = "";
-    for(let i=0; i<5; i++) {
-        starsHtml += `<i class="${i < count ? 'fas' : 'far'} fa-star"></i>`;
-    }
-    return starsHtml;
+function formatPhone(input){
+    var v=input.value.replace(/\D/g,'');
+    if(v.length>10) v=v.substring(0,10);
+    var f='';
+    if(v.length>0) f=v.substring(0,4);
+    if(v.length>4) f+=' '+v.substring(4,6);
+    if(v.length>6) f+=' '+v.substring(6,8);
+    if(v.length>8) f+=' '+v.substring(8,10);
+    input.value=f;
 }
 
-const container = document.getElementById("sweetsContainer");
-sweets.forEach(s => {
-    container.innerHTML += `<div class="sweet-card">
-        <img src="${s.img}" class="sweet-img" onerror="this.src='https://via.placeholder.com/200x150?text=Amir+School'">
-        <div class="sweet-name">${s.name}</div>
-        <div class="sweet-price">${s.price}</div>
-    </div>`;
+// GPS
+function useGPS(){
+    var b=document.getElementById('gpsBtn'), l=document.getElementById('cartDeliveryLoading');
+    if(!navigator.geolocation){showToast('<i class="fas fa-exclamation-circle" style="margin-left:5px"></i> متصفحك لا يدعم تحديد الموقع');return}
+    b.classList.add('loading'); b.innerHTML='<i class="fas fa-spinner fa-spin" style="margin-left:5px"></i> جاري تحديد موقعك بدقة...'; l.classList.add('show');
+    
+    navigator.geolocation.getCurrentPosition(function(pos){
+        var la=pos.coords.latitude, lo=pos.coords.longitude;
+        if(la<35.5||la>36.8||lo<0.5||lo>2.5){
+            b.classList.remove('loading'); b.innerHTML='<i class="fas fa-crosshairs"></i> تحديد بلديتي تلقائياً (GPS)'; l.classList.remove('show');
+            showToast('<i class="fas fa-map-marker-alt" style="margin-left:5px"></i> عذراً، التوصيل داخل ولاية الشلف فقط'); return;
+        }
+        var k=haversine(ORIGIN_LAT,ORIGIN_LNG,la,lo), pr=calcPrice(k);
+        
+        fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat='+la+'&lon='+lo+'&accept-language=ar')
+        .then(function(r){return r.json()}).then(function(d){
+            l.classList.remove('show'); b.classList.remove('loading'); b.innerHTML='<i class="fas fa-crosshairs"></i> تحديث موقعي (GPS)';
+            var n='موقعي المحدد (GPS)', dt='';
+            if(d&&d.address){n=d.address.neighbourhood||d.address.suburb||d.address.village||d.address.town||d.address.city||n;if(d.address.road)dt=d.address.road}
+            document.getElementById('cartDeliveryInputWrap').style.display='block';
+            document.getElementById('cartDeliveryInput').value=n;
+            pickPlace(n,dt,k,pr,la,lo);
+        }).catch(function(){
+            l.classList.remove('show'); b.classList.remove('loading'); b.innerHTML='<i class="fas fa-crosshairs"></i> تحديث موقعي (GPS)';
+            document.getElementById('cartDeliveryInputWrap').style.display='block';
+            document.getElementById('cartDeliveryInput').value='موقعي (GPS)'; pickPlace('موقعي (GPS)','',k,pr,la,lo);
+        });
+    },function(e){
+        b.classList.remove('loading'); b.innerHTML='<i class="fas fa-crosshairs"></i> تحديد بلديتي تلقائياً (GPS)'; l.classList.remove('show');
+        showToast('<i class="fas fa-location-crosshairs" style="margin-left:5px"></i> يرجى السماح بالوصول للموقع');
+    },{enableHighAccuracy:true,timeout:15000,maximumAge:0});
+}
+
+function pickPlace(n,dt,k,pr,la,lo){
+    deliveryData={name:n,detail:dt,km:k,price:pr,lat:la||null,lon:lo||null};
+    var r=document.getElementById('cartDeliveryResult'), lnk='';
+    if(la&&lo)lnk='<a href="https://www.google.com/maps?q='+la+','+lo+'" target="_blank" style="color:var(--primary);font-size:.72rem;text-decoration:none;display:inline-flex;align-items:center;gap:3px;margin-top:4px"><i class="fas fa-external-link-alt"></i> عرض على الخريطة</a>';
+    r.innerHTML='<div class="delivery-result-name"><i class="fas fa-check-circle"></i> التوصيل إلى: '+n+'</div>'+(dt?'<div style="font-size:.72rem;color:var(--muted);text-align:center;margin-bottom:4px">'+dt+'</div>':'')+lnk+'<div class="delivery-result-grid"><div class="delivery-result-item"><span class="dr-icon" style="color:var(--primary)"><i class="fas fa-route"></i></span><span class="dr-value" style="color:var(--primary-dark)">'+k+' كم</span><span class="dr-label">المسافة</span></div><div class="delivery-result-divider"></div><div class="delivery-result-item"><span class="dr-icon" style="color:var(--success)"><i class="fas fa-coins"></i></span><span class="dr-value" style="color:var(--success)">'+pr+' دج</span><span class="dr-label">التوصيل</span></div></div><button class="cart-delivery-remove" onclick="removeDelivery()"><i class="fas fa-times" style="margin-left:4px"></i> إلغاء التوصيل</button>';
+    r.classList.add('show'); document.getElementById('deliveryTotalRow').style.display='flex'; updateCartTotals();
+    showToast('<i class="fas fa-motorcycle" style="margin-left:5px"></i> تم تحديد موقعك وتحديث السعر');
+}
+
+function removeDelivery(){
+    deliveryData=null; document.getElementById('cartDeliveryInput').value=''; document.getElementById('cartDeliveryInputWrap').style.display='none';
+    document.getElementById('cartDeliveryResult').classList.remove('show');
+    document.getElementById('deliveryTotalRow').style.display='none'; updateCartTotals();
+    var b=document.getElementById('gpsBtn'); b.innerHTML='<i class="fas fa-crosshairs"></i> تحديد بلديتي تلقائياً (GPS)';
+    showToast('<i class="fas fa-times-circle" style="margin-left:5px"></i> تم إلغاء التوصيل');
+}
+
+var sweets=[{name:"تشارك مسكّر",price:"70 دج",img:"images/tcharakmsakar.jpg"},{name:"تشارك العريان",price:"70 دج",img:"images/tcharakarian.jpg"},{name:"عرايش",price:"90 دج",img:"images/araiech.jpg"},{name:"كعيكعات",price:"80 دج",img:"images/kaikat.jpg"},{name:"مقروض زمان",price:"70 دج",img:"images/maqrout.jpg"},{name:"مقروض اللوز",price:"100 دج",img:"images/maqroutlouz.jpg"},{name:"كفتة",price:"200 دج",img:"images/kefta.jpg"},{name:"دزيريات",price:"100 دج",img:"images/dziriyat.jpg"},{name:"بقالوة",price:"80 دج",img:"images/baklawa.jpg"},{name:"بقالوة تركية",price:"80 دج",img:"images/turkish.jpg"},{name:"قنيدلات",price:"80 دج",img:"images/qnidlet.jpg"},{name:"مشوك الباي",price:"200 دج",img:"images/mcheweklouz.jpg"},{name:"الفاكهة",price:"200 دج",img:"images/fruits.jpg"},{name:"صابلي المعجون",price:"40 دج",img:"images/sabli.jpg"},{name:"مشوك",price:"60 دج",img:"images/mchewek.jpg"},{name:"جلجلانية",price:"70 دج",img:"images/djeljlania.jpg"},{name:"مخبز",price:"120 دج",img:"images/mkhabez.jpg"},{name:"كعك النقاش",price:"70 دج",img:"images/naqach.jpg"},{name:"سنيكرز",price:"80 دج",img:"images/snickers.jpg"},{name:"قلوب الشكولاطة",price:"80 دج",img:"images/chikoula.jpg"},{name:"بنيون",price:"80 دج",img:"images/bniwen.jpg"},{name:"طابع زمان",price:"30 دج",img:"images/tabaa.jpg"},{name:"طابع الطلية",price:"40 دج",img:"images/tabaatalia.jpg"},{name:"غريبية",price:"50 دج",img:"images/ghriba.jpg"}];
+var cart=[];
+
+function hidePreloader(){var p=document.getElementById('preloader');if(p){p.classList.add('hidden');setTimeout(function(){p.style.display='none'},600)}}
+function showToast(m){var t=document.getElementById('toastNotification');if(!t)return;t.innerHTML=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2500)}
+
+function renderSweets(f){
+    f=f||'';var c=document.getElementById("sweetsContainer");if(!c)return;
+    var a=f?sweets.filter(function(s){return s.name.indexOf(f)!==-1}):sweets;
+    if(!a.length){c.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)"><i class="fas fa-search" style="font-size:2rem;display:block;color:#eee;margin-bottom:10px"></i>لا توجد نتائج</div>';return}
+    c.innerHTML=a.map(function(s){
+        var i=sweets.indexOf(s);
+        return'<div class="sweet-card"><img src="'+s.img+'" class="sweet-img" loading="lazy" onerror="this.src=\'https://via.placeholder.com/200x150?text=Amir\'"><div class="sweet-name">'+s.name+'</div><div class="sweet-price"><i class="fas fa-tag" style="margin-left:3px;font-size:.65rem"></i>'+s.price+'</div><button class="add-to-cart-btn" onclick="addToCart('+i+',this)"><i class="fas fa-cart-plus"></i> أضف</button></div>';
+    }).join('');
+}
+function filterSweets(){renderSweets(document.getElementById('searchInput').value.trim())}
+
+// 3 جمل للتأثير
+var sentences=["فن صناعة الحلويات التقليدية والعصرية والمملحات ","تكوينات احترافية بشهادات معتمدة من الدولة","نجهز طلبيات أفراحكم ومناسباتكم بأعلى جودة"];
+var sIdx=0,cIdx=0,isDel=false;
+function typeEffect(){
+    var d=document.getElementById("schoolDesc");if(!d)return;
+    var cur=sentences[sIdx];
+    if(isDel){d.innerHTML=cur.substring(0,cIdx-1);cIdx--}else{d.innerHTML=cur.substring(0,cIdx+1);cIdx++}
+    var spd=isDel?40:70;
+    if(!isDel&&cIdx===cur.length){spd=2000;isDel=true}else if(isDel&&cIdx===0){isDel=false;sIdx=(sIdx+1)%sentences.length;spd=500}
+    setTimeout(typeEffect,spd);
+}
+
+function animateCounters(){document.querySelectorAll('.stat-number[data-count]').forEach(function(c){var t=parseInt(c.getAttribute('data-count')),s=t/120,cur=0;var tm=setInterval(function(){cur+=s;if(cur>=t){c.textContent=t+'+';clearInterval(tm)}else c.textContent=Math.floor(cur)},16)})}
+
+function addToCart(i,btn){
+    var item=sweets[i],ex=null;for(var j=0;j<cart.length;j++)if(cart[j].name===item.name){ex=cart[j];break}
+    if(ex)ex.qty+=10;else cart.push({name:item.name,price:item.price,img:item.img,qty:50});
+    updateCartUI();
+    if(btn){btn.classList.add('added');btn.innerHTML='<i class="fas fa-check"></i> تمت الإضافة';setTimeout(function(){btn.classList.remove('added');btn.innerHTML='<i class="fas fa-cart-plus"></i> أضف'},1500)}
+    showToast('<i class="fas fa-check-circle" style="margin-left:5px"></i> "'+item.name+'" أُضيف للسلة');
+}
+
+function updateCartUI(){var c=document.getElementById("cartCount");if(c)c.innerText=cart.length}
+function toggleCart(){var m=document.getElementById("cartModal");if(m.style.display==="flex"){m.style.display="none";document.body.style.overflow="auto"}else{m.style.display="flex";document.body.style.overflow="hidden";renderCartItems()}}
+
+function updateCartTotals(){
+    var s=0;for(var i=0;i<cart.length;i++)s+=(parseInt(cart[i].price.replace(/\D/g,''))||0)*cart[i].qty;
+    var d=deliveryData?deliveryData.price:0;
+    document.getElementById('sweetsTotal').textContent=s.toLocaleString()+' دج';
+    document.getElementById('deliveryTotal').textContent=d.toLocaleString()+' دج';
+    document.getElementById('deliveryTotalRow').style.display=d>0?'flex':'none';
+    document.getElementById('totalPrice').textContent=(s+d).toLocaleString()+' دج';
+}
+
+function renderCartItems(){
+    var c=document.getElementById("cartItemsList");
+    if(!cart.length){c.innerHTML='<div style="text-align:center;padding:35px 15px"><i class="fas fa-shopping-basket" style="font-size:3rem;color:#eee;display:block;margin-bottom:12px"></i><p style="color:#888;font-weight:bold;font-size:.9rem">السلة فارغة</p></div>';updateCartTotals();return}
+    var h='';for(var i=0;i<cart.length;i++){var it=cart[i];h+='<div class="cart-item-card"><img src="'+it.img+'" class="item-img-mini" onerror="this.src=\'https://via.placeholder.com/50\'"><div style="flex:1;margin-right:6px"><h4 style="margin:0;font-size:.85rem;color:#333">'+it.name+'</h4><span style="color:#27ae60;font-weight:bold;font-size:.78rem"><i class="fas fa-coins" style="margin-left:2px;font-size:.6rem"></i>'+it.price+'</span></div><div class="qty-wrapper"><button class="qty-btn-small" onclick="changeQty('+i+',-10)">-</button><span style="font-weight:bold;font-size:.8rem;min-width:20px;text-align:center">'+it.qty+'</span><button class="qty-btn-small" onclick="changeQty('+i+',10)">+</button></div><button class="delete-item-btn" onclick="removeFromCart('+i+')"><i class="far fa-trash-alt"></i></button></div>'}
+    c.innerHTML=h;updateCartTotals();
+}
+
+function changeQty(i,d){cart[i].qty=Math.max(10,cart[i].qty+d);renderCartItems()}
+function removeFromCart(i){var n=cart[i].name;cart.splice(i,1);renderCartItems();updateCartUI();showToast('<i class="far fa-trash-alt" style="margin-left:5px"></i> "'+n+'" حُذف')}
+
+function updateShopStatus(){
+    var now=new Date(),day=now.getDay(),ct=now.getHours()+now.getMinutes()/60,op=false,msg1="",msg2="";
+    if(day===5){
+        if(ct>=14&&ct<17){op=true;msg1='مرحباً، محلنا مفتوح حالياً';msg2="سيتم الإغلاق على الساعة 17:00";}
+        else if(ct<14){msg1='نتأسف، محلنا مغلق حالياً';msg2="سنفتح اليوم على الساعة 14:00";}
+        else{msg1='نتأسف، محلنا مغلق حالياً';msg2="نعود لخدمتكم غداً على الساعة 09:00";}
+    }else{
+        if(ct>=9&&ct<17){op=true;msg1='مرحباً، محلنا مفتوح حالياً';msg2="سيتم الإغلاق على الساعة 17:00";}
+        else if(ct<9){msg1='نتأسف، محلنا مغلق حالياً';msg2="سنفتح اليوم على الساعة 09:00";}
+        else{msg1='نتأسف، محلنا مغلق حالياً';msg2=(day===4)?"نعود لخدمتكم غداً على الساعة 14:00":"نعود لخدمتكم غداً على الساعة 09:00";}
+    }
+    var sb=document.getElementById('shopStatus'),sd=document.getElementById('statusDot'),st=document.getElementById('statusText'),sm=document.getElementById('statusTimer'),img=document.getElementById('profileImage');
+    if(sb){sb.className=op?"status-badge status-open":"status-badge status-closed";sd.className=op?"dot dot-open":"dot dot-closed";st.innerHTML=op?'<i class="fas fa-door-open" style="margin-left:5px"></i> '+msg1:'<i class="fas fa-door-closed" style="margin-left:5px"></i> '+msg1;sm.innerText=msg2;}
+    if(img)img.className=op?"profile-img open":"profile-img closed";
+}
+
+function updateCountdowns(){var n=Date.now();function s(id,t){var e=document.getElementById(id);if(e){var d=Math.ceil((t-n)/864e5);e.innerText=d>0?d:"0"}}s("eid-fitr-days",new Date("2026-03-21").getTime());s("eid-adha-days",new Date("2026-05-27").getTime())}
+
+function finalizeOrder(){
+    if(!cart.length){showToast('<i class="fas fa-exclamation-triangle" style="margin-left:5px"></i> السلة فارغة!');return}
+    var msg='🛒 *Amir Délices - طلب جديد* 🍪\n═══════════════════════\n\n📋 *تفاصيل الطلبية:*\n\n',st=0;
+    for(var i=0;i<cart.length;i++){var p=(parseInt(cart[i].price.replace(/\D/g,''))||0);st+=p*cart[i].qty;msg+='🍰 *'+cart[i].name+'*\n   📦 الكمية: '+cart[i].qty+' حبة\n   💰 السعر: '+(p*cart[i].qty).toLocaleString()+' دج\n\n'}
+    msg+='═══════════════════════\n🧁 *مجموع الحلويات:* '+st.toLocaleString()+' دج\n';
+    if(deliveryData){msg+='\n🏍️ *التوصيل:*\n📍 *إلى:* '+deliveryData.name;if(deliveryData.detail)msg+=' ('+deliveryData.detail+')';msg+='\n📏 *المسافة:* '+deliveryData.km+' كم\n💵 *تكلفة التوصيل:* '+deliveryData.price+' دج\n';if(deliveryData.lat&&deliveryData.lon)msg+='📌 *الموقع:* https://maps.google.com/?q='+deliveryData.lat+','+deliveryData.lon+'\n'}
+    msg+='\n═══════════════════════\n💎 *المجموع الكلي:* '+document.getElementById("totalPrice").innerText+'\n═══════════════════════\n\n✨ شكراً لاختياركم حلوياتنا!\n🌐 تم الطلب عبر الموقع الرسمي';
+    window.open('https://wa.me/213699748196?text='+encodeURIComponent(msg),'_blank');
+}
+
+function sendToWhatsApp(){
+    var name=document.getElementById('custName').value.trim();if(!name){showToast('<i class="fas fa-exclamation-circle" style="margin-left:5px"></i> املأ اسمك');return}
+    var phone=document.getElementById('custPhone').value.trim(),type=document.getElementById('eventType').value,date=document.getElementById('eventDate').value,guests=document.getElementById('guestCount').value,notes=document.getElementById('orderNotes').value.trim();
+    var msg='✨ *طلب تسعيرة لمناسبة خاصة* ✨\n═══════════════════════\n\n👤 *المرسل:* '+name+'\n';
+    if(phone)msg+='📱 *الهاتف:* '+phone+'\n';
+    msg+='🎉 *المناسبة:* '+type+'\n📅 *التاريخ:* '+(date||'غير محدد')+'\n👥 *المدعوين:* '+guests+'\n\n═══════════════════════\n\n';
+    if(cart.length){msg+='🍪 *الحلويات المختارة:*\n';for(var i=0;i<cart.length;i++)msg+='  🍰 '+cart[i].name+' ('+cart[i].qty+' حبة)\n';msg+='\n'}
+    if(deliveryData){msg+='🏍️ *التوصيل إلى:* '+deliveryData.name;if(deliveryData.detail)msg+=' ('+deliveryData.detail+')';msg+='\n📏 '+deliveryData.km+' كم - 💵 '+deliveryData.price+' دج\n';if(deliveryData.lat&&deliveryData.lon)msg+='📌 الموقع: https://maps.google.com/?q='+deliveryData.lat+','+deliveryData.lon+'\n';msg+='\n'}
+    if(notes)msg+='📝 *ملاحظات:*\n'+notes+'\n\n';
+    msg+='═══════════════════════\n🌐 تم الإرسال من الموقع الرسمي لـ Amir Délices';
+    window.open('https://wa.me/213699748196?text='+encodeURIComponent(msg),'_blank');
+    showToast('<i class="fas fa-paper-plane" style="margin-left:5px"></i> تم الإرسال!');
+}
+
+var testimonials = [
+    {name: "أم ريتاج", text: "البقالوة تعكم شابة بزاف، تذوب في الفم يعطيك الصحة شاف.", stars: 5},
+    {name: "كريمة ب.", text: "درت فورماسيون والحمد لله راني نخدم من داري والطلبيات ما يحبسوش.", stars: 5},
+    {name: "سمية مهداوي", text: "أحسن مدرسة في الشلف، المعاملة روعة والتعليم بضمير.", stars: 5},
+    {name: "فاطمة الزهراء", text: "المقروض جاني مرمل ومعسل للقلب، ربي يبارك في رزقكم.", stars: 5},
+    {name: "فايزة أم أنس", text: "حمرتولي وجهي في عرس خويا، الضياف قاع سألو على الحلويات.", stars: 5},
+    {name: "نادية من الشلف", text: "طلبت للعرس وكانت الحلويات فوق الممتاز، الكل عجبو.", stars: 5}
+];
+
+function renderTestimonials() {
+    var l = document.getElementById("testimonialsList");
+    if (!l) return;
+    
+    // مضاعفة المصفوفة لضمان استمرار التدفق البصري
+    var all = testimonials.concat(testimonials);
+    var h = '';
+    
+    for (var i = 0; i < all.length; i++) {
+        var t = all[i], s = '';
+        for (var j = 0; j < t.stars; j++) s += '<i class="fas fa-star"></i>';
+        
+        h += '<div class="testimonial-card">' +
+             '<div class="testi-name"><i class="fas fa-user-circle" style="margin-left:4px"></i>' + t.name + '</div>' +
+             '<div class="stars">' + s + '</div>' +
+             '<p class="testi-text">"' + t.text + '"</p>' +
+             '</div>';
+    }
+    
+    l.innerHTML = h;
+}
+// استدعاء الدالة عند تحميل الصفحة
+renderTestimonials();
+    
+function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
+function toggleMobileMenu(){var n=document.getElementById('navLinks'),m=document.getElementById('menuIcon');n.classList.toggle('open');m.className=n.classList.contains('open')?'fas fa-times':'fas fa-bars'}
+
+var observer=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){en.target.classList.add('visible');if(en.target.classList.contains('stats-bar'))animateCounters();observer.unobserve(en.target)}})},{threshold:.1});
+
+window.addEventListener('scroll',function(){
+    var st=document.documentElement.scrollTop,sh=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+    if(sh>0)document.getElementById('progressBar').style.width=(st/sh*100)+'%';
+    var n=document.getElementById('mainNavbar');if(n){window.scrollY>50?n.classList.add('scrolled'):n.classList.remove('scrolled')}
+    var b=document.getElementById("backToTop");if(b)b.style.display=(document.body.scrollTop>500||document.documentElement.scrollTop>500)?"flex":"none";
 });
 
-const testiList = document.getElementById("testimonialsList");
-[...testimonials, ...testimonials].forEach(t => {
-    testiList.innerHTML += `<div class="testimonial-card">
-        <div class="testi-user">
-            <div class="user-meta">
-                <i class="fas fa-user-circle"></i>
-                <span class="testi-name">${t.name}</span>
-            </div>
-            <div class="stars">${generateStars(t.stars)}</div>
-        </div>
-        <p class="testi-text">"${t.text}"</p>
-    </div>`;
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){var c=document.getElementById('cartModal');if(c&&c.style.display==='flex')toggleCart()}});
+document.addEventListener('click',function(e){if(e.target.classList.contains('nav-link')||e.target.closest('.nav-link')){document.getElementById('navLinks').classList.remove('open');document.getElementById('menuIcon').className='fas fa-bars'}});
+
+document.addEventListener('DOMContentLoaded',function(){
+    setTimeout(hidePreloader,1000);
+    renderSweets();typeEffect();updateShopStatus();updateCountdowns();renderTestimonials();
+    document.getElementById("backToTop").onclick=scrollToTop;
+    document.getElementById("mobileMenuBtn").onclick=toggleMobileMenu;
+    document.querySelectorAll(".faq-question").forEach(function(q){
+        q.onclick=function(){document.querySelectorAll(".faq-item").forEach(function(it){if(it!==q.parentElement)it.classList.remove("active")});q.parentElement.classList.toggle("active")}
+    });
+    document.getElementById("year").innerText=new Date().getFullYear();
+    document.querySelectorAll('.animate-on-scroll').forEach(function(el){observer.observe(el)});
+    setInterval(updateShopStatus,60000);
 });
-
-document.querySelectorAll(".faq-question").forEach(q => {
-    q.onclick = () => q.parentElement.classList.toggle("active");
-});
-
-document.getElementById("schoolDesc").innerText = "فن صناعة الحلويات والمملحات وتكوينات احترافية";
-document.getElementById("year").innerText = new Date().getFullYear();
-
-// تشغيل الحالة وتحديثها تلقائياً
-updateShopStatus();
-setInterval(updateShopStatus, 60000); // تحديث كل دقيقة
+    
+window.onload=function(){setTimeout(hidePreloader,500)};
+setTimeout(hidePreloader,3000);
 </script>
 </body>
 </html>
